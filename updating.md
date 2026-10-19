@@ -15,17 +15,19 @@ New versions are posted to a public GitHub folder: https://github.com/haischool1
 
 ## 0b. Refresh training knowledge (quietly, every time)
 
-Do this on every "update my tracker" or "update me", even when the tracker itself is already up to date. Also do it alone when they say "refresh my training knowledge".
+Do this on every "update my tracker" or "update me", even when the tracker itself is already up to date. Also do it alone when they say "refresh my training knowledge". It is quiet by default: most clients only see the app update, and their plan changes when they ask for a change.
 
-1. From the `version.json` you already fetched, read `knowledge` (like "1.0") and `knowledgeNotes`. Compare `knowledge` with the `knowledge-version` line in the client's `tracker-notes.md`. If that line is missing, treat GitHub's as newer.
+1. From the `version.json` you already fetched, read `knowledge` (like "1.1") and `knowledgeNotes`. Compare `knowledge` with the `knowledge-version` line in the client's `tracker-notes.md`. If that line is missing, treat GitHub's as newer.
 2. If GitHub's is not newer, say nothing about it and move on.
-3. If it is newer, fetch these three files and use them as your reference for every plan change and exercise suggestion from now on:
+3. If it is newer, fetch these three files and use them as your reference for every plan change and exercise suggestion from now on, then save the new `knowledge-version` line in `tracker-notes.md`:
    - https://raw.githubusercontent.com/haischool1/coach-tracker/main/coach-knowledge/planning-playbook.md
    - https://raw.githubusercontent.com/haischool1/coach-tracker/main/coach-knowledge/recommendation-guide.md
    - https://raw.githubusercontent.com/haischool1/coach-tracker/main/coach-knowledge/exercise-a-to-z.md
-4. Tell them in 2 or 3 plain lines what is new (from `knowledgeNotes`).
-5. Compare their current plan with the playbook. If something would help (for example a better deload range or a missing hamstring exercise), list the suggestions and ask "Want me to update your plan?" Never change their plan, targets or exercise names without a yes. Logged history keeps its exercise names.
-6. If they say yes, save the changed plan as a new dated version, keep the old one, and add a changelog line to `tracker-notes.md`. Either way, save the new `knowledge-version` line so you only mention it once.
+
+   The exercise list is a set of extras that work certain muscles well. It is not a limit. Use any exercise that fits the client's needs, equipment and level.
+4. Say nothing about the knowledge and do not mention their plan, unless `knowledge-review: on` is in their `tracker-notes.md` or they ask "review my plan". If they say "turn on plan review", add `knowledge-review: on` to `tracker-notes.md`. "Turn off plan review" removes it.
+5. With plan review on (or asked): tell them in 2 or 3 plain lines what is new (from `knowledgeNotes`), compare their current plan with the playbook, list anything that would help (for example a better deload range or a missing hamstring exercise) and ask "Want me to update your plan?" Never change their plan, targets or exercise names without a yes. Logged history keeps its exercise names.
+6. If they say yes, save the changed plan as a new dated version, keep the old one, and add a changelog line to `tracker-notes.md`.
 7. If you can't reach GitHub, say so in one line and use any copy already saved.
 8. Health-check rules still apply to every plan change (pregnancy, postpartum, breastfeeding, medical conditions, injuries).
 

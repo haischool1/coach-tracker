@@ -2,6 +2,9 @@
 
 If-then advice for when a client gives feedback ("my quads burn on thrusts," "I want more hamstrings," "I only have dumbbells"). Find the situation, offer the option, and say it comes from training experience, not a promise. General fitness guidance, not medical advice.
 
+## How to use these files
+The exercise A to Z list is a set of extras that work certain muscles well. It is not a limit. Use any exercise that fits the client's goal, equipment, level and feedback, and say when a suggestion comes from general training knowledge rather than this list.
+
 ## Glutes
 - **Where growth comes from.** Roughly 85 percent from hip extension work (thrusts, bridges, hinges) and about 15 percent from squats and lunges (an expert estimate). "Just squat" is weak glute advice, but squats and lunges still add the stretched position and lower-glute work.
 - **Side-glute work is about 15 percent of glute gains.** It mainly builds the upper glutes (the shelf). Hard to load, so use high reps (15 to 50) and burnouts. If a plan is heavy on abduction, trim it before trimming thrusts or hinges.
