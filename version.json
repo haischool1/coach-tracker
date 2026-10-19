@@ -1,7 +1,7 @@
 {
-  "version": "3.1",
-  "date": "2026-10-03",
-  "notes": "Your week on the Workout tab (drag a day to move it, catch-up reminders, done or not with a Finish button). Set tags show what improved. This week is three simple bar charts. New 3D icons, a gold-sparkle Coach button, meals in color by time of day, a calendar when you tap the date, and the page reopens where you left off.",
+  "version": "3.2",
+  "date": "2026-10-19",
+  "notes": "A cleaner look with 4 tabs and the coach button at the top right. Focus mode shows one exercise at a time with big buttons and a rest countdown. After each lift, tap how hard it was, and your tracker suggests your next weights (tap the set number to log them). A finish summary, a weekly countdown and week streak, 4-week training blocks, sets by muscle, a 30, 45 or full-length workout option, milestone badges, a My Plan card, and Snap a label or Snap a meal on Food.",
   "knowledge": "1.1",
   "knowledgeDate": "2026-10-19",
   "knowledgeNotes": "New training knowledge: a plan-building playbook (weekly sets by goal, effort, progression, deload ranges), a recommendation guide (fixes and options for common feedback), and an exercise A to Z of extra exercises for each muscle group. Your coach uses it quietly when you ask for a change. Say \"turn on plan review\" if you want it to suggest plan updates."
