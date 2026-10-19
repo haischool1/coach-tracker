@@ -13,12 +13,28 @@ New versions are posted to a public GitHub folder: https://github.com/haischool1
    - https://raw.githubusercontent.com/haischool1/coach-tracker/main/check_tracker.py
 3. If you can't reach GitHub (no web access, or the fetch fails), say so in one line and use this skill's copies. If they say they have a newer kit file, ask them to add it to the chat.
 
+## 0b. Refresh training knowledge (quietly, every time)
+
+Do this on every "update my tracker" or "update me", even when the tracker itself is already up to date. Also do it alone when they say "refresh my training knowledge".
+
+1. From the `version.json` you already fetched, read `knowledge` (like "1.0") and `knowledgeNotes`. Compare `knowledge` with the `knowledge-version` line in the client's `tracker-notes.md`. If that line is missing, treat GitHub's as newer.
+2. If GitHub's is not newer, say nothing about it and move on.
+3. If it is newer, fetch these three files and use them as your reference for every plan change and exercise suggestion from now on:
+   - https://raw.githubusercontent.com/haischool1/coach-tracker/main/coach-knowledge/planning-playbook.md
+   - https://raw.githubusercontent.com/haischool1/coach-tracker/main/coach-knowledge/recommendation-guide.md
+   - https://raw.githubusercontent.com/haischool1/coach-tracker/main/coach-knowledge/exercise-a-to-z.md
+4. Tell them in 2 or 3 plain lines what is new (from `knowledgeNotes`).
+5. Compare their current plan with the playbook. If something would help (for example a better deload range or a missing hamstring exercise), list the suggestions and ask "Want me to update your plan?" Never change their plan, targets or exercise names without a yes. Logged history keeps its exercise names.
+6. If they say yes, save the changed plan as a new dated version, keep the old one, and add a changelog line to `tracker-notes.md`. Either way, save the new `knowledge-version` line so you only mention it once.
+7. If you can't reach GitHub, say so in one line and use any copy already saved.
+8. Health-check rules still apply to every plan change (pregnancy, postpartum, breastfeeding, medical conditions, injuries).
+
 ## 1. See what they have
 
 1. Find their tracker URL in `tracker-notes.md` or `coach-playbook.md`.
 2. Read it with the Artifact tool (`action: "read"`) and note where the full page was saved.
 3. Run `python3 scripts/check_tracker.py <saved page>` (the script is in this skill's folder). It says which kit version the page is, and whether the page was changed after setup.
-4. If it's already the latest version and unchanged, tell them they're up to date and stop.
+4. If it's already the latest version and unchanged, tell them the tracker is up to date and stop (step 0b above still applies).
 5. List every changelog line in `tracker-notes.md` that starts with "Custom:". Those are the features to carry over.
 6. If the checker says the page was changed but there are no "Custom:" lines, ask them what they had added. If nobody knows, look through the saved page for anything the new template doesn't have, and describe it to them in plain words.
 
