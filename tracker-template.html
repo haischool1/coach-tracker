@@ -1,5 +1,5 @@
 <title>My Training Log</title>
-<meta name="byoc-version" content="3.2">
+<meta name="byoc-version" content="3.2.1">
 <meta name="theme-color" content="#ECF0F5">
 <style>
 /* ===== Tokens: light ===== */
@@ -766,6 +766,7 @@ body::before{background:radial-gradient(70% 40% at 0% 0%,var(--wash1),transparen
 /* help lines once you know your way around */
 body.seasoned .setkey,body.seasoned .wkhint{display:none}
 #focusGo{display:none}
+#woNote.folded:not(:focus){max-height:4.6em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
 #todayList .pill.streak{background:rgba(232,133,12,.14);color:var(--warn-ink)}
 .fmstart{width:100%;padding:14px;font-size:16px;border-radius:16px}
 /* food shortcuts */
@@ -870,6 +871,7 @@ body.seasoned .setkey,body.seasoned .wkhint{display:none}
       <div id="todayBody"></div>
       <button type="button" class="linkbtn" id="woNoteBtn" style="align-self:flex-start">+ Add a note</button>
       <textarea id="woNote" rows="2" placeholder="How do you feel today? Sleep, soreness, anything that hurt…" aria-label="Notes for today's workout"></textarea>
+      <button type="button" class="linkbtn" id="woNoteMore" style="align-self:flex-start" hidden>Show all</button>
     </div>
     <div class="card">
       <div class="row between">
@@ -2037,7 +2039,7 @@ body.seasoned .setkey,body.seasoned .wkhint{display:none}
     const saved = S.workouts.find(w => w.id === woId(S.date, p.id));
     if (!noteDirty[p.id]){ $("woNote").value = (saved && saved.note) || ""; autoGrow($("woNote")); }
     const noteOn = !!$("woNote").value || S.noteOpen === p.id;   // the note box shows once there's a note, or after "Add a note"
-    $("woNote").hidden = !noteOn; $("woNoteBtn").hidden = noteOn;
+    $("woNote").hidden = !noteOn; $("woNoteBtn").hidden = noteOn; S.noteAll = false; requestAnimationFrame(foldNote);
     renderToday();
     $("woHint").textContent = saved ? `Saved ${S.date === today ? "today" : fmtLong(S.date)}. Changes save as you type.` : `Tap a "Previous" number to copy it. Sets save as you type.`;
     const fromSaved = ex => {
@@ -2159,6 +2161,13 @@ body.seasoned .setkey,body.seasoned .wkhint{display:none}
     $("logPhoto").click();
   });
   $("pfOn").addEventListener("change", () => { memPf = $("pfOn").checked; try { localStorage.setItem("tl-prefill", $("pfOn").checked ? "on" : "off"); } catch(e){} renderWorkout(); });
+  function foldNote(){   // long notes show about 3 lines until you tap them
+    const n = $("woNote"), v = n.value || "", long = !n.hidden && (v.length > 160 || v.split("\n").length > 3) && !S.noteAll;
+    n.classList.toggle("folded", long); $("woNoteMore").hidden = !long || document.activeElement === n;
+  }
+  $("woNoteMore").onclick = () => { S.noteAll = true; foldNote(); $("woNote").focus(); };
+  $("woNote").addEventListener("focus", () => { $("woNoteMore").hidden = true; });
+  $("woNote").addEventListener("blur", () => setTimeout(foldNote, 0));
   $("woNoteBtn").onclick = () => { S.noteOpen = selId(); $("woNote").hidden = false; $("woNoteBtn").hidden = true; $("woNote").focus(); };
   $("woNote").addEventListener("input", () => { noteDirty[selId()] = true; renderToday(); queueWoSave(1500); });
   $("exList").addEventListener("focusout", () => setTimeout(() => { if (woPending && !typingSets()) renderWorkout(); }, 1600));
