@@ -6,3 +6,4 @@ If you have the kit, you don't need to download anything here yourself. Open Cla
 
 - `tracker-template.html`: the tracker page
 - `version.json`: the current version number and what changed
+- `coach-knowledge/`: training knowledge your coach uses to build and adjust plans. Your coach checks it quietly each time you say "update me" and asks before changing anything in your plan.
