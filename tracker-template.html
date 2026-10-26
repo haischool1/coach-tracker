@@ -1,5 +1,5 @@
 <title>My Training Log</title>
-<meta name="byoc-version" content="3.3.0">
+<meta name="byoc-version" content="3.3.1">
 <meta name="theme-color" content="#ECF0F5">
 <style>
 /* ===== Training Log 3.12: the look from the Oct 26 mockup =====
@@ -551,6 +551,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     </div>
     <div id="hDue"></div>
     <div class="line" id="hStreak"></div>
+    <button type="button" class="line tap" id="hCycle" hidden></button>
   </section>
 
   <!-- WORKOUT: the focus screen is the workout screen -->
@@ -699,7 +700,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   // ---------- core: helpers, shared state, settings, profile ----------
   // Every module below shares this one scope (build.py pastes them in order inside one function).
   // Nothing personal lives in the code: the name, phase, plan, targets, accent color and rules all come from config/main in the database.
-  const PAGE_VERSION = "3.12.0";
+  const PAGE_VERSION = "3.12.1";
   const $ = id => document.getElementById(id);
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const iso = d => { const z = new Date(d.getTime() - d.getTimezoneOffset()*60000); return z.toISOString().slice(0,10); };
@@ -2187,7 +2188,13 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
       { k: "12-week streak", ok: best >= 12, ic: "12", p: `${Math.min(best, 12)} of 12 weeks` }];
   }
   // ---------- Home: one hero card (today's workout), protein and weigh-in tiles, what's due, streaks ----------
-  function renderDash(){ if (S.tab !== "dash") return; renderWhatsNew(); renderHomeHero(); renderHomeTiles(); renderDue(); renderStreak(); }
+  function renderDash(){ if (S.tab !== "dash") return; renderWhatsNew(); renderHomeHero(); renderHomeTiles(); renderDue(); renderStreak(); renderCycle(); }
+  function renderCycle(){   // cycle notes (settings.cycle): one tap on day 1 of a period, saved as days/{date}.period = true
+    const el = $("hCycle"), on = sett().cycle; el.hidden = !on; if (!on) return;
+    const d = S.date, day = dayDoc(d), was = !!day.period, cd = cycleDay(d);
+    el.innerHTML = `<span>Cycle${cd && cd <= 45 ? ` · day ${cd}` : ""}</span><span class="${was ? "hot" : ""}">${was ? "Period started this day ✓" : "Period started today? Tap"}</span>`;
+    el.onclick = async () => { const x = JSON.parse(JSON.stringify(dayDoc(d))); x.date = d; x.meals = x.meals || []; if (x.period) delete x.period; else x.period = true; if (await writeDay(d, x)) toast(x.period ? "Noted. Your weight chart marks it." : "Period note removed."); };
+  }
   function foodStreak(d){   // days in a row with food logged, counting today once something is logged
     let n = (dayDoc(d).meals || []).length ? 1 : 0, k = 1;
     while ((dayDoc(addDays(d, -k)).meals || []).length){ n++; k++; }
