@@ -1,5 +1,5 @@
 <title>My Training Log</title>
-<meta name="byoc-version" content="3.3.1">
+<meta name="byoc-version" content="3.3.2">
 <meta name="theme-color" content="#ECF0F5">
 <style>
 /* ===== Training Log 3.12: the look from the Oct 26 mockup =====
@@ -290,6 +290,13 @@ button.rowi:active{background:var(--chip)}
 .wkday.sel{background:var(--navy);color:var(--on-navy)} .wkday.sel b,.wkday.sel span{color:var(--on-navy)} .wkday.sel i{color:#8FE3B4}
 .wkday.done i{color:var(--good-ink)} .wkday.miss i{color:var(--warn-ink)} .wkday.rest span{color:var(--muted)}
 .wkday.part i{color:var(--warn-ink)}
+.wkday{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.wkday.tgt{box-shadow:inset 0 0 0 1.5px var(--accent);background:var(--accent-soft)}
+.wkday.over{background:var(--accent);color:var(--accent-ink)} .wkday.over b,.wkday.over span{color:var(--accent-ink)}
+.wkday.drag{opacity:.35}
+.wkfly{position:fixed;z-index:95;pointer-events:none;background:var(--navy);box-shadow:0 12px 30px -10px rgba(10,20,50,.6);transform:scale(1.1)} .wkfly b,.wkfly span{color:var(--on-navy)}
+.undoline{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--chip);font-size:14px}
+.undoline button{background:var(--card);color:var(--accent);box-shadow:var(--shadow);padding:7px 12px}
 .warnline{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:rgba(201,122,18,.12);color:var(--warn-ink);font-size:13.5px}
 .warnline .ic{width:18px;height:18px;flex:none;margin-top:1px}
 
@@ -700,7 +707,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   // ---------- core: helpers, shared state, settings, profile ----------
   // Every module below shares this one scope (build.py pastes them in order inside one function).
   // Nothing personal lives in the code: the name, phase, plan, targets, accent color and rules all come from config/main in the database.
-  const PAGE_VERSION = "3.12.1";
+  const PAGE_VERSION = "3.12.2";
   const $ = id => document.getElementById(id);
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const iso = d => { const z = new Date(d.getTime() - d.getTimezoneOffset()*60000); return z.toISOString().slice(0,10); };
@@ -1203,7 +1210,8 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   function sheetBack(){ const prev = SH.stack.pop(); if (!prev) return closeSheet(); SH.open = false; openSheet(Object.assign({}, prev, { replace: true })); SH.stack = SH.stack; $("uiSheetBack").hidden = !SH.stack.length; }
   function closeSheet(){
     const sh = $("uiSheet"); if (sh.hidden) return;
-    SH.open = false; SH.stack = []; SH.cur = null;
+    const was = SH.cur; SH.open = false; SH.stack = []; SH.cur = null;
+    if (was && was.onClose) was.onClose();
     sh.classList.remove("open"); if (!$("coachSheet").classList.contains("open")) document.body.classList.remove("sheet-open");
     setTimeout(() => { if (!sh.classList.contains("open")){ sh.hidden = true; $("uiSheetBody").innerHTML = ""; } }, 300);
   }
@@ -1645,33 +1653,75 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     setTimeout(() => { liftDrag = null; }, 0);
   };
   document.addEventListener("pointerup", endLiftDrag); document.addEventListener("pointercancel", endLiftDrag);
-  // ---------- the week sheet: pick a day, then swap it with today or just do it today ----------
+  // ---------- the week sheet: tap a day, then tap where it goes (or hold and drag). Swaps are for this week only. ----------
+  // A swap that puts two hard sessions for one muscle back to back shows a warning first, never a block. Undo for a few seconds after.
+  let wkSel = null, wkPending = null, wkUndo = null, wkUndoT = null, wkDrag = null;
   function openWeekSheet(){
     const sun = sundayOf(S.date), meIdx = parseD(S.date).getDay();
-    let sel = null;
+    wkSel = null; wkPending = null;
     const draw = () => {
       const st = weekState(sun), cur = weekFor(sun), ICO = { done: CHECK, restdone: CHECK, part: "◐", miss: "!", skip: "–", moved: "↪" };
-      const grid = `<div class="wkgrid">${st.map(x => `<button type="button" class="wkday ${x.st}${x.d === today ? " now" : ""}${sel === x.i ? " sel" : ""}" data-i="${x.i}" aria-pressed="${sel === x.i}"><b>${WDAY[x.i]}</b><span>${esc(shortName(x.id))}</span><i>${ICO[x.st] || ""}</i></button>`).join("")}</div>`;
-      let act = `<div class="note">Tap a day to move it or do it today.</div>`;
-      if (sel != null && sel !== meIdx){
-        const x = st[sel], warn = swapWarning(cur, meIdx, sel), nm = isRestId(x.id) ? "Rest" : shortName(x.id);
-        act = `<div class="rows"><div class="rowi"><span class="k">${WDAYL[sel]} · ${esc(nm)}<small>${x.st === "done" ? "Already done" : x.st === "miss" ? "Missed" : x.st === "rest" ? "A rest day" : "Planned"}</small></span></div></div>`
-          + (warn.length ? `<div class="warnline">${ic("info")}<span>Heads up: ${esc(warn.join("; "))}. Fine now and then, hard on recovery every week.</span></div>` : "")
-          + `<div class="sheetacts">${isRestId(x.id) ? "" : `<button type="button" id="wkJust">Just ${S.date === today ? "today" : WDAY[meIdx]}</button>`}<button type="button" class="primary" id="wkSwap">Swap with ${WDAY[meIdx]}</button></div>`;
-      } else if (sel === meIdx){
-        act = `<div class="note">That is the day you are on.</div>`;
-      }
+      const grid = `<div class="wkgrid" id="wkGrid">${st.map(x => `<button type="button" class="wkday ${x.st}${x.d === today ? " now" : ""}${wkSel === x.i ? " sel" : wkSel != null ? " tgt" : ""}" data-i="${x.i}" aria-pressed="${wkSel === x.i}" aria-label="${WDAYL[x.i]}: ${esc(shortName(x.id))}"><b>${WDAY[x.i]}</b><span>${esc(shortName(x.id))}</span><i>${ICO[x.st] || ""}</i></button>`).join("")}</div>`;
+      let act;
+      if (wkPending){
+        const { a, b, warn } = wkPending;
+        act = `<div class="warnline">${ic("info")}<span>Heads up: ${esc(warn.join("; "))}. Two hard days in a row are hard to recover from. Fine now and then.</span></div>
+          <div class="sheetacts"><button type="button" id="wkCancel">Cancel</button><button type="button" class="primary" id="wkGo">Swap ${WDAY[a]} and ${WDAY[b]} anyway</button></div>`;
+      } else if (wkUndo){
+        act = `<div class="undoline"><span>${esc(wkUndo.text)}</span><button type="button" id="wkUndoBtn">Undo</button></div>`;
+      } else if (wkSel != null){
+        const x = st[wkSel], nm = isRestId(x.id) ? "Rest" : shortName(x.id);
+        act = `<div class="note">${esc(WDAYL[wkSel])} · ${esc(nm)}. Now tap the day it should go to.</div>`
+          + (!isRestId(x.id) && wkSel !== meIdx ? `<div class="sheetacts"><button type="button" id="wkJust">Just ${S.date === today ? "today" : WDAY[meIdx]}: ${esc(nm)}</button></div>` : "");
+      } else act = `<div class="note">Tap a day, then tap where it goes. Or hold and drag. Changes are for this week only.</div>`;
       const base = weekBase(), changed = cur.some((v, i) => v !== base[i]);
-      return grid + act + (changed ? `<div class="sheetacts"><button type="button" id="wkUsual">Make this my usual week</button><button type="button" id="wkReset">Back to usual</button></div>` : "");
+      return grid + act + (changed && !wkPending ? `<div class="sheetacts"><button type="button" id="wkUsual">Make this my usual week</button><button type="button" id="wkReset">Back to usual</button></div>` : "");
+    };
+    const settle = (a, b) => {   // the second tap or the drop: warn first when two hard days for one muscle would touch
+      if (a === b){ wkSel = null; refreshSheet(); return; }
+      const warn = swapWarning(weekFor(sun), a, b);
+      if (warn.length){ wkPending = { a, b, warn }; wkSel = null; refreshSheet(); return; }
+      doSwap(a, b);
+    };
+    const doSwap = (a, b) => {
+      const prev = weekFor(sun).slice(), moved = shortName(prev[a]);
+      wkPending = null; wkSel = null; planPicked = false;
+      swapDays(sun, a, b);
+      clearTimeout(wkUndoT); wkUndo = { days: prev, text: `Moved ${moved} to ${WDAYL[b]}.` }; wkUndoT = setTimeout(() => { wkUndo = null; refreshSheet(); }, 10000);
+      const nowToday = weekFor(sun)[meIdx]; if (a === meIdx || b === meIdx){ if (nowToday && !isRestId(nowToday)) pickDay(nowToday); else { FM.ei = null; renderWorkout(); } }
+      setTimeout(refreshSheet, 50);
     };
     const wire = body => {
-      body.querySelectorAll(".wkday").forEach(b => b.onclick = () => { sel = sel === +b.dataset.i ? null : +b.dataset.i; refreshSheet(); });
-      if ($("wkJust")) $("wkJust").onclick = () => { const id = weekFor(sun)[sel]; closeSheet(); pickDay(id); };
-      if ($("wkSwap")) $("wkSwap").onclick = () => { const id = weekFor(sun)[sel]; closeSheet(); planPicked = false; swapDays(sun, meIdx, sel); if (!isRestId(id)) pickDay(id); else { FM.ei = null; renderWorkout(); } };
+      body.querySelectorAll(".wkday").forEach(b => {
+        b.onclick = () => { if (wkDrag && wkDrag.moved) return; const i = +b.dataset.i; if (wkPending) return; if (wkSel == null) wkSel = i; else if (wkSel === i) wkSel = null; else { settle(wkSel, i); return; } refreshSheet(); };
+        b.onpointerdown = e => { if (wkPending) return; wkDrag = { from: +b.dataset.i, x: e.clientX, y: e.clientY, id: e.pointerId, moved: false, el: b, t: setTimeout(() => startWkDrag(e), 350) }; };
+      });
+      if ($("wkJust")) $("wkJust").onclick = () => { const id = weekFor(sun)[wkSel]; closeSheet(); pickDay(id); };
+      if ($("wkGo")) $("wkGo").onclick = () => doSwap(wkPending.a, wkPending.b);
+      if ($("wkCancel")) $("wkCancel").onclick = () => { wkPending = null; refreshSheet(); };
+      if ($("wkUndoBtn")) $("wkUndoBtn").onclick = () => { const u = wkUndo; wkUndo = null; clearTimeout(wkUndoT); saveWeek(sun, u.days); toast("Put back."); setTimeout(refreshSheet, 50); };
       if ($("wkUsual")) $("wkUsual").onclick = async () => { await setUsualWeek(weekFor(sun)); toast("Saved as your usual week."); refreshSheet(); };
       if ($("wkReset")) $("wkReset").onclick = () => { saveWeek(sun, weekBase()); setTimeout(refreshSheet, 300); };
     };
-    openSheet({ title: "This week", html: draw(), wire, refresh(){ $("uiSheetBody").innerHTML = draw(); wire($("uiSheetBody")); } });
+    const startWkDrag = e => {   // hold a day for a moment, then drag it onto another day
+      if (!wkDrag || !wkDrag.el || !$("wkGrid")) return;
+      wkDrag.moved = true; wkSel = null; wkDrag.el.classList.add("drag");
+      const g = wkDrag.el.cloneNode(true); g.className = "wkday wkfly"; g.removeAttribute("data-i"); g.style.width = wkDrag.el.offsetWidth + "px"; document.body.appendChild(g); wkDrag.ghost = g;
+      $("wkGrid").querySelectorAll(".wkday").forEach(x => { if (x !== wkDrag.el) x.classList.add("tgt"); });
+      moveGhost(e.clientX, e.clientY); try { navigator.vibrate && navigator.vibrate(15); } catch(err){}
+    };
+    const moveGhost = (x, y) => { if (!wkDrag || !wkDrag.ghost) return; wkDrag.ghost.style.left = (x - wkDrag.ghost.offsetWidth / 2) + "px"; wkDrag.ghost.style.top = (y - 30) + "px"; };
+    const onMove = e => { if (!wkDrag || e.pointerId !== wkDrag.id) return; if (!wkDrag.moved){ if (Math.abs(e.clientX - wkDrag.x) + Math.abs(e.clientY - wkDrag.y) > 12){ clearTimeout(wkDrag.t); wkDrag = null; } return; }
+      e.preventDefault(); moveGhost(e.clientX, e.clientY);
+      const over = document.elementFromPoint(e.clientX, e.clientY)?.closest(".wkday:not(.wkfly)");
+      $("wkGrid")?.querySelectorAll(".wkday.over").forEach(x => x !== over && x.classList.remove("over")); if (over && over !== wkDrag.el) over.classList.add("over"); };
+    const onUp = e => { if (!wkDrag) return; clearTimeout(wkDrag.t); const d = wkDrag;
+      if (d.moved){ if (d.ghost) d.ghost.remove(); const over = document.elementFromPoint(e.clientX, e.clientY)?.closest(".wkday:not(.wkfly)"); $("wkGrid")?.querySelectorAll(".wkday").forEach(x => x.classList.remove("drag", "over", "tgt"));
+        if (over && +over.dataset.i !== d.from) settle(d.from, +over.dataset.i); else refreshSheet(); setTimeout(() => { wkDrag = null; }, 0); }
+      else wkDrag = null; };
+    document.addEventListener("pointermove", onMove); document.addEventListener("pointerup", onUp); document.addEventListener("pointercancel", onUp);
+    openSheet({ title: "This week", html: draw(), wire, refresh(){ if (!SH.open || !SH.cur || SH.cur.title !== "This week") return; $("uiSheetBody").innerHTML = draw(); wire($("uiSheetBody")); },
+      onClose(){ document.removeEventListener("pointermove", onMove); document.removeEventListener("pointerup", onUp); document.removeEventListener("pointercancel", onUp); clearTimeout(wkUndoT); wkUndo = null; } });
   }
   function openNoteSheet(p){
     const saved = S.workouts.find(w => w.id === woId(S.date, p.id)), cur = (S.noteText || {})[p.id] ?? ((saved && saved.note) || "");
@@ -2280,7 +2330,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     $("hStreak").innerHTML = bits.length ? `<span>Streaks</span><span>${esc(bits.join(" · "))}</span>` : `<span>Streaks</span><span>Log a workout and your food to start one</span>`;
   }
   // one-time "What's new" card after an update, closed with a tap and remembered in settings.seenVersion
-  const WHATS_NEW = ["Home: one card, today's workout, Start.", "Workout: one lift at a time, with a rest clock.", "Food: one box, one camera, chips you use.", "Progress: three numbers, the trend, your lifts. The rest is behind the gear."];
+  const WHATS_NEW = ["Home: one card, today's workout, Start.", "Workout: one lift at a time, with a rest clock.", "Food: one box, one camera, chips you use.", "Progress: three numbers, the trend, your lifts. The rest is behind the gear.", "Week: tap a day, tap where it goes, or hold and drag. This week only, with Undo."];
   function renderWhatsNew(){
     const el = $("whatsNew"), show = !!(S.db && S.config && plan().length && sett().seenVersion !== PAGE_VERSION && !S.first && !S.wnClosed);
     el.hidden = !show; if (!show) return;
