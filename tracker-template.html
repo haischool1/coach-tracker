@@ -1,5 +1,5 @@
 <title>My Training Log</title>
-<meta name="byoc-version" content="3.3.2">
+<meta name="byoc-version" content="3.3.3">
 <meta name="theme-color" content="#ECF0F5">
 <style>
 /* ===== Training Log 3.12: the look from the Oct 26 mockup =====
@@ -222,6 +222,12 @@ select{appearance:none;-webkit-appearance:none;padding-right:30px;background-ima
 .finnext{font-size:14px;color:var(--navy-muted)}
 .restpill{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:29;display:none;align-items:center;gap:10px;padding:8px 10px 8px 14px;border-radius:999px;background:var(--navy);color:var(--on-navy);box-shadow:0 10px 24px -10px rgba(10,20,50,.6);font-weight:600;font-size:14px}
 .restpill.on{display:flex}
+body.resting .wrap{padding-bottom:calc(164px + env(safe-area-inset-bottom,0px))}
+.focus .mid.midtop{justify-content:flex-start}
+.datenote{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;padding:10px 14px;border-radius:14px;background:var(--chip);color:var(--ink-2);font:500 14px var(--body);text-align:left}
+.datenote b{font-weight:700}
+.datenote .go{color:var(--accent);font-weight:600;white-space:nowrap}
+.datenote.ahead{background:rgba(201,122,18,.16);color:var(--warn-ink)}
 .restpill b{font-family:var(--display);font-variant-numeric:tabular-nums;font-size:18px;min-width:52px;text-align:center}
 .restpill b.zero{color:#8FE3B4}
 .restpill button{background:rgba(255,255,255,.14);color:var(--on-navy);padding:6px 10px;border-radius:999px;font-size:13px}
@@ -532,6 +538,8 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     </div>
   </header>
 
+  <button type="button" class="datenote" id="dateNote" hidden></button>
+
   <div id="dbNotice" class="notice" hidden>Your saved log loads when this page is opened in Claude. Nothing shown here is saved yet.</div>
 
   <!-- HOME -->
@@ -652,7 +660,6 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   </section>
 
   <dialog id="viewer" aria-label="Photo viewer"><button class="ghost" id="viewerClose" aria-label="Close">✕ Close</button><div id="viewerBody"></div></dialog>
-  <footer class="brandfoot"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="bfG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8A3D"/><stop offset=".55" stop-color="#FF2D78"/><stop offset="1" stop-color="#7A5CFF"/></linearGradient></defs><path d="M10 6h28a8 8 0 0 1 8 8v16a8 8 0 0 1-8 8H21l-9 7v-7h-2a8 8 0 0 1-8-8V14a8 8 0 0 1 8-8z" fill="url(#bfG)"/><g fill="#fff"><rect x="11" y="15" width="4.5" height="14" rx="1.6"/><rect x="16.5" y="17.5" width="3.5" height="9" rx="1.2"/><rect x="20" y="20.5" width="8" height="3" rx="1"/><rect x="28" y="17.5" width="3.5" height="9" rx="1.2"/><rect x="32.5" y="15" width="4.5" height="14" rx="1.6"/></g></svg>Build Your Own Coach</footer>
 </div>
 
 <!-- rest clock, on any tab but Workout while it runs -->
@@ -661,8 +668,8 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
 <!-- tab bar -->
 <nav class="tabbar" aria-label="Sections"><div class="tabinner">
   <button type="button" class="tabbtn" data-tab="dash" id="tab-dash" aria-current="page"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"/></svg>Home</button>
-  <button type="button" class="tabbtn" data-tab="workout" id="tab-workout"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></svg>Workout</button>
   <button type="button" class="tabbtn" data-tab="today" id="tab-today"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3v7a2 2 0 0 0 2 2v9M11 3v7a2 2 0 0 1-2 2M9 3v6"/><path d="M17 21V3c-2 1.5-3 4-3 7 0 1.5 1 2.5 3 2.5"/></svg>Food</button>
+  <button type="button" class="tabbtn" data-tab="workout" id="tab-workout"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></svg>Workout</button>
   <button type="button" class="tabbtn" data-tab="progress" id="tab-progress"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progress</button>
 </div></nav>
 
@@ -707,7 +714,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   // ---------- core: helpers, shared state, settings, profile ----------
   // Every module below shares this one scope (build.py pastes them in order inside one function).
   // Nothing personal lives in the code: the name, phase, plan, targets, accent color and rules all come from config/main in the database.
-  const PAGE_VERSION = "3.12.2";
+  const PAGE_VERSION = "3.12.6";
   const $ = id => document.getElementById(id);
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const iso = d => { const z = new Date(d.getTime() - d.getTimezoneOffset()*60000); return z.toISOString().slice(0,10); };
@@ -817,9 +824,12 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     $("dateLabel").textContent = S.tab === "progress" ? "Progress" : fmtShort(S.date);
     $("topSub").textContent = bits.filter(Boolean).join(" · ");
     $("goToday").hidden = S.date === today;
+    const dn = $("dateNote"), off = S.date !== today && S.tab !== "progress", ahead = S.date > today;   // logging on another day should never be a surprise
+    dn.hidden = !off; dn.classList.toggle("ahead", ahead);
+    if (off) dn.innerHTML = `<span>${ahead ? "You're logging for" : "Viewing"} <b>${esc(fmtShort(S.date))}</b></span><span class="go">Back to today</span>`;
     if (P.name) document.title = `${P.name}'s Training Log`;
   }
-  const setDate = d => { flushWoSave(); mealEdit = null; showAllFlat = false; S.date = d; $("dateInput").value = d; S.draft = {}; S.touched = {}; S.filledEx = {}; S.editW = false; woDirty = false; planPicked = false; noteDirty = {}; pendingLog = null; FM.ei = null; FM.si = null; renderAll(); renderLogPrev(); };
+  const setDate = d => { if (typingSet()) document.activeElement.blur(); flushWoSave(); mealEdit = null; showAllFlat = false; S.date = d; $("dateInput").value = d; S.draft = {}; S.touched = {}; S.filledEx = {}; S.editW = false; woDirty = false; planPicked = false; noteDirty = {}; pendingLog = null; FM.ei = null; FM.si = null; FM.after = null; FM.typed = null; FM.edit = false; renderAll(); renderLogPrev(); };
   $("dateInput").addEventListener("change", e => e.target.value && setDate(e.target.value));
   let calMon = null;
   function renderCal(){   // month grid; a dot marks days with food or a workout logged
@@ -849,6 +859,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   $("prevDay").onclick = () => setDate(addDays(S.date,-1));
   $("nextDay").onclick = () => setDate(addDays(S.date,1));
   $("goToday").onclick = () => setDate(today);
+  $("dateNote").onclick = () => setDate(today);
   // ---------- food: totals, the two bars, meals grouped by meal, the weigh-in write ----------
   function dayDoc(d){ return S.days[d] || {date:d, meals:[]}; }
   function totals(d){
@@ -1150,6 +1161,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     swap: '<path d="M4 8h13l-3-3M20 16H7l3 3"/>',
     play: '<path d="M8 5v14l11-7z"/>',
     plus: '<path d="M12 5v14M5 12h14"/>',
+    minus: '<path d="M5 12h14"/>',
     x: '<path d="M6 6l12 12M18 6 6 18"/>',
     info: '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8v.5"/>',
     grip: '<path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/>',
@@ -1382,9 +1394,10 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     return null;
   }
   // ---------- the Workout screen: one lift, one set at a time. Log set starts the rest clock; set dots are the planned sets ----------
-  const FM = { ei: null, si: null, skip: new Set(), effAsk: null };
-  function fmNext(p){   // first lift (in the order picked) with an empty set
-    const d = ensureDraft(p), order = keptOrder(p);
+  const FM = { ei: null, si: null, skip: new Set(), effAsk: null, typed: null, after: null, pf: null, edit: false };   // edit = you tapped a set dot to change a logged set   // typed = what you've typed in the boxes, kept across redraws
+  function fmNext(p, after){   // the next lift (in the order picked) with an empty set, starting after the lift you just finished
+    const d = ensureDraft(p), all = keptOrder(p), k = all.indexOf(after);
+    const order = k >= 0 ? all.slice(k + 1).concat(all.slice(0, k + 1)) : all;
     for (const ei of order){
       if (FM.skip.has(ei)) continue;
       const si = d[ei].sets.findIndex(x => !(+x.r > 0));
@@ -1395,19 +1408,25 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   function fmAt(p){   // where the screen is: a lift you tapped or are editing, else the next empty set
     const d = ensureDraft(p);
     if (FM.ei != null && d[FM.ei]){
-      if (FM.si != null && d[FM.ei].sets[FM.si]) return { ei: FM.ei, si: FM.si, edit: +d[FM.ei].sets[FM.si].r > 0 };
+      if (FM.si != null && d[FM.ei].sets[FM.si]) return { ei: FM.ei, si: FM.si, edit: FM.edit && +d[FM.ei].sets[FM.si].r > 0 };
       const si = d[FM.ei].sets.findIndex(x => !(+x.r > 0));
       if (si >= 0) return { ei: FM.ei, si };
       FM.ei = null;
     }
-    return fmNext(p);
+    return fmNext(p, FM.after);
   }
   function prSet(p, ei){   // which set of this lift today is a new personal record (or -1)
     const ex = p.exercises[ei], d = ensureDraft(p)[ei], n = ex.name, prev = bestBefore(n, S.date);
     const cur = d.sets.map(s => +s.r > 0 ? { w: s.w === "" || s.w == null ? 0 : +s.w, r: +s.r } : null), top = topSet(n, cur.filter(Boolean));
     return top && prev && setScore(n, top) > setScore(n, prev) + 1e-9 ? cur.indexOf(top) : -1;
   }
+  // a save coming back or the rest clock ending must not redraw under your fingers: that closes the phone keyboard. Wait until you leave the box.
+  const typingSet = () => { const a = document.activeElement; return !!a && (a.id === "fmW" || a.id === "fmR"); };
+  let woRedraw = false;
+  function quietWorkout(){ if (typingSet()) woRedraw = true; else renderWorkout(); }
+  $("focusCard").addEventListener("focusout", () => setTimeout(() => { if (woRedraw && !typingSet()) renderWorkout(); }, 80));
   function renderWorkout(){
+    woRedraw = false;
     const el = $("focusCard"); if (!el) return;
     if (S.tab !== "workout"){ paintRest(); return; }
     const p = plan().find(x => x.id === curDayId());
@@ -1434,7 +1453,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     const at = fmAt(p), prog = saved ? woProgress(saved) : null, allLogged = !at, finished = !!(saved && saved.done) || (allLogged && order.every(ei => setsIn(d[ei]).length));
     const dayBtn = `<button type="button" class="daybtn" id="fmDay">${esc(p.name)}${ic("down")}</button>`;
     const noteOn = !!((S.noteText || {})[p.id] || (saved && saved.note));
-    const foot = (ex, ei) => `<div class="foot"><a href="${ytUrl(ex.name)}" target="_blank" rel="noopener">${ic("play")}Form video</a><button type="button" id="fmSwap">${ic("swap")}Swap</button><button type="button" id="fmSkip">${ic("skip")}Skip</button><button type="button" id="fmNote">${ic("note")}${noteOn ? "Note ✓" : "Note"}</button></div>`;
+    const foot = (ex, ei) => `<div class="foot"><a href="${ytUrl(ex.name)}" target="_blank" rel="noopener">${ic("play")}Form video</a><button type="button" id="fmSwap">${ic("swap")}Swap</button><button type="button" id="fmSkip">${ic("skip")}Skip lift</button><button type="button" id="fmNote">${ic("note")}${noteOn ? "Note ✓" : "Note"}</button></div>`;
     if ((finished || allLogged) && !force && !(FM.ei != null && FM.si != null)){
       const w = saved || { exercises: [], date: S.date }, st = woStats(w), bi = blockInfo(S.date, p, []);
       const left = order.filter(ei => !setsIn(d[ei]).length).length;
@@ -1452,17 +1471,19 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
       return;
     }
     const { ei, si, edit } = at, ex = p.exercises[ei], dr = d[ei], last = lastSets(ex.name, S.date, p.id), cue = nextCue(ex, S.date, p.id), sg = sugFor(cue, last, si), pv = last && last.sets[si];
-    const cur = dr.sets[si], pre = pfOn();
-    const w0 = +cur.r > 0 ? cur.w : pre ? (sg ? sg.w : pv ? pv.w : "") : "", r0 = +cur.r > 0 ? cur.r : pre ? (sg ? sg.r : pv ? pv.r : "") : "";
-    const wPh = sg ? fmtW(sg.w) : pv ? fmtW(pv.w) : "lb", rPh = sg ? sg.r : pv ? pv.r : "reps";
+    const cur = dr.sets[si], pre = pfOn(), key = `${S.date}|${p.id}|${ei}|${si}`, ty = FM.typed && FM.typed.key === key ? FM.typed : null;
+    const done = dr.sets.slice(0, si).filter(x => +x.r > 0).pop(), hint = done ? { w: done.w, r: done.r } : sg || pv || null;   // after set 1, the hint is the set you just did
+    FM.pf = pre && hint ? { w: hint.w, r: hint.r } : { w: "", r: "" };
+    const w0 = ty ? ty.w : +cur.r > 0 ? cur.w : "", r0 = ty ? ty.r : +cur.r > 0 ? cur.r : "";
+    const wPh = hint ? fmtW(hint.w) : "lb", rPh = hint ? hint.r : "reps";
     const pos = order.indexOf(ei), total = order.length, pr = prSet(p, ei);
     const dots = dr.sets.map((s, i) => `<button type="button" data-dot="${i}" class="${i === si ? "now" : +s.r > 0 ? (i === pr ? "best" : "done") : ""}" aria-label="Set ${i + 1}${+s.r > 0 ? `, ${fmtSet(s, ex.name)}` : ""}">${i === pr ? ic("trophy") : ""}</button>`).join("") + `<button type="button" class="dadd" id="fmAdd">+ set</button>`;
     const lastSet = si >= dr.sets.length - 1, lastLift = pos >= total - 1;
-    const logLabel = edit ? "Save set" : lastSet ? (lastLift ? "Log set and finish" : "Log set and go to next lift") : "Log set";
+    const logLabel = lastSet ? (lastLift ? "Log set and finish" : "Log set and go to next lift") : "Log set";
     const eff = FM.effAsk != null && d[FM.effAsk] ? `<div class="effort"><span class="q">How hard was ${esc(p.exercises[FM.effAsk].name)}?</span><div class="effbtns">${[1, 2, 3, 4].map(v => `<button type="button" data-eff="${v}" aria-pressed="${+d[FM.effAsk].effort === v}">${EFFORT_L[v]}<small>${EFFORT_S[v]}</small></button>`).join("")}</div></div>` : "";
-    const rest = RT.running ? `<div class="restrow"><button type="button" class="radj" id="rtMinus" aria-label="10 seconds less">${ic("down")}</button><div class="rmid"><span class="rlbl">Rest</span><span class="t" id="rtClock">${fmtT(restLeft())}</span></div><button type="button" class="radj" id="rtPlus" aria-label="10 seconds more">${ic("plus")}</button><button type="button" id="rtSkip">Skip</button></div>` : "";
+    const rest = RT.running ? `<div class="restrow"><button type="button" class="radj" id="rtMinus" aria-label="10 seconds less">${ic("minus")}</button><div class="rmid"><span class="rlbl">Rest</span><span class="t" id="rtClock">${fmtT(restLeft())}</span></div><button type="button" class="radj" id="rtPlus" aria-label="10 seconds more">${ic("plus")}</button><button type="button" id="rtSkip">Skip rest</button></div>` : "";
     el.innerHTML = `<div class="hdr">${dayBtn}<span class="num">lift ${pos + 1} of ${total}</span><button type="button" id="fmAll">All lifts</button></div>
-      <div class="mid">
+      <div class="mid midtop">
         <div><h2>${esc(ex.name)}</h2><div class="meta">Set ${si + 1} of ${dr.sets.length} · ${edit ? "editing" : `last time ${esc(lastText(last, ex.name))}`}${last && last.from && !last.date ? ` (${esc(last.from)})` : ""}</div></div>
         ${cue ? cueHtml(cue) : `<div class="cue hold">${ic("target")}<span>${esc(ex.sets)} × ${esc(ex.reps)}</span></div>`}
         <div class="nums"><label>lb<input id="fmW" type="number" inputmode="decimal" step="0.5" value="${esc(w0)}" placeholder="${esc(wPh)}"></label><label>reps<input id="fmR" type="number" inputmode="numeric" value="${esc(r0)}" placeholder="${esc(rPh)}"></label></div>
@@ -1472,25 +1493,37 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
       </div>${foot(ex, ei)}`;
     $("fmDay").onclick = openWeekSheet; $("fmAll").onclick = () => openLiftsSheet(p); $("fmNote").onclick = () => openNoteSheet(p);
     $("fmLog").onclick = () => logSet(p, ei, si);
+    const keepTyped = () => {   // what you type saves on its own after a pause; Log set still moves you on and starts the rest clock
+      const wv = $("fmW").value, rv = $("fmR").value;
+      woDirty = true; touch(p.id, ei);
+      const cur = ensureDraft(p)[ei];   // the draft as it is now (a save coming back can rebuild it)
+      if (!FM.typed || FM.typed.key !== key) FM.typed = { key, orig: Object.assign({}, cur.sets[si]) };
+      FM.typed.w = wv; FM.typed.r = rv; FM.ei = ei; FM.si = si;   // stay on this set while you type
+      const w = wv || String((FM.pf || {}).w ?? "");
+      cur.sets[si] = +rv > 0 ? { w: w === "" ? 0 : +w, r: +rv } : FM.typed.orig;
+      queueWoSave(1500);
+    };
+    $("fmW").addEventListener("input", keepTyped); $("fmR").addEventListener("input", keepTyped);
     $("fmR").addEventListener("keydown", e => { if (e.key === "Enter"){ e.preventDefault(); logSet(p, ei, si); } });
-    el.querySelectorAll("[data-dot]").forEach(b => b.onclick = () => { FM.ei = ei; FM.si = +b.dataset.dot; renderWorkout(); });
-    $("fmAdd").onclick = () => { dr.sets.push({ w: "", r: "" }); FM.ei = ei; FM.si = dr.sets.length - 1; woDirty = true; renderWorkout(); };
-    $("fmSkip").onclick = () => { FM.skip.add(ei); FM.ei = null; FM.si = null; toast(`Skipped ${ex.name}.`); renderWorkout(); };
+    el.querySelectorAll("[data-dot]").forEach(b => b.onclick = () => { FM.ei = ei; FM.si = +b.dataset.dot; FM.edit = true; FM.typed = null; renderWorkout(); });
+    $("fmAdd").onclick = () => { woDirty = true; touch(p.id, ei); const sets = ensureDraft(p)[ei].sets; sets.push({ w: "", r: "" }); FM.ei = ei; FM.si = sets.length - 1; FM.edit = false; FM.typed = null; renderWorkout(); };   // touched, so the new set survives a redraw
+    $("fmSkip").onclick = () => { FM.skip.add(ei); FM.after = ei; FM.ei = null; FM.si = null; FM.edit = false; FM.typed = null; toast(`Skipped ${ex.name}.`); renderWorkout(); };
     $("fmSwap").onclick = () => { openCoach(); $("qlText").value = `Can you give me a swap for ${ex.name} today?`; };
     el.querySelectorAll("[data-eff]").forEach(b => b.onclick = () => { setEffort(p, FM.effAsk, +b.dataset.eff); FM.effAsk = null; renderWorkout(); });
     if ($("rtSkip")){ $("rtSkip").onclick = stopRest; $("rtMinus").onclick = () => nudgeRest(-10); $("rtPlus").onclick = () => nudgeRest(10); }
     const tipLine = $("tipLine"); if (tipLine) tipLine.remove();
   }
   function logSet(p, ei, si){
-    const d = ensureDraft(p), ex = p.exercises[ei], w = $("fmW").value, r = $("fmR").value;
+    const d = ensureDraft(p), ex = p.exercises[ei], pf = FM.pf || {}, w = $("fmW").value || String(pf.w ?? ""), r = $("fmR").value || String(pf.r ?? "");
     if (!(+r > 0)){ $("fmR").focus(); toast("Enter the reps first."); return; }
+    FM.typed = null; FM.edit = false;
     d[ei].sets[si] = { w: w === "" ? 0 : +w, r: +r }; woDirty = true; touch(p.id, ei); queueWoSave(0);
     const pr = prSet(p, ei), key = `${S.date}|${p.id}`;
     if (pr === si && !celebrated.has(key)){ celebrated.add(key); toast(`New best: ${ex.name} ${fmtSet(d[ei].sets[si], ex.name)}`, true); }   // one celebration per workout
     const liftDone = exDone(p, ei) && !d[ei].effort;
-    FM.si = null; FM.ei = null;
+    FM.si = null; FM.after = ei; FM.ei = exDone(p, ei) ? null : ei;   // stay on this lift until its sets are in
     if (liftDone) FM.effAsk = ei;
-    const nx = fmNext(p);
+    const nx = FM.ei != null ? { ei, si } : fmNext(p, ei);
     if (nx || liftDone) startTimer(restFor(ex), ex.name); else stopRest();
     renderWorkout();
   }
@@ -1520,7 +1553,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     return nextDayId();
   }
   const selId = curDayId;   // the coach's context and the kit's hooks still ask for selId()
-  function pickDay(id){ if (!plan().some(p => p.id === id)) return; flushWoSave(); S.selDay = id; planPicked = true; woDirty = false; FM.ei = null; FM.si = null; FM.skip = new Set(); renderWorkout(); }
+  function pickDay(id){ if (!plan().some(p => p.id === id)) return; flushWoSave(); S.selDay = id; planPicked = true; woDirty = false; FM.ei = null; FM.si = null; FM.after = null; FM.typed = null; FM.edit = false; FM.skip = new Set(); renderWorkout(); }
   const setsIn = d => (d ? d.sets : []).filter(x => x.r !== "" && x.r != null && +x.r > 0);
   function exDone(p, ei){ const d = S.draft[p.id] && S.draft[p.id][ei]; return !!d && setsIn(d).length >= Math.max(1, +p.exercises[ei].sets || d.sets.length); }
   const touch = (pid, ei) => { (S.touched[pid] = S.touched[pid] || new Set()).add(ei); };
@@ -1626,7 +1659,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     const wire = body => {
       body.querySelectorAll("[data-len]").forEach(b => b.onclick = () => { memLen = +b.dataset.len; try { localStorage.setItem("tl-len", b.dataset.len); } catch(e){} refreshSheet(); renderWorkout(); });
       body.querySelectorAll(".liftrow").forEach(b => {
-        b.onclick = e => { if (liftDrag && liftDrag.moved) return; if (e.target.closest("[data-grip]")) return; const ei = +b.dataset.ei; FM.ei = ei; FM.si = null; FM.skip.delete(ei); closeSheet(); renderWorkout(); };
+        b.onclick = e => { if (liftDrag && liftDrag.moved) return; if (e.target.closest("[data-grip]")) return; const ei = +b.dataset.ei; FM.ei = ei; FM.si = null; FM.edit = false; FM.typed = null; FM.skip.delete(ei); closeSheet(); renderWorkout(); };
       });
       body.querySelectorAll("[data-grip]").forEach(g => g.onpointerdown = e => { e.preventDefault(); const row = g.closest(".liftrow"); liftDrag = { k: +row.dataset.k, id: e.pointerId, moved: false, row }; try { g.setPointerCapture(e.pointerId); } catch(err){} });
       if ($("orderSave")) $("orderSave").onclick = async () => { const names = exOrder(p).map(i => p.exercises[i].name); try { await saveSettings({ liftOrder: Object.assign({}, sett().liftOrder, { [p.id]: names }) }); toast("Order saved for this day."); } catch(e){ toast("Open this page in Claude to save."); } };
@@ -1732,7 +1765,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   // ---------- rest clock: starts after Log set, keeps running across tabs, buzzes at zero ----------
   // Time comes from the lift's own "rest" field or COACH_RULES.rest (150 / 105 / 75). The workout screen shows it inline (#rtClock);
   // every other tab shows the small pill (#restPill). RT.onDone is set by the workout screen so it can redraw when the clock hits zero.
-  const RT = { end: 0, total: 0, int: null, label: "", running: false, zeroAt: 0, onTick: null, onDone: () => { if (S.tab === "workout") renderWorkout(); } };
+  const RT = { end: 0, total: 0, int: null, label: "", running: false, zeroAt: 0, onTick: null, onDone: () => { if (S.tab === "workout") quietWorkout(); } };
   const fmtT = s => `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`;
   const restLeft = () => RT.running ? Math.max(0, Math.round((RT.end - Date.now()) / 1000)) : 0;
   let dingUrl = null, dingEl = null, tCtx = null;
@@ -1768,7 +1801,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     const c = $("rtClock"); if (c){ c.textContent = txt; c.classList.toggle("zero", zero); }
     const p = $("rpClock"); if (p){ p.textContent = txt; p.classList.toggle("zero", zero); }
     $("rpName").textContent = RT.label ? `after ${RT.label}` : "Rest";
-    $("restPill").classList.toggle("on", RT.running);
+    $("restPill").classList.toggle("on", RT.running); document.body.classList.toggle("resting", RT.running);
     if (RT.onTick) RT.onTick(left);
   }
   function tick(){
@@ -2330,7 +2363,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     $("hStreak").innerHTML = bits.length ? `<span>Streaks</span><span>${esc(bits.join(" · "))}</span>` : `<span>Streaks</span><span>Log a workout and your food to start one</span>`;
   }
   // one-time "What's new" card after an update, closed with a tap and remembered in settings.seenVersion
-  const WHATS_NEW = ["Home: one card, today's workout, Start.", "Workout: one lift at a time, with a rest clock.", "Food: one box, one camera, chips you use.", "Progress: three numbers, the trend, your lifts. The rest is behind the gear.", "Week: tap a day, tap where it goes, or hold and drag. This week only, with Undo."];
+  const WHATS_NEW = ["The menu is now Home, Food, Workout, Progress.", "The keyboard stays open while you type a set.", "A line at the top tells you when you're on a day other than today, with a way back.", "The two Skip buttons now say Skip rest and Skip lift.", "After your first set, the grey numbers show the set you just did.", "The Log set button stays in place when the rest clock starts."];
   function renderWhatsNew(){
     const el = $("whatsNew"), show = !!(S.db && S.config && plan().length && sett().seenVersion !== PAGE_VERSION && !S.first && !S.wnClosed);
     el.hidden = !show; if (!show) return;
@@ -2866,7 +2899,7 @@ Context (JSON): ${JSON.stringify(ctx)}`;
     pendingLog = { R: { meals, weight: null, workout: null, newFoods: [], empty: false }, pick: true, sel: meals.map(() => false) };
     renderLogPrev(); $("logPrev").scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
-  function renderAll(){ renderTop(); renderFood(); renderWorkout(); renderQuick(); renderStats(); }
+  function renderAll(){ renderTop(); renderFood(); quietWorkout(); renderQuick(); renderStats(); }
   renderAll();
   // ---------- data layer: the artifact database ----------
   // Every read and save goes through DB, so one place knows how the database works. Paths are "collection/doc"
@@ -2903,13 +2936,13 @@ Context (JSON): ${JSON.stringify(ctx)}`;
     const fail = () => {};
     DB.watchCollection("days", docs => { S.days = {}; docs.forEach(d => S.days[d.id] = d.data); renderFood(); renderQuick(); renderStats(); }, fail);
     // a workout with no sets and no note (every set typed then cleared) doesn't count as done; a checked-off rest day does
-    DB.watchCollection("workouts", docs => { S.workouts = docs.map(d => ({id:d.id, ...d.data})).filter(w => w.rest || (w.exercises||[]).some(x => (x.sets||[]).length) || (w.note||"").trim()); renderWorkout(); renderStats(); }, fail);
+    DB.watchCollection("workouts", docs => { S.workouts = docs.map(d => ({id:d.id, ...d.data})).filter(w => w.rest || (w.exercises||[]).some(x => (x.sets||[]).length) || (w.note||"").trim()); quietWorkout(); renderStats(); }, fail);
     DB.watchCollection("measurements", docs => { S.meas = docs.map(d => d.data); renderStats(); }, fail);
     DB.watchDoc("config/main", s => { S.config = s.exists ? s.data : null; S.first = !(S.config && plan().length); applyAccent(); if (S.tab === "dash") showTab("dash"); renderAll(); }, fail);
     DB.watchCollection("photos", docs => { S.photos = {}; docs.forEach(d => S.photos[d.id] = d.data); renderStats(); }, fail);
     (window.claude.use("assets") || Promise.resolve(null)).then(a => { S.assets = a; if (S.tab==="progress") renderProgress(); }).catch(()=>{});
     DB.watchDoc("config/weightHistory", s => { S.history = s.exists ? (s.data.weeks || []) : []; S.historyCheckins = s.exists ? (s.data.checkins || []) : []; S.historyLabel = s.exists ? (s.data.label || "") : ""; renderStats(); }, fail);
-    DB.watchCollection("schedule", docs => { S.sched = {}; docs.forEach(d => S.sched[d.id] = d.data); renderWorkout(); renderStats(); }, fail);
+    DB.watchCollection("schedule", docs => { S.sched = {}; docs.forEach(d => S.sched[d.id] = d.data); quietWorkout(); renderStats(); }, fail);
     DB.watchCollection("weekly", docs => { S.weekly = {}; docs.forEach(d => S.weekly[d.id] = Object.assign({date:d.id}, d.data)); renderStats(); }, fail);
     DB.watchCollection("chat", docs => { S.chat = {}; docs.forEach(d => S.chat[d.id] = d.data); if (!chatBusy) renderChat(); }, fail);
     DB.watchDoc("config/foods", s => { S.foods = s.exists ? (s.data.items || []) : []; renderQuick(); }, fail);
@@ -2919,7 +2952,7 @@ Context (JSON): ${JSON.stringify(ctx)}`;
       const lim = await (sm.limits ? sm.limits().catch(() => null) : null);
       if (lim && lim.images){ S.images = true; $("qlPhotoBtn").hidden = false; }
     }).catch(()=>{});
-    DB.watchDoc("config/baseline", s => { S.baseline = s.exists ? s.data : null; renderWorkout(); renderStats(); }, fail);
+    DB.watchDoc("config/baseline", s => { S.baseline = s.exists ? s.data : null; quietWorkout(); renderStats(); }, fail);
   })();
 })();
 </script>
