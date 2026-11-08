@@ -1,5 +1,5 @@
 <title>My Training Log</title>
-<meta name="byoc-version" content="3.3.3">
+<meta name="byoc-version" content="3.4.0">
 <meta name="theme-color" content="#ECF0F5">
 <style>
 /* ===== Training Log 3.12: the look from the Oct 26 mockup =====
@@ -166,7 +166,8 @@ select{appearance:none;-webkit-appearance:none;padding-right:30px;background-ima
 .focus > *{position:relative}
 .focus .hdr{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;color:var(--navy-muted)}
 .focus .hdr button{color:var(--on-navy);font-weight:600;background:rgba(255,255,255,.1);padding:7px 12px;border-radius:999px;font-size:13px;min-width:0;max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.focus .hdr .daybtn{display:inline-flex;align-items:center;gap:4px}
+.focus .hdr .daybtn{display:inline-flex;align-items:center;gap:5px;min-width:0}
+.focus .hdr .num{white-space:nowrap}
 .focus .hdr .daybtn .ic{width:14px;height:14px;flex:none}
 .focus .mid{flex:1;display:flex;flex-direction:column;justify-content:center;gap:10px;padding-block:18px 8px}
 .focus h2{font-size:28px;color:var(--on-navy)}
@@ -220,6 +221,7 @@ select{appearance:none;-webkit-appearance:none;padding-right:30px;background-ima
 .finbest{display:flex;flex-direction:column;gap:6px;width:100%;text-align:left}
 .finbest div{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:rgba(214,158,0,.16);font-size:14px}
 .finnext{font-size:14px;color:var(--navy-muted)}
+.warmup{align-self:flex-start;font-size:13px;color:var(--navy-muted);padding:0 2px}
 .restpill{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:29;display:none;align-items:center;gap:10px;padding:8px 10px 8px 14px;border-radius:999px;background:var(--navy);color:var(--on-navy);box-shadow:0 10px 24px -10px rgba(10,20,50,.6);font-weight:600;font-size:14px}
 .restpill.on{display:flex}
 body.resting .wrap{padding-bottom:calc(164px + env(safe-area-inset-bottom,0px))}
@@ -289,7 +291,7 @@ button.rowi:active{background:var(--chip)}
 .wkgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
 .wkday{display:grid;gap:3px;justify-items:center;padding:8px 2px;border-radius:12px;background:var(--chip);min-width:0;text-align:center}
 .wkday b{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
-.wkday span{font-size:11px;line-height:1.2;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.wkday span{font-size:11px;line-height:1.2;color:var(--ink-2);overflow:hidden;max-width:100%;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow-wrap:anywhere;min-height:2.4em}
 .wkday i{font-style:normal;font-size:11px;color:var(--good-ink);height:13px;display:grid;place-items:center}
 .wkday i .ic{width:12px;height:12px;stroke-width:2.6}
 .wkday.now{box-shadow:inset 0 0 0 1.5px var(--accent)}
@@ -325,6 +327,12 @@ button.rowi:active{background:var(--chip)}
 .empty{color:var(--muted);font-size:15px;padding:10px 0}
 .logprev{display:flex;flex-direction:column;gap:9px;padding:12px;border-radius:16px;background:var(--card);box-shadow:var(--shadow)}
 .lp-h{display:flex;flex-direction:column;gap:2px}
+.usualcard{display:flex;flex-direction:column;gap:6px;padding:12px 12px 12px 14px;border-radius:16px;background:var(--card);box-shadow:inset 3px 0 0 var(--accent),var(--shadow)}
+.uc-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:-6px -6px -4px 0}
+.uc-h b{font:700 15px var(--body)}
+.uc-foods{font:500 14px var(--body);color:var(--ink-2)}
+.usualcard .row.between{flex-wrap:wrap;gap:8px}
+.usualcard .primary,.usualcard .ghost{padding:8px 14px}
 .lp-h .small{font-size:13px}
 .pickrow{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;align-items:center;font:600 14px var(--body);padding:4px 0;cursor:pointer}
 .pickrow input{width:20px;height:20px;padding:0;accent-color:var(--accent)}
@@ -351,6 +359,11 @@ button.rowi:active{background:var(--chip)}
 .meamt{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .meamt button{border-radius:999px;padding:7px 12px;font-size:13px}
 .meamt button.on{background:var(--accent);color:var(--accent-ink)}
+.amts{display:inline-flex;gap:4px;flex-wrap:wrap;vertical-align:middle}
+.amts button{border-radius:999px;padding:5px 10px;font:600 13px var(--body);background:var(--chip);color:var(--ink-2)}
+.amts button.on{background:var(--accent);color:var(--accent-ink)}
+.status .amts{margin:0 6px}
+.qrow .amts{display:flex;margin-top:6px}
 .meact{display:flex;gap:8px;align-items:center}
 .meact .del{color:var(--bad);background:transparent;padding:8px 4px;margin-right:auto}
 .mshow{align-self:flex-start;color:var(--accent);background:transparent;padding:10px 0 4px}
@@ -598,15 +611,16 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     </div>
     <div class="status" id="logStatus" role="status"></div>
     <div class="logprev" id="logPrev" hidden></div>
+    <div class="usualcard" id="usualCard" hidden></div>
     <div class="chips" id="favs"></div>
     <div class="card">
       <div class="cardhead"><span class="eyebrow">Meals</span><span class="small muted" id="mealCount"></span></div>
       <div class="macline" id="cfLine" hidden></div>
       <div id="mealList"></div>
       <div class="status" id="foodStatus" role="status"></div>
-      <details class="more"><summary>+ Exact numbers</summary>
+      <details class="more"><summary>+ Quick add or exact numbers</summary>
         <form class="form" id="mealForm" autocomplete="off">
-          <input id="mealName" class="span2" placeholder="Food (e.g. 3 eggs + rice)" required>
+          <input id="mealName" class="span2" placeholder="Food, or leave blank (e.g. Chipotle bowl)">
           <input id="mealCal" type="number" inputmode="numeric" min="0" placeholder="kcal" required>
           <input id="mealPro" type="number" inputmode="decimal" min="0" step="0.5" placeholder="protein g" required>
           <input id="mealCarb" type="number" inputmode="decimal" min="0" step="0.5" placeholder="carbs g">
@@ -714,7 +728,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   // ---------- core: helpers, shared state, settings, profile ----------
   // Every module below shares this one scope (build.py pastes them in order inside one function).
   // Nothing personal lives in the code: the name, phase, plan, targets, accent color and rules all come from config/main in the database.
-  const PAGE_VERSION = "3.12.6";
+  const PAGE_VERSION = "3.12.7";
   const $ = id => document.getElementById(id);
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const iso = d => { const z = new Date(d.getTime() - d.getTimezoneOffset()*60000); return z.toISOString().slice(0,10); };
@@ -791,8 +805,23 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
       gainPerWeek: [0.25, 0.5],   // lb a week on a bulk when settings.weeklyRate is not set (a cut uses 0.5% to 1% of body weight, holding uses -0.25 to +0.25)
       earlyDays: 14,              // the first two weeks after the phase starts are water weight: no verdict yet
       slack: 0.05                 // a pace this close to the band still counts as on track
+    },
+    food: {   // a past day logged under 60% of the calorie minimum is probably missing food: weekly averages leave it out and say so
+      lightDay: 0.6
+    },
+    warmup: {   // a grey line before set 1 of a loaded lift (barbell, Smith, T-bar, landmine) at 50 lb or more. A guide only: warm-ups are never logged.
+      lifts: /barbell|smith|t-bar|landmine/i, minWork: 50, barLb: 45, firstReps: 10,
+      steps: [[0.5, 5], [0.75, 3]]   // about half the working weight for 5, then about three quarters for 3, rounded to 5 lb
     }
   };
+  function warmupSets(name, work){   // [{w, r, label}] or [] when no warm-up is needed
+    const W = COACH_RULES.warmup, wk = +work || 0;
+    if (!W.lifts.test(name || "") || isBW(name) || wk < W.minWork) return [];
+    const bar = /barbell/i.test(name), start = bar ? W.barLb : 0, out = [{ w: start, r: W.firstReps, label: bar ? "bar" : "empty" }];
+    W.steps.forEach(([pct, reps]) => { const w = Math.round(wk * pct / 5) * 5; if (w > out[out.length - 1].w + 5 && w < wk - 5) out.push({ w, r: reps, label: String(w) }); });
+    return out;
+  }
+  const lightDay = (cal, t) => cal > 0 && cal < t.calMin * COACH_RULES.food.lightDay;
   const EFFORT_L = COACH_RULES.effort.labels, EFFORT_S = COACH_RULES.effort.hints;
   // ---------- tabs, the date at the top, the calendar ----------
   const TAB_NAMES = {dash:"Home", workout:"Workout", today:"Food", progress:"Progress"};
@@ -862,6 +891,15 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   $("dateNote").onclick = () => setDate(today);
   // ---------- food: totals, the two bars, meals grouped by meal, the weigh-in write ----------
   function dayDoc(d){ return S.days[d] || {date:d, meals:[]}; }
+  // amounts: one set of buttons everywhere (chip status line, Save card, meal editor). scaleLine scales from the food as first logged.
+  const AMTS = [[0.5, "½×"], [1, "1×"], [1.5, "1½×"], [2, "2×"]];
+  const amtLabel = k => (AMTS.find(a => a[0] === k) || [k, k + "×"])[1];
+  function scaleLine(base, k){
+    const o = Object.assign({}, base, { name: base.name + (k === 1 ? "" : ` (${amtLabel(k)})`), cal: Math.round((+base.cal || 0) * k) });
+    ["protein", "carbs", "fat", "addedSugar"].forEach(f => { if (base[f] != null) o[f] = Math.round((+base[f] || 0) * k * 2) / 2; });
+    return o;
+  }
+  const amtBtns = (k, attr) => `<span class="amts">${AMTS.map(([v, l]) => `<button type="button" ${attr}="${v}"${v === k ? ' class="on"' : ""}>${l}</button>`).join("")}</span>`;
   function totals(d){
     const m = dayDoc(d).meals || [];
     return m.reduce((a,x)=>({cal:a.cal+(+x.cal||0), pro:a.pro+(+x.protein||0), carb:a.carb+(+x.carbs||0), fat:a.fat+(+x.fat||0), sug:a.sug+(+x.addedSugar||0)}),{cal:0,pro:0,carb:0,fat:0,sug:0});
@@ -920,7 +958,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     const f = (k, label, step) => `<label>${label}<input type="number" inputmode="decimal" step="${step}" min="0" data-f="${k}" value="${m[k] != null ? esc(m[k]) : ""}"></label>`, cur = mealOf(m) || "";
     return `<div class="medit" id="mEdit">
       <label>Food<input type="text" data-f="name" value="${esc(m.name)}"></label>
-      <div class="meamt"><span class="small muted">Amount</span>${[[0.5,"½×"],[1,"1×"],[1.5,"1½×"],[2,"2×"]].map(([k,l]) => `<button type="button" data-k="${k}"${k === 1 ? ' class="on"' : ""}>${l}</button>`).join("")}</div>
+      <div class="meamt"><span class="small muted">Amount</span>${AMTS.map(([k,l]) => `<button type="button" data-k="${k}"${k === 1 ? ' class="on"' : ""}>${l}</button>`).join("")}</div>
       <div class="mefields">${f("cal","kcal",1)}${f("protein","Protein",0.5)}${f("carbs","Carbs",0.5)}${f("fat","Fat",0.5)}${sett().sugar ? f("addedSugar","Sugar",0.5) : ""}</div>
       <label>Meal<select data-f="meal"><option value="">Not set</option>${MEALS.map(([v,l]) => `<option value="${v}"${cur === v ? " selected" : ""}>${l === "Snacks" ? "Snack" : l}</option>`).join("")}</select></label>
       <div class="meact"><button type="button" class="del" id="mDel">Delete</button><button type="button" class="ghost" id="mCancel">Cancel</button><button type="button" class="primary" id="mSave">Save</button></div>
@@ -983,17 +1021,30 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     try { await DB.set("days/"+d, body); if (statusEl) statusEl.textContent = "Saved."; return true; }
     catch(e){ const msg = e && e.code === "invalid_argument" ? "You can view this log but not edit it." : "Couldn't save. Try again in a moment."; if (statusEl) statusEl.textContent = msg; else toast(msg); return false; }
   }
+  // Quick add: calories and protein are enough (no name = "Quick add"). If carbs and fat are in and the calories are far below what
+  // the macros add up to (protein and carbs 4 kcal a gram, fat 9), offer the macro total once before saving.
+  const macroCal = (p, c, f) => Math.round(p * 4 + c * 4 + f * 9);
+  let qaChecked = null;
   $("mealForm").addEventListener("submit", async e => {
     e.preventDefault();
-    const day = JSON.parse(JSON.stringify(dayDoc(S.date)));
+    const st = $("foodStatus"), day = JSON.parse(JSON.stringify(dayDoc(S.date)));
     day.meals = day.meals || []; day.date = S.date;
-    const meal = { name:$("mealName").value.trim(), cal:+$("mealCal").value, protein:+$("mealPro").value,
+    const meal = { name:$("mealName").value.trim().slice(0, 120) || "Quick add", cal:Math.round(+$("mealCal").value), protein:r05(+$("mealPro").value),
       time:new Date().toLocaleTimeString([], {hour:"numeric", minute:"2-digit"}) };
     if (S.date === today) meal.meal = nowMeal();
     const c = parseFloat($("mealCarb").value), f = parseFloat($("mealFat").value), sg = parseFloat($("mealSug").value);
     if (!isNaN(c)) meal.carbs = c; if (!isNaN(f)) meal.fat = f; if (!isNaN(sg)) meal.addedSugar = sg;
+    const mc = !isNaN(c) && !isNaN(f) ? macroCal(meal.protein, c, f) : 0, sig = [meal.cal, meal.protein, c, f].join("|");
+    if (mc && meal.cal < mc * 0.8 && qaChecked !== sig){
+      qaChecked = sig;
+      st.innerHTML = `Those macros add up to about ${mc.toLocaleString()} kcal. <button type="button" class="ghost" id="qaUse" style="color:var(--accent);font-weight:700">Use ${mc.toLocaleString()}</button><button type="button" class="ghost" id="qaKeep">Keep ${meal.cal.toLocaleString()}</button>`;
+      $("qaUse").onclick = () => { $("mealCal").value = mc; $("mealForm").requestSubmit(); };
+      $("qaKeep").onclick = () => $("mealForm").requestSubmit();
+      return;
+    }
+    qaChecked = null;
     day.meals.push(meal);
-    if (await writeDay(S.date, day, $("foodStatus"))) { ["mealName","mealCal","mealPro","mealCarb","mealFat","mealSug"].forEach(id => $(id).value=""); }
+    if (await writeDay(S.date, day, st)) { st.textContent = `Saved ${meal.name}.`; ["mealName","mealCal","mealPro","mealCarb","mealFat","mealSug"].forEach(id => $(id).value=""); }
   });
   let undoTimer = null;
   async function removeMeal(i){
@@ -1299,9 +1350,11 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   }
   async function saveWeek(sun, days, extra){
     if (!S.db){ toast("Open this page in Claude to save."); return; }
-    const prev = S.sched[sun] || {};
+    const had = sun in S.sched, prev = S.sched[sun] || {};
     const body = Object.assign({ date: sun, days: days.map(x => isRestId(x) ? "rest" : x) }, prev.skipped ? { skipped: prev.skipped } : {}, extra || {});
-    try { await DB.set("schedule/" + sun, body); } catch(e){ toast("Couldn't save. Try again in a moment."); }
+    S.sched[sun] = body; quietWorkout(); refreshSheet();   // show the move right away; the save catches up in the background
+    try { await DB.set("schedule/" + sun, body); }
+    catch(e){ if (had) S.sched[sun] = prev; else delete S.sched[sun]; quietWorkout(); refreshSheet(); toast("Couldn't save the week. Try again in a moment."); }
   }
   function swapDays(sun, a, b){   // future days swap; a past day's workout moves forward and the later workouts slide into the next rest day
     if (a === b) return;
@@ -1431,7 +1484,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     if (S.tab !== "workout"){ paintRest(); return; }
     const p = plan().find(x => x.id === curDayId());
     if (!p){ el.innerHTML = `<div class="mid"><h2>No plan yet</h2><div class="meta">Your plan shows here once your coach sets it up.</div></div>`; return; }
-    const dayBtn = `<button type="button" class="daybtn" id="fmDay">${esc(p.name)}${ic("down")}</button>`;
+    const dayBtn = `<button type="button" class="daybtn" id="fmDay" aria-label="${esc(p.name)}. Open this week to swap days">${ic("calendar")}${esc(shortName(p.id))}</button>`;   // the calendar says it opens the week; "Chest A" (not "Day 1 Chest A") leaves room on small phones
     if (isRest(p)){
       const done = restDone(S.date), n = p.exercises.length, cu = catchUp();
       el.innerHTML = `<div class="hdr">${dayBtn}<span>${S.date === today ? "Today" : esc(fmtShort(S.date))}</span></div>
@@ -1451,15 +1504,17 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   function renderLifting(p, force){
     const el = $("focusCard"), d = ensureDraft(p), saved = S.workouts.find(w => w.id === woId(S.date, p.id)), order = keptOrder(p);
     const at = fmAt(p), prog = saved ? woProgress(saved) : null, allLogged = !at, finished = !!(saved && saved.done) || (allLogged && order.every(ei => setsIn(d[ei]).length));
-    const dayBtn = `<button type="button" class="daybtn" id="fmDay">${esc(p.name)}${ic("down")}</button>`;
+    const dayBtn = `<button type="button" class="daybtn" id="fmDay" aria-label="${esc(p.name)}. Open this week to swap days">${ic("calendar")}${esc(shortName(p.id))}</button>`;   // the calendar says it opens the week; "Chest A" (not "Day 1 Chest A") leaves room on small phones
+    const liftsLbl = S.date === today ? "Today's lifts" : `${WDAY[parseD(S.date).getDay()]}'s lifts`;   // opens the whole workout: every lift, time options, order
     const noteOn = !!((S.noteText || {})[p.id] || (saved && saved.note));
     const foot = (ex, ei) => `<div class="foot"><a href="${ytUrl(ex.name)}" target="_blank" rel="noopener">${ic("play")}Form video</a><button type="button" id="fmSwap">${ic("swap")}Swap</button><button type="button" id="fmSkip">${ic("skip")}Skip lift</button><button type="button" id="fmNote">${ic("note")}${noteOn ? "Note ✓" : "Note"}</button></div>`;
     if ((finished || allLogged) && !force && !(FM.ei != null && FM.si != null)){
       const w = saved || { exercises: [], date: S.date }, st = woStats(w), bi = blockInfo(S.date, p, []);
       const left = order.filter(ei => !setsIn(d[ei]).length).length;
-      el.innerHTML = `<div class="hdr">${dayBtn}<button type="button" id="fmAll">All lifts</button></div>
+      el.innerHTML = `<div class="hdr">${dayBtn}<button type="button" id="fmAll">${liftsLbl}</button></div>
         <div class="mid"><div class="finish"><div class="bigcheck">${CHECK}</div><h2>${finished ? "Workout done" : "All lifts logged"}</h2>
           <div class="finstats"><div><b>${st.pr ? `${st.pr.n}/${st.pr.total}` : st.sets}</b><span>${st.pr ? "lifts" : "sets"}</span></div><div><b>${st.vol ? Math.round(st.vol).toLocaleString() : "–"}</b><span>lb moved</span></div><div><b>${st.mins || "–"}</b><span>minutes</span></div></div>
+          ${st.vol ? `<div class="finnext">${esc([heavyLine(st.vol), vsLastLine(st)].filter(Boolean).join(" "))}</div>` : ""}
           ${st.bests.length ? `<div class="finbest">${st.bests.map(b => `<div>${TROPHY}<span>New best · ${esc(b)}</span></div>`).join("")}</div>` : `<div class="finnext">No new bests today. Showing up is what moves the numbers.</div>`}
           ${st.next ? `<div class="finnext">Next: ${esc(st.next.q.name)}, ${WDAYL[parseD(st.next.d).getDay()]}.</div>` : ""}
           ${finished ? `<button type="button" class="btn" id="fmHome">Nice</button>` : `<button type="button" class="btn" id="fmFinish">Finish workout${left ? ` · ${left} skipped` : ""}</button>`}
@@ -1478,14 +1533,16 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     const wPh = hint ? fmtW(hint.w) : "lb", rPh = hint ? hint.r : "reps";
     const pos = order.indexOf(ei), total = order.length, pr = prSet(p, ei);
     const dots = dr.sets.map((s, i) => `<button type="button" data-dot="${i}" class="${i === si ? "now" : +s.r > 0 ? (i === pr ? "best" : "done") : ""}" aria-label="Set ${i + 1}${+s.r > 0 ? `, ${fmtSet(s, ex.name)}` : ""}">${i === pr ? ic("trophy") : ""}</button>`).join("") + `<button type="button" class="dadd" id="fmAdd">+ set</button>`;
+    const wu = si === 0 && !edit && !dr.sets.some(s => +s.r > 0) && hint ? warmupSets(ex.name, hint.w) : [];   // before set 1 only, never logged
+    const wuLine = wu.length ? `<div class="warmup">Warm-up first: ${wu.map(s => `${esc(s.label)} × ${s.r}`).join(" · ")}</div>` : "";
     const lastSet = si >= dr.sets.length - 1, lastLift = pos >= total - 1;
     const logLabel = lastSet ? (lastLift ? "Log set and finish" : "Log set and go to next lift") : "Log set";
     const eff = FM.effAsk != null && d[FM.effAsk] ? `<div class="effort"><span class="q">How hard was ${esc(p.exercises[FM.effAsk].name)}?</span><div class="effbtns">${[1, 2, 3, 4].map(v => `<button type="button" data-eff="${v}" aria-pressed="${+d[FM.effAsk].effort === v}">${EFFORT_L[v]}<small>${EFFORT_S[v]}</small></button>`).join("")}</div></div>` : "";
     const rest = RT.running ? `<div class="restrow"><button type="button" class="radj" id="rtMinus" aria-label="10 seconds less">${ic("minus")}</button><div class="rmid"><span class="rlbl">Rest</span><span class="t" id="rtClock">${fmtT(restLeft())}</span></div><button type="button" class="radj" id="rtPlus" aria-label="10 seconds more">${ic("plus")}</button><button type="button" id="rtSkip">Skip rest</button></div>` : "";
-    el.innerHTML = `<div class="hdr">${dayBtn}<span class="num">lift ${pos + 1} of ${total}</span><button type="button" id="fmAll">All lifts</button></div>
+    el.innerHTML = `<div class="hdr">${dayBtn}<span class="num">lift ${pos + 1} of ${total}</span><button type="button" id="fmAll">${liftsLbl}</button></div>
       <div class="mid midtop">
         <div><h2>${esc(ex.name)}</h2><div class="meta">Set ${si + 1} of ${dr.sets.length} · ${edit ? "editing" : `last time ${esc(lastText(last, ex.name))}`}${last && last.from && !last.date ? ` (${esc(last.from)})` : ""}</div></div>
-        ${cue ? cueHtml(cue) : `<div class="cue hold">${ic("target")}<span>${esc(ex.sets)} × ${esc(ex.reps)}</span></div>`}
+        ${cue ? cueHtml(cue) : `<div class="cue hold">${ic("target")}<span>${esc(ex.sets)} × ${esc(ex.reps)}</span></div>`}${wuLine}
         <div class="nums"><label>lb<input id="fmW" type="number" inputmode="decimal" step="0.5" value="${esc(w0)}" placeholder="${esc(wPh)}"></label><label>reps<input id="fmR" type="number" inputmode="numeric" value="${esc(r0)}" placeholder="${esc(rPh)}"></label></div>
         <div class="dots">${dots}</div>
         <button type="button" class="btn" id="fmLog">${logLabel}</button>
@@ -1571,7 +1628,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     }
     return S.draft[p.id];
   }
-  // the order the lifts run in: a one-off order picked in the All lifts sheet (S.order), else settings.liftOrder[dayId], else the plan's order
+  // the order the lifts run in: a one-off order picked in the Today's lifts sheet (S.order), else settings.liftOrder[dayId], else the plan's order
   function exOrder(p){
     const names = (S.order && S.order[p.id]) || ((sett().liftOrder || {})[p.id]);
     const idx = p.exercises.map((_, i) => i);
@@ -1626,7 +1683,26 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     const bests = (w.exercises || []).map(x => { const top = topSet(x.name, x.sets), prev = bestBefore(x.name, w.date);
       if (!top || !prev || !(setScore(x.name, top) > setScore(x.name, prev) + 1e-9)) return null;
       return `${x.name}: ${fmtSet(top, x.name)}`; }).filter(Boolean);
-    return { sets: sets.length, vol, mins: mins >= 5 && mins <= 240 ? mins : 0, pr, bests, next: nextLiftAfter(w.date) };
+    const dayId = w.dayId || String(w.id || "").split("_")[1];   // last time on this same plan day, for "vs last time"
+    const names = new Set((w.exercises || []).map(x => x.name)), same = x => { const n = (x.exercises || []).filter(e => names.has(e.name)).length; return names.size && n >= names.size / 2; };   // at least half the same lifts, so a plan change doesn't compare apples to oranges
+    const prev0 = dayId ? S.workouts.filter(x => x.date < w.date && (x.dayId || String(x.id || "").split("_")[1]) === dayId).sort((a, b) => a.date < b.date ? 1 : -1)[0] : null;
+    const prev = prev0 && same(prev0) ? prev0 : null;
+    const prevVol = prev ? (prev.exercises || []).flatMap(x => x.sets || []).reduce((a, x) => a + (+x.w || 0) * (+x.r || 0), 0) : 0;
+    return { sets: sets.length, vol, mins: mins >= 5 && mins <= 240 ? mins : 0, pr, bests, next: nextLiftAfter(w.date), prevVol, prevDate: prev ? prev.date : null };
+  }
+  // the fun line on the finish card: the total weight moved as everyday things. Our own list, rough weights in lb.
+  const HEAVY_THINGS = [["grand pianos", 1000], ["small cars", 3000], ["pickup trucks", 5000], ["elephants", 12000], ["school buses", 25000]];
+  function heavyLine(vol){
+    let pick = null; HEAVY_THINGS.forEach(t => { if (vol >= t[1]) pick = t; });
+    if (!pick) return "";
+    const n = Math.round(vol / pick[1] * 2) / 2, whole = Math.floor(n), half = n - whole ? "½" : "";
+    const one = { "grand pianos": "grand piano", "small cars": "small car", "pickup trucks": "pickup truck", "elephants": "elephant", "school buses": "school bus" }[pick[0]];
+    return `That's about ${whole === 1 && !half ? `${/^[aeiou]/.test(one) ? "an" : "a"} ${one}` : `${whole}${half} ${pick[0]}`}.`;
+  }
+  function vsLastLine(st){
+    if (!st.prevVol || !st.vol) return "";
+    const diff = Math.round(st.vol - st.prevVol), when = fmtD(st.prevDate);
+    return diff === 0 ? `Same as last time (${when}).` : `${Math.abs(diff).toLocaleString()} lb ${diff > 0 ? "more" : "less"} than last time (${when}).`;
   }
   const YT = {
     "Barbell bench press":"barbell bench press proper form", "Barbell bent-over row":"barbell bent over row proper form", "Barbell overhead press":"standing barbell overhead press form",
@@ -1640,7 +1716,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   };
   const ytUrl = name => "https://www.youtube.com/results?search_query=" + encodeURIComponent(YT[name] || (name + " proper form"));
   const lastText = (l, n) => l && l.sets && l.sets.length ? `${isBW(n) && !(+l.sets[0].w) ? "BW" : fmtW(l.sets[0].w)} × ${l.sets.map(s => s.r).join(", ")}` : "first time";
-  // ---------- All lifts sheet: the overview, Full / 45 / 30, drag to reorder, tap to jump ----------
+  // ---------- Today's lifts sheet (the fmAll button): the overview, Full / 45 / 30, drag to reorder, tap to jump ----------
   let liftDrag = null;
   function openLiftsSheet(p){
     const draw = () => {
@@ -1687,51 +1763,45 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   };
   document.addEventListener("pointerup", endLiftDrag); document.addEventListener("pointercancel", endLiftDrag);
   // ---------- the week sheet: tap a day, then tap where it goes (or hold and drag). Swaps are for this week only. ----------
-  // A swap that puts two hard sessions for one muscle back to back shows a warning first, never a block. Undo for a few seconds after.
-  let wkSel = null, wkPending = null, wkUndo = null, wkUndoT = null, wkDrag = null;
+  // A swap happens on the first try. If it puts two hard sessions for one muscle back to back, a heads-up shows with Undo (never a block).
+  let wkSel = null, wkUndo = null, wkUndoT = null, wkDrag = null;
   function openWeekSheet(){
     const sun = sundayOf(S.date), meIdx = parseD(S.date).getDay();
-    wkSel = null; wkPending = null;
+    wkSel = null;
     const draw = () => {
       const st = weekState(sun), cur = weekFor(sun), ICO = { done: CHECK, restdone: CHECK, part: "◐", miss: "!", skip: "–", moved: "↪" };
       const grid = `<div class="wkgrid" id="wkGrid">${st.map(x => `<button type="button" class="wkday ${x.st}${x.d === today ? " now" : ""}${wkSel === x.i ? " sel" : wkSel != null ? " tgt" : ""}" data-i="${x.i}" aria-pressed="${wkSel === x.i}" aria-label="${WDAYL[x.i]}: ${esc(shortName(x.id))}"><b>${WDAY[x.i]}</b><span>${esc(shortName(x.id))}</span><i>${ICO[x.st] || ""}</i></button>`).join("")}</div>`;
       let act;
-      if (wkPending){
-        const { a, b, warn } = wkPending;
-        act = `<div class="warnline">${ic("info")}<span>Heads up: ${esc(warn.join("; "))}. Two hard days in a row are hard to recover from. Fine now and then.</span></div>
-          <div class="sheetacts"><button type="button" id="wkCancel">Cancel</button><button type="button" class="primary" id="wkGo">Swap ${WDAY[a]} and ${WDAY[b]} anyway</button></div>`;
-      } else if (wkUndo){
-        act = `<div class="undoline"><span>${esc(wkUndo.text)}</span><button type="button" id="wkUndoBtn">Undo</button></div>`;
+      if (wkUndo){
+        act = (wkUndo.warn ? `<div class="warnline">${ic("info")}<span>Heads up: ${esc(wkUndo.warn.join("; "))}. Two hard days in a row are hard to recover from. Fine now and then.</span></div>` : "")
+          + `<div class="undoline"><span>${esc(wkUndo.text)}</span><button type="button" id="wkUndoBtn">Undo</button></div>`;
       } else if (wkSel != null){
         const x = st[wkSel], nm = isRestId(x.id) ? "Rest" : shortName(x.id);
         act = `<div class="note">${esc(WDAYL[wkSel])} · ${esc(nm)}. Now tap the day it should go to.</div>`
           + (!isRestId(x.id) && wkSel !== meIdx ? `<div class="sheetacts"><button type="button" id="wkJust">Just ${S.date === today ? "today" : WDAY[meIdx]}: ${esc(nm)}</button></div>` : "");
       } else act = `<div class="note">Tap a day, then tap where it goes. Or hold and drag. Changes are for this week only.</div>`;
       const base = weekBase(), changed = cur.some((v, i) => v !== base[i]);
-      return grid + act + (changed && !wkPending ? `<div class="sheetacts"><button type="button" id="wkUsual">Make this my usual week</button><button type="button" id="wkReset">Back to usual</button></div>` : "");
+      return grid + act + (changed ? `<div class="sheetacts"><button type="button" id="wkUsual">Make this my usual week</button><button type="button" id="wkReset">Back to usual</button></div>` : "");
     };
-    const settle = (a, b) => {   // the second tap or the drop: warn first when two hard days for one muscle would touch
+    const settle = (a, b) => {   // the second tap or the drop: swap now; a heads-up rides along when two hard days for one muscle touch
       if (a === b){ wkSel = null; refreshSheet(); return; }
-      const warn = swapWarning(weekFor(sun), a, b);
-      if (warn.length){ wkPending = { a, b, warn }; wkSel = null; refreshSheet(); return; }
-      doSwap(a, b);
+      doSwap(a, b, swapWarning(weekFor(sun), a, b));
     };
-    const doSwap = (a, b) => {
+    const doSwap = (a, b, warn) => {
       const prev = weekFor(sun).slice(), moved = shortName(prev[a]);
-      wkPending = null; wkSel = null; planPicked = false;
+      wkSel = null; planPicked = false;
+      clearTimeout(wkUndoT); wkUndo = { days: prev, text: `Moved ${moved} to ${WDAYL[b]}.`, warn: warn && warn.length ? warn : null };
+      wkUndoT = setTimeout(() => { wkUndo = null; refreshSheet(); }, wkUndo.warn ? 20000 : 10000);
       swapDays(sun, a, b);
-      clearTimeout(wkUndoT); wkUndo = { days: prev, text: `Moved ${moved} to ${WDAYL[b]}.` }; wkUndoT = setTimeout(() => { wkUndo = null; refreshSheet(); }, 10000);
       const nowToday = weekFor(sun)[meIdx]; if (a === meIdx || b === meIdx){ if (nowToday && !isRestId(nowToday)) pickDay(nowToday); else { FM.ei = null; renderWorkout(); } }
       setTimeout(refreshSheet, 50);
     };
     const wire = body => {
       body.querySelectorAll(".wkday").forEach(b => {
-        b.onclick = () => { if (wkDrag && wkDrag.moved) return; const i = +b.dataset.i; if (wkPending) return; if (wkSel == null) wkSel = i; else if (wkSel === i) wkSel = null; else { settle(wkSel, i); return; } refreshSheet(); };
-        b.onpointerdown = e => { if (wkPending) return; wkDrag = { from: +b.dataset.i, x: e.clientX, y: e.clientY, id: e.pointerId, moved: false, el: b, t: setTimeout(() => startWkDrag(e), 350) }; };
+        b.onclick = () => { if (wkDrag && wkDrag.moved) return; const i = +b.dataset.i; if (wkSel == null) wkSel = i; else if (wkSel === i) wkSel = null; else { settle(wkSel, i); return; } refreshSheet(); };
+        b.onpointerdown = e => { wkDrag = { from: +b.dataset.i, x: e.clientX, y: e.clientY, id: e.pointerId, moved: false, el: b, t: setTimeout(() => startWkDrag(e), 350) }; };
       });
       if ($("wkJust")) $("wkJust").onclick = () => { const id = weekFor(sun)[wkSel]; closeSheet(); pickDay(id); };
-      if ($("wkGo")) $("wkGo").onclick = () => doSwap(wkPending.a, wkPending.b);
-      if ($("wkCancel")) $("wkCancel").onclick = () => { wkPending = null; refreshSheet(); };
       if ($("wkUndoBtn")) $("wkUndoBtn").onclick = () => { const u = wkUndo; wkUndo = null; clearTimeout(wkUndoT); saveWeek(sun, u.days); toast("Put back."); setTimeout(refreshSheet, 50); };
       if ($("wkUsual")) $("wkUsual").onclick = async () => { await setUsualWeek(weekFor(sun)); toast("Saved as your usual week."); refreshSheet(); };
       if ($("wkReset")) $("wkReset").onclick = () => { saveWeek(sun, weekBase()); setTimeout(refreshSheet, 300); };
@@ -1939,7 +2009,9 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     const days = Array.from({length:7}, (_,i) => addDays(start, i));
     const foodDays = days.filter(d => d <= end && d !== today);   // today is still in progress, so food stats skip it
     const logged = foodDays.filter(d => (dayDoc(d).meals||[]).length), tots = logged.map(totals);
-    const avgCal = tots.length ? tots.reduce((a,x)=>a+x.cal,0)/tots.length : 0, avgPro = tots.length ? tots.reduce((a,x)=>a+x.pro,0)/tots.length : 0;
+    const full = tots.filter(x => !lightDay(x.cal, t)), light = tots.length - full.length;   // light days (probably missing food) stay out of the averages
+    const avgCal = full.length ? full.reduce((a,x)=>a+x.cal,0)/full.length : 0, avgPro = full.length ? full.reduce((a,x)=>a+x.pro,0)/full.length : 0;
+    const lightNote = light ? ` · ${light} light day${light > 1 ? "s" : ""} left out` : "";
     const proHit = tots.filter(x => x.pro >= t.proMin).length;
     const wos = S.workouts.filter(w => w.date >= start && w.date <= end);
     const LET = ["S","M","T","W","T","F","S"], ate = d => (dayDoc(d).meals||[]).length > 0;
@@ -1952,8 +2024,8 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     }
     const row = o => `<div class="wkrow"><div class="wkhead"><span class="k">${o.k}</span><span class="wkval">${o.v}</span></div>${o.viz}</div>`;
     const rows = [
-      row({ k:"Calories", viz: gbars(d => d !== today && ate(d) ? totals(d).cal : null, t.calMin - 100, t.calMax + 100, "kcal"), v: tots.length ? `avg <b>${Math.round(avgCal).toLocaleString()}</b> · ${avgCal < t.calMin - 50 ? "under" : avgCal > t.calMax + 50 ? "over" : "on target"}` : "Log food to track" }),
-      row({ k:"Protein", viz: gbars(d => ate(d) ? totals(d).pro : null, t.proMin, null, "g"), v: tots.length ? `<b>${proHit} of ${logged.length}</b> days hit · avg ${Math.round(avgPro)} g` : "Log food to track" })
+      row({ k:"Calories", viz: gbars(d => d !== today && ate(d) ? totals(d).cal : null, t.calMin - 100, t.calMax + 100, "kcal"), v: full.length ? `avg <b>${Math.round(avgCal).toLocaleString()}</b> · ${avgCal < t.calMin - 50 ? "under" : avgCal > t.calMax + 50 ? "over" : "on target"}${lightNote}` : tots.length ? `Only light days so far` : "Log food to track" }),
+      row({ k:"Protein", viz: gbars(d => ate(d) ? totals(d).pro : null, t.proMin, null, "g"), v: tots.length ? `<b>${proHit} of ${logged.length}</b> days hit${full.length ? ` · avg ${Math.round(avgPro)} g` : ""}` : "Log food to track" })
     ];
     if (st.sugar && tots.length){ const over = tots.filter(x => x.sug > st.sugarLimit).length;
       rows.push(row({ k:"Added sugar", viz: gbars(d => ate(d) && d !== today ? totals(d).sug : null, st.sugarLimit, null, "g", true), v: over ? `<b>${over}</b> day${over > 1 ? "s" : ""} over ${st.sugarLimit} g` : `Under ${st.sugarLimit} g every day` })); }
@@ -2363,7 +2435,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     $("hStreak").innerHTML = bits.length ? `<span>Streaks</span><span>${esc(bits.join(" · "))}</span>` : `<span>Streaks</span><span>Log a workout and your food to start one</span>`;
   }
   // one-time "What's new" card after an update, closed with a tap and remembered in settings.seenVersion
-  const WHATS_NEW = ["The menu is now Home, Food, Workout, Progress.", "The keyboard stays open while you type a set.", "A line at the top tells you when you're on a day other than today, with a way back.", "The two Skip buttons now say Skip rest and Skip lift.", "After your first set, the grey numbers show the set you just did.", "The Log set button stays in place when the rest clock starts."];
+  const WHATS_NEW = ["At meal time, Food offers your usual meal, or the same meal as yesterday. Log it in one tap, or tap Change to pick foods first.", "After you tap a chip, pick ½×, 1½× or 2× to change the amount. The Save card has the same buttons for each food.", "Quick add: save just calories and protein, no food name needed.", "This week leaves out light days (probably missing food) from your calorie average, and says so.", "Before set 1 of a barbell, Smith or T-bar lift, a grey line suggests warm-up sets. They are never logged.", "The finish card compares your total weight to everyday things, and to last time on the same day.", "All lifts is now Today's lifts. The day button has a calendar: tap it to swap days this week.", "Swapping days in your week moves them right away. When two hard days end up back to back you get a heads-up and Undo, not an extra step."];
   function renderWhatsNew(){
     const el = $("whatsNew"), show = !!(S.db && S.config && plan().length && sett().seenVersion !== PAGE_VERSION && !S.first && !S.wnClosed);
     el.hidden = !show; if (!show) return;
@@ -2489,6 +2561,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     return list.map((f, i) => ({ f, i, pin: !!f.pin, s: chipScore(f, hourNow, anchor) })).sort((a, b) => (b.pin - a.pin) || (b.s - a.s) || (a.i - b.i)).map(x => x.f);
   }
   function renderQuick(){
+    renderUsual();
     const el = $("favs"); if (!el) return;
     const all = rankChips(S.foods.filter(f => f.chip !== false), new Date().getHours()), N = 8, favs = all.slice(0, N);
     const hasY = S.db && (dayDoc(addDays(S.date, -1)).meals || []).length;
@@ -2524,24 +2597,41 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     openSheet({ title: "Your foods", html: draw(), wire, tall: true, refresh(){ $("uiSheetBody").innerHTML = draw(); wire($("uiSheetBody")); } });
   }
   async function quickAdd(f, stEl){
-    const st = stEl || $("logStatus"), undoId = st.id + "Undo", time = nowTime(), ps = comboParts(f);
+    const st = stEl || $("logStatus"), time = nowTime(), ps = comboParts(f);
     const line = x => ({ name: String(x.name), cal: Math.round(num(x.cal)), protein: r05(x.protein), carbs: r05(x.carbs), fat: r05(x.fat), addedSugar: r05(x.addedSugar), time });
     const added = ps.length ? ps.map(line) : [Object.assign(line(f), { name: f.name + (f.serving ? `, ${f.serving}` : "") })];
     if (S.date === today) added.forEach(m => m.meal = nowMeal());
+    return addLines(added, ps.length ? `${f.short || f.name} (${ps.length} foods)` : added[0].name, st);
+  }
+  async function addLines(added, label, stEl){   // write foods to the day, then "Added ... ½× 1× 1½× 2× Undo" for 10 seconds
+    const st = stEl || $("logStatus"), undoId = st.id + "Undo", base = added.map(m => Object.assign({}, m));
     const d = S.date, day = JSON.parse(JSON.stringify(dayDoc(d)));
     day.meals = day.meals || []; day.date = d; day.meals.push(...added);
-    if (!(await writeDay(d, day, st))) return;
-    clearTimeout(favUndo);
-    const label = ps.length ? `${f.short || f.name} (${ps.length} foods)` : added[0].name;
-    st.innerHTML = `Added ${esc(label)}. <button class="ghost" id="${undoId}" style="color:var(--accent);font-weight:700">Undo</button>`;
-    $(undoId).onclick = async () => {
-      clearTimeout(favUndo);
-      const cur = JSON.parse(JSON.stringify(dayDoc(d))); cur.meals = cur.meals || [];
-      let gone = 0;
-      added.slice().reverse().forEach(m => { const idx = cur.meals.map(x => x.name + x.time).lastIndexOf(m.name + m.time); if (idx >= 0){ cur.meals.splice(idx,1); gone++; } });
-      if (gone && await writeDay(d, cur, st)) st.textContent = "Removed.";
+    if (!(await writeDay(d, day, st))) return false;
+    let now = added, k = 1;
+    const at = (cur, m) => cur.meals.map(x => x.name + x.time).lastIndexOf(m.name + m.time);
+    const hold = () => { clearTimeout(favUndo); favUndo = setTimeout(() => { if ($(undoId)) st.textContent = ""; }, 10000); };
+    const draw = () => {
+      st.innerHTML = `Added ${esc(label)}.${amtBtns(k, "data-amt")}<button class="ghost" id="${undoId}" style="color:var(--accent);font-weight:700">Undo</button>`;
+      st.querySelectorAll("[data-amt]").forEach(b => b.onclick = async () => {   // change the amount: rewrite the same lines, scaled from what was added
+        const k2 = +b.dataset.amt; if (k2 === k) return;
+        const cur = JSON.parse(JSON.stringify(dayDoc(d))); cur.meals = cur.meals || [];
+        const next = base.map(m => scaleLine(m, k2));
+        let hit = 0; now.forEach((m, j) => { const i = at(cur, m); if (i >= 0){ cur.meals[i] = next[j]; hit++; } });
+        if (!hit){ st.textContent = "That food changed. Edit it under Meals."; return; }
+        hold();
+        if (await writeDay(d, cur, st)){ now = next; k = k2; draw(); }
+      });
+      $(undoId).onclick = async () => {
+        clearTimeout(favUndo);
+        const cur = JSON.parse(JSON.stringify(dayDoc(d))); cur.meals = cur.meals || [];
+        let gone = 0;
+        now.slice().reverse().forEach(m => { const i = at(cur, m); if (i >= 0){ cur.meals.splice(i, 1); gone++; } });
+        if (gone && await writeDay(d, cur, st)) st.textContent = "Removed.";
+      };
     };
-    favUndo = setTimeout(() => { if ($(undoId)) st.textContent = ""; }, 10000);
+    draw(); hold();
+    return true;
   }
   $("qlPhoto").addEventListener("change", e => {
     qlImages = [...e.target.files];
@@ -2633,10 +2723,10 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     if (atBottom || chatBusy) el.scrollTop = el.scrollHeight;
     renderAsks();
   }
-  function itemRows(R, x){   // one row per food, weigh-in, lift and saved label; x() draws each row's remove button
+  function itemRows(R, x, amt){   // one row per food, weigh-in, lift and saved label; x() draws each row's remove button, amt(j) a food's amount buttons
     let h = "";
     const sg = sett().sugar;
-    R.meals.forEach((m,j) => h += `<div class="qrow"><span class="tag food">Food</span><div>${esc(m.name)}<div class="nums">${m.cal} kcal · ${m.protein} P · ${m.carbs} C · ${m.fat} F${sg && m.addedSugar > 0 ? ` · ${m.addedSugar} g sugar` : ""}</div></div>${x("m",j,m.name)}</div>`);
+    R.meals.forEach((m,j) => h += `<div class="qrow"><span class="tag food">Food</span><div>${esc(m.name)}<div class="nums">${m.cal} kcal · ${m.protein} P · ${m.carbs} C · ${m.fat} F${sg && m.addedSugar > 0 ? ` · ${m.addedSugar} g sugar` : ""}</div>${amt ? amt(j) : ""}</div>${x("m",j,m.name)}</div>`);
     if (R.weight != null) h += `<div class="qrow"><span class="tag wt">Weight</span><div>${R.weight} lb</div>${x("w",0,"weight")}</div>`;
     if (R.workout){ const p = plan().find(q => q.id === R.workout.dayId);
       R.workout.exercises.forEach((e,j) => h += `<div class="qrow"><span class="tag lift">Lift</span><div>${esc(e.name)}${liftPR(e.name, e.sets, S.date) ? ` <span class="prchip">${ic("trophy")}PR</span>` : ""}<div class="nums">${e.sets.map(s=>`${s.w}×${s.r}`).join(", ")} · ${esc(p ? p.name : R.workout.dayId)}</div></div>${x("x",j,e.name)}</div>`); }
@@ -2687,6 +2777,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     const ctx = {
       date: d, weekday: parseD(d).toLocaleDateString("en-US",{weekday:"long"}),
       targets: t, today: { calories: Math.round(tot.cal), protein: Math.round(tot.pro*2)/2, carbs: Math.round(tot.carb), fat: Math.round(tot.fat), foods: (day.meals||[]).map(m => `${m.name} (${Math.round(+m.cal||0)} kcal, ${m.protein} g P)`), weight: day.weight ?? null },
+      last7Days: Array.from({length:7}, (_, i) => addDays(d, i - 7)).filter(x => (dayDoc(x).meals||[]).length).map(x => { const tt = totals(x); return { date:x, calories:Math.round(tt.cal), protein:Math.round(tt.pro), light: lightDay(tt.cal, t) }; }),
       yesterdayFoods: (yday.meals||[]).map(m => ({name:m.name, cal:m.cal, protein:m.protein, carbs:m.carbs, fat:m.fat, addedSugar:m.addedSugar||0})),
       weight7dayAvg: avg7(d) ? +avg7(d).toFixed(1) : null, weight7dayAvgPrevWeek: avg7(addDays(d,-7)) ? +avg7(addDays(d,-7)).toFixed(1) : null,
       todaysWorkout: todayWo, recentSessions: recentWo, lastSetsByExercise: lastFor(allEx),
@@ -2712,6 +2803,8 @@ Logging rules:
 - newFoods: when a photo shows a nutrition label, read it exactly and add {"name","serving","cal","protein","carbs","fat","addedSugar","aliases":[],"source":"label"} so it's saved for next time; log the amount they ate (one serving if unsaid). For a meal photo, estimate portions. When they ask to save a combo ("save that as my usual lunch"), add {"name","short","serving","aliases":[],"parts":[{"name","cal","protein","carbs","fat","addedSugar"}], "cal","protein","carbs","fat","addedSugar"} with cal and macros as the totals of the parts, and log nothing unless they also say they ate it.
 - rules: only when they tell you something lasting to remember about their food (a default, a nickname, a recipe change, like "my shake is 2 scoops now" or "rice is always cooked weight"), add one short plain sentence; otherwise []. If it changes a saved food or combo, also put the updated food in newFoods with the same name. Never add a rule for a one-time meal.
 ${st.cycle ? "- periodStart: true only if they say their period started today (or on the day shown), else false.\n" : ""}- Don't log anything that is only mentioned in a question (e.g. "should I eat 3 eggs?").
+
+Light days: a day in last7Days with light: true was logged under ${Math.round(COACH_RULES.food.lightDay * 100)}% of the calorie minimum, so food is probably missing. Leave it out of any average, and before suggesting a calorie change because of one, ask whether that day was complete.
 
 Coaching facts to use: progression is double progression (when every set hits the top of the rep range, add ${COACH_RULES.progression.stepLb} lb on barbell lifts or the smallest jump otherwise). When asked what weight or reps to use, answer from nextTargets (the Workout screen shows the same targets). A logged set that beats bestSets for that lift is a new PR, so say so. Rest: ${mm(R.main)} heavy main lifts, ${mm(R.secondary)} secondary lifts, ${mm(R.other)} isolation (or the restSec shown per exercise). Protein target is the priority; collagen and gelatin are incomplete protein. ${coachNotes.length ? `About ${who} and how to coach them: ` + coachNotes.join(" ") + " " : ""}${P.weeklyGoal ? "Weekly weight goal: " + P.weeklyGoal + ". " : ""}When asked if they're on track, use weightPace (from 7-day averages) against targetLbPerWeek; the first ${COACH_RULES.weight.earlyDays} days after the phase starts include water weight, so don't judge them. ${st.sugar ? `Their added sugar limit is ${st.sugarLimit} g a day; mention it only when they're near or over it, and never shame food choices.` : ""} ${st.cycle ? "Around a period, water weight can hide progress on the scale for a week or more; say so if they worry about a jump." : ""} Never shame food or bodies. For pain, injury or medical questions, give general guidance only and suggest seeing a professional if it persists.
 
@@ -2840,6 +2933,94 @@ Context (JSON): ${JSON.stringify(ctx)}`;
       if (btn) btn.disabled = false;
     }
   }
+  // ---------- the meal-time card on Food: "Your usual lunch" when the same foods keep coming back at that meal (meal prep),
+  // otherwise "Dinner like yesterday?" (leftovers). One tap logs it all, Change ticks foods first, ✕ hides it for that meal today. ----------
+  const MAIN_MEALS = ["breakfast", "lunch", "dinner"];
+  const USUAL_DAYS = 14, USUAL_MIN = 4, LAST_BACK = 2;   // look back 14 days; "usual" = together on 4+ of them (about twice a week); leftovers = yesterday or the day before
+  const FOOD_FILLER = new Set(["large", "medium", "small", "cooked", "plain", "organic", "h-e-b", "heb", "fresh", "homemade", "raw", "est", "estimate", "about", "of", "a"]);
+  // one name for "3 eggs, cooked", "Large eggs, cooked, 3" and "3 large eggs, cooked plain": egg. "Protein shake: whole milk" is part of the protein shake.
+  function foodKey(name){
+    let n = lower(name);
+    if (n.includes(":")) n = n.split(":")[0];
+    n = n.split(",")[0].replace(/\(.*?\)/g, " ").replace(/[\d½¼¾/.%]+/g, " ");
+    return (n.match(/[a-z'&-]+/g) || []).filter(w => !FOOD_FILLER.has(w)).map(w => w.length > 3 && /[^s]s$/.test(w) ? w.slice(0, -1) : w).join(" ");
+  }
+  function slotLines(d, slot){   // the foods logged at one meal of a day; a food with no time joins the meal logged just before it (as on the Food list)
+    const tagged = (dayDoc(d).meals || []).map(m => ({ m, g: mealOf(m) }));
+    tagged.forEach((x, k) => { if (!x.g){ const b = tagged.slice(0, k).reverse().find(y => y.g), a = tagged.slice(k + 1).find(y => y.g); x.g = (b || a || {}).g || "snack"; } });
+    return tagged.filter(x => x.g === slot).map(x => x.m);
+  }
+  function copyLine(m, slot){
+    const o = { name: String(m.name || "Food"), cal: Math.round(num(m.cal)), protein: r05(m.protein) };
+    ["carbs", "fat", "addedSugar"].forEach(k => { if (m[k] != null && m[k] !== "") o[k] = r05(m[k]); });
+    if (slot) o.meal = slot;
+    return o;
+  }
+  // "Your usual": the foods that show up together at this meal on 4 or more of the last 14 days. Amounts come from the latest time.
+  function findUsual(slot, anchor){
+    const days = [];
+    for (let k = 1; k <= USUAL_DAYS; k++){
+      const lines = slotLines(addDays(anchor, -k), slot), byKey = {};
+      lines.forEach(m => { const key = foodKey(m.name); if (key) (byKey[key] = byKey[key] || []).push(m); });
+      if (Object.keys(byKey).length) days.push(byKey);
+    }
+    const freq = {}; days.forEach(dy => Object.keys(dy).forEach(key => freq[key] = (freq[key] || 0) + 1));
+    const often = Object.keys(freq).filter(key => freq[key] >= USUAL_MIN).sort((a, b) => freq[b] - freq[a] || a.localeCompare(b));
+    const together = keys => days.filter(dy => keys.every(key => dy[key])).length;
+    let best = null, bestN = 0;
+    for (let i = 0; i < often.length; i++) for (let j = i + 1; j < often.length; j++){
+      const n = together([often[i], often[j]]);
+      if (n > bestN){ best = [often[i], often[j]]; bestN = n; }
+    }
+    if (!best || bestN < USUAL_MIN) return null;
+    often.forEach(key => { if (!best.includes(key) && together(best.concat(key)) >= USUAL_MIN) best.push(key); });
+    const lines = best.map(key => days.find(dy => dy[key])[key]).flat().map(m => copyLine(m, slot));
+    return { kind: "usual", slot, lines, days: together(best) };
+  }
+  // "Like yesterday?": the same meal from yesterday, or the day before when yesterday's had fewer than two foods.
+  function findLast(slot, anchor){
+    for (let k = 1; k <= LAST_BACK; k++){
+      const d = addDays(anchor, -k), lines = slotLines(d, slot);
+      if (lines.length >= 2) return { kind: "last", slot, back: k, date: d, lines: lines.map(m => copyLine(m, slot)) };
+    }
+    return null;
+  }
+  let usualHidden = {};
+  try { usualHidden = JSON.parse(localStorage.getItem("tl-usual-hidden") || "{}") || {}; } catch(e){}
+  function mealCardFor(d, hourNow){   // which card to show now, or null
+    if (d !== today) return null;
+    const slot = clockMeal(hourNow);
+    if (!MAIN_MEALS.includes(slot) || usualHidden[d + "|" + slot] || slotLines(d, slot).length) return null;
+    return findUsual(slot, d) || findLast(slot, d);
+  }
+  const mealName = slot => ({ breakfast: "Breakfast", lunch: "Lunch", dinner: "Dinner" })[slot] || "Meal";
+  function cardTitle(c){
+    if (c.kind === "usual") return `Your usual ${c.slot}`;
+    return `${mealName(c.slot)} like ${c.back === 1 ? "yesterday" : parseD(c.date).toLocaleDateString([], { weekday: "long" })}?`;
+  }
+  function cardFoods(lines){   // "Ground beef, Pinto beans, White rice and 2 more"; the parts of a shake show once
+    const names = []; lines.forEach(m => { const n = String(m.name).includes(":") ? String(m.name).split(":")[0] : String(m.name).split(",")[0]; if (!names.includes(n)) names.push(n); });
+    return names.length > 4 ? names.slice(0, 3).join(", ") + ` and ${names.length - 3} more` : names.join(", ");
+  }
+  function renderUsual(){
+    const el = $("usualCard"); if (!el) return;
+    const n = new Date(), hour = S.clockHour != null ? S.clockHour : n.getHours() + n.getMinutes() / 60;   // S.clockHour: test pages pin the time of day
+    const c = S.db && !pendingLog ? mealCardFor(S.date, hour) : null;
+    if (!c){ el.hidden = true; el.innerHTML = ""; return; }
+    const cal = c.lines.reduce((a, m) => a + num(m.cal), 0), pro = c.lines.reduce((a, m) => a + num(m.protein), 0);
+    el.innerHTML = `<div class="uc-h"><b>${esc(cardTitle(c))}</b><button class="iconbtn" type="button" id="ucX" aria-label="Not now">✕</button></div>
+      <div class="uc-foods">${esc(cardFoods(c.lines))}</div>
+      <div class="row between"><span class="small muted">${Math.round(cal).toLocaleString()} kcal · ${Math.round(pro)} g protein${c.kind === "usual" ? ` · ${c.days} of the last ${USUAL_DAYS} days` : ""}</span>
+      <span class="row"><button type="button" class="ghost" id="ucChange">Change</button><button type="button" class="primary" id="ucLog">Log it</button></span></div>`;
+    el.hidden = false;
+    $("ucX").onclick = () => { usualHidden[S.date + "|" + c.slot] = 1; try { localStorage.setItem("tl-usual-hidden", JSON.stringify(Object.fromEntries(Object.entries(usualHidden).filter(([k]) => k.slice(0, 10) >= addDays(today, -7))))); } catch(e){} renderUsual(); };
+    $("ucLog").onclick = async () => { $("ucLog").disabled = true; await addLines(c.lines.map(m => Object.assign({}, m, { time: nowTime() })), `your ${c.kind === "usual" ? "usual " : ""}${c.slot} (${c.lines.length} foods)`); renderUsual(); };
+    $("ucChange").onclick = () => {
+      pendingLog = { R: { meals: c.lines.map(m => Object.assign({}, m)), weight: null, workout: null, newFoods: [], empty: false }, pick: true, sel: c.lines.map(() => true),
+        title: cardTitle(c).replace(/\?$/, ""), hint: "Untick anything you didn't have, then Save." };
+      renderLogPrev(); $("logPrev").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    };
+  }
   // ---------- Food tab: the one box (type, talk or a photo) goes through the coach in log mode and comes back as a Save card ----------
   let logImages = [], logBusy = false, pendingLog = null;
   $("logPhoto").addEventListener("change", e => { logImages = [...e.target.files]; $("logStatus").textContent = logImages.length ? `${logImages.length} photo${logImages.length > 1 ? "s" : ""} attached. Say what it is, or just tap the arrow.` : ""; });
@@ -2848,7 +3029,7 @@ Context (JSON): ${JSON.stringify(ctx)}`;
   $("logGo").addEventListener("click", logFood);
   async function logFood(){
     const st = $("logStatus"), text = $("logText").value.trim(), imgs = logImages.slice();
-    if (!S.sample){ st.textContent = "Logging by text works when this page is open in Claude. Tap a chip, or add exact numbers under Meals."; return; }
+    if (!S.sample){ st.textContent = "Logging by text works when this page is open in Claude. Tap a chip, or use Quick add under Meals."; return; }
     if (logBusy) return;
     if (!text && !imgs.length){ st.textContent = "Type or say what you ate first."; $("logText").focus(); return; }
     logBusy = true; $("logGo").disabled = true; st.textContent = "Reading it…";
@@ -2866,20 +3047,30 @@ Context (JSON): ${JSON.stringify(ctx)}`;
   }
   function renderLogPrev(){
     const el = $("logPrev");
+    renderUsual();   // the meal-time card steps aside while a Save card is open
     if (!pendingLog){ el.hidden = true; el.innerHTML = ""; return; }
     const R = pendingLog.R;
     if (pendingLog.pick){
       const allLbl = () => pendingLog.sel.every(Boolean) ? "Clear all" : "Tick all";
-      el.innerHTML = `<div class="lp-h"><div class="row between"><b>Yesterday's foods</b><button type="button" class="linkbtn" id="pkAll">${allLbl()}</button></div><span class="small muted">Tick what you had today, then Save.</span></div>`
+      el.innerHTML = `<div class="lp-h"><div class="row between"><b>${esc(pendingLog.title || "Yesterday's foods")}</b><button type="button" class="linkbtn" id="pkAll">${allLbl()}</button></div><span class="small muted">${esc(pendingLog.hint || "Tick what you had today, then Save.")}</span></div>`
         + R.meals.map((m, j) => `<label class="pickrow"><input type="checkbox" data-pk="${j}"${pendingLog.sel[j] ? " checked" : ""}><span>${esc(m.name)}<span class="nums">${m.cal} kcal · ${m.protein} P</span></span></label>`).join("")
         + `<div class="row" style="justify-content:flex-end"><button type="button" class="ghost" id="logCancel">Cancel</button><button type="button" class="primary" id="logSave">Save</button></div>`;
       el.querySelectorAll("[data-pk]").forEach(c => c.onchange = () => { pendingLog.sel[+c.dataset.pk] = c.checked; $("pkAll").textContent = allLbl(); });
       $("pkAll").onclick = () => { const on = !pendingLog.sel.every(Boolean); pendingLog.sel = pendingLog.sel.map(() => on); el.querySelectorAll("[data-pk]").forEach(c => c.checked = on); $("pkAll").textContent = allLbl(); };
     } else {
       const x = (k, j, label) => `<button class="iconbtn" type="button" data-lx="${k}-${j}" aria-label="Remove ${esc(label)}">✕</button>`;
-      el.innerHTML = `<div class="lp-h"><b>Ready to save</b>${pendingLog.reply ? `<span class="small muted">${esc(pendingLog.reply)}</span>` : ""}</div>` + itemRows(R, x)
+      if (!pendingLog.base){ pendingLog.base = R.meals.map(m => Object.assign({}, m)); pendingLog.k = R.meals.map(() => 1); }   // amounts scale from what the coach read
+      const amt = j => amtBtns(pendingLog.k[j], `data-la="${j}" data-v`);
+      el.innerHTML = `<div class="lp-h"><b>Ready to save</b>${pendingLog.reply ? `<span class="small muted">${esc(pendingLog.reply)}</span>` : ""}</div>` + itemRows(R, x, amt)
         + `<div class="row" style="justify-content:flex-end"><button type="button" class="ghost" id="logCancel">Cancel</button><button type="button" class="primary" id="logSave">Save</button></div>`;
-      el.querySelectorAll("[data-lx]").forEach(b => b.onclick = () => { pendingLog.R = dropItem(pendingLog.R, b.dataset.lx); if (pendingLog.R.empty) pendingLog = null; renderLogPrev(); });
+      el.querySelectorAll("[data-lx]").forEach(b => b.onclick = () => {
+        const [k, j] = b.dataset.lx.split("-"); if (k === "m"){ pendingLog.base.splice(+j, 1); pendingLog.k.splice(+j, 1); }
+        pendingLog.R = dropItem(pendingLog.R, b.dataset.lx); if (pendingLog.R.empty) pendingLog = null; renderLogPrev();
+      });
+      el.querySelectorAll("[data-la]").forEach(b => b.onclick = () => {
+        const j = +b.dataset.la, k = +b.dataset.v;
+        pendingLog.k[j] = k; pendingLog.R.meals[j] = scaleLine(pendingLog.base[j], k); renderLogPrev();
+      });
     }
     el.hidden = false;
     $("logCancel").onclick = () => { pendingLog = null; renderLogPrev(); };
