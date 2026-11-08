@@ -61,7 +61,11 @@ Publish with `url` set to their tracker's URL. Don't pass capabilities; the trac
 
 Do only the steps for the version they came from. Always `get` a doc, change it, and `set` it back with `if_version`, keeping everything else.
 
-**From kit 3.2.1 (or 3.2, 3.1) to 3.3** (also do the earlier steps below for older trackers)
+**From kit 3.3.x to 3.4** (also do the earlier steps below for older trackers)
+
+- Nothing has to change. No new fields. The meal-time card works from the meals they already log, and works best when food has a `meal` tag or a clock `time`.
+
+**From kit 3.2.1 (or 3.2, 3.1) to 3.3**
 
 - Nothing has to change. Every field keeps its meaning. The page writes a few new optional settings on its own: `settings.seenVersion` (the What's new card), `settings.liftOrder` (a saved lift order per plan day), `settings.accent` (the color they pick behind the gear), and `pin` / `chip` flags on `config/foods` items.
 - Make sure `config/main.profile` has `name`, `phase`, `phaseStart` (YYYY-MM-DD) and `projectName` (the name of their coach project): Home and the coach read them. Set `label` on `config/baseline` and `config/weightHistory` if they have imported history (what the old app was called).
@@ -86,6 +90,15 @@ Do only the steps for the version they came from. Always `get` a doc, change it,
 1. Open it with the Artifact tool (`action: "open"`) and check it loads with their data: Home should show their name's page title, the phase and day count under the date, and today's workout card.
 2. Update `tracker-notes.md`: the new kit version and today's date, a changelog line "Updated to kit <version>", and their "Custom:" lines (reworded if a feature changed). Update the logging rules in `coach-playbook.md` from `coaching-rules.md` (meal tags, combos, the one rule book).
 3. Tell them in 3 lines what changed and one thing to try first, for example: "Tap Start on the Home card. The Workout screen walks you through one set at a time and times your rest."
+
+## What's new in 3.4
+
+- **Meal-time card on Food:** at breakfast, lunch or dinner, "Your usual lunch" (foods eaten together at that meal on 4 or more of the last 14 days) or "Dinner like yesterday?" (leftovers). Log it adds the whole meal with Undo, Change opens a tick list, ✕ hides it for that meal.
+- **Amount buttons:** after a chip tap, and for each food on the Save card: ½×, 1×, 1½×, 2×. They change that same food, not a second one.
+- **Quick add:** the form at the bottom of Food takes just calories and protein, with no food name. It offers the macro total if the calories look too low.
+- **Light days:** a day logged under 60% of the calorie minimum is left out of This week's averages, and the coach asks before changing calories because of one.
+- **Workout:** a grey warm-up line before set 1 of a barbell, Smith, T-bar or landmine lift (never logged). The finish card adds a fun weight line and how it compares with last time on the same day. "All lifts" is now "Today's lifts", and the day button has a calendar.
+- **Swapping days** moves them right away. When two hard days for one muscle end up back to back, a heads-up shows with Undo instead of an extra step.
 
 ## What's new in 3.3
 
