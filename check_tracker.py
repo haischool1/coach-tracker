@@ -4,9 +4,10 @@
 # The kit's build (workout-plans/app/build.py --kit) fills in KNOWN; don't edit it by hand.
 import hashlib, re, sys
 
-LATEST = "3.4.0"
+LATEST = "3.4.1"
 KNOWN = {
     "1fd87ccd81091261": "3.4.0",
+    "4adf5baa31129e14": "3.4.1",
     "72dbed3f92ee4e2d": "3.3.2",
     "7db65d1a10d4fe06": "3.3.3",
     "ae0cd4869893c9c2": "3.0",
