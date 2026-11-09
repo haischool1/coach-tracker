@@ -1,5 +1,5 @@
 <title>My Training Log</title>
-<meta name="byoc-version" content="3.4.1">
+<meta name="byoc-version" content="3.4.2">
 <meta name="theme-color" content="#ECF0F5">
 <style>
 /* ===== Training Log 3.12: the look from the Oct 26 mockup =====
@@ -10,7 +10,7 @@
   --navy:#1F3A5F; --navy-2:#2B4D7A; --navy-deep:#0E1A2E; --on-navy:#F4F7FC; --navy-muted:#A9BCD8; --navy-soft:rgba(255,255,255,.1);
   --accent:#2F6BFF; --accent-fill:var(--accent); --accent-ink:#fff; --accent-soft:rgba(47,107,255,.12);
   --good:#1E9E5B; --good-ink:#167A46; --warn:#C97A12; --warn-ink:#8A5410; --bad:#D6453D;
-  --cal:#E8632E; --pro:#2F6BFF; --pr:#D69E00; --pr-t:rgba(214,158,0,.16); --hist:#8B7CD8; --cyc:#B04A8C;
+  --cal:#E8632E; --pro:#6A55E0; --pr:#D69E00; --pr-t:rgba(214,158,0,.16); --hist:#8B7CD8; --cyc:#B04A8C;
   --soft:#E6ECF7; --chip:#EEF2F8; --field:#F2F4F8; --input-edge:#D5DCE8; --surface:#FFFFFF; --inner:#F6F8FB; --glass-edge:rgba(255,255,255,.7); --glass-2:#F6F8FB;
   --band:rgba(30,158,91,.14); --ring-bg:#E6ECF7;
   --shadow:0 1px 2px rgba(19,32,58,.06),0 6px 18px -12px rgba(19,32,58,.18);
@@ -24,20 +24,20 @@
   --navy:#1A3050; --navy-2:#24416B; --navy-deep:#0A1322; --on-navy:#F4F7FC; --navy-muted:#9DB2D1; --navy-soft:rgba(255,255,255,.08);
   --accent:#6B9BFF; --accent-ink:#0B1426; --accent-soft:rgba(107,155,255,.16);
   --good:#3DC27E; --good-ink:#5AD497; --warn:#E39A3B; --warn-ink:#F2C584; --bad:#F06A62;
-  --cal:#FF8A5B; --pro:#6B9BFF; --pr:#F5C542; --pr-t:rgba(245,197,66,.16); --hist:#A89BEA; --cyc:#E07BBE;
+  --cal:#FF8A5B; --pro:#A99BFF; --pr:#F5C542; --pr-t:rgba(245,197,66,.16); --hist:#A89BEA; --cyc:#E07BBE;
   --soft:#1F2E49; --chip:#1F2C44; --field:#1C2941; --input-edge:#2E3F5E; --surface:#1C2941; --inner:#1C2941; --glass-edge:rgba(255,255,255,.08); --glass-2:#1F2C44;
   --band:rgba(61,194,126,.18); --ring-bg:#263551;
-  --shadow:0 1px 2px rgba(0,0,0,.35),0 8px 20px -14px rgba(0,0,0,.7);
+  --shadow:0 0 0 1px #2A3A59,0 1px 2px rgba(0,0,0,.35),0 8px 20px -14px rgba(0,0,0,.7);
   color-scheme:dark } }
 :root[data-theme="dark"]{
   --bg:#0E1626; --card:#172238; --ink:#EEF2F8; --ink-2:#D5DCEA; --muted:#9FAEC6; --line:#263551;
   --navy:#1A3050; --navy-2:#24416B; --navy-deep:#0A1322; --on-navy:#F4F7FC; --navy-muted:#9DB2D1; --navy-soft:rgba(255,255,255,.08);
   --accent:#6B9BFF; --accent-ink:#0B1426; --accent-soft:rgba(107,155,255,.16);
   --good:#3DC27E; --good-ink:#5AD497; --warn:#E39A3B; --warn-ink:#F2C584; --bad:#F06A62;
-  --cal:#FF8A5B; --pro:#6B9BFF; --pr:#F5C542; --pr-t:rgba(245,197,66,.16); --hist:#A89BEA; --cyc:#E07BBE;
+  --cal:#FF8A5B; --pro:#A99BFF; --pr:#F5C542; --pr-t:rgba(245,197,66,.16); --hist:#A89BEA; --cyc:#E07BBE;
   --soft:#1F2E49; --chip:#1F2C44; --field:#1C2941; --input-edge:#2E3F5E; --surface:#1C2941; --inner:#1C2941; --glass-edge:rgba(255,255,255,.08); --glass-2:#1F2C44;
   --band:rgba(61,194,126,.18); --ring-bg:#263551;
-  --shadow:0 1px 2px rgba(0,0,0,.35),0 8px 20px -14px rgba(0,0,0,.7);
+  --shadow:0 0 0 1px #2A3A59,0 1px 2px rgba(0,0,0,.35),0 8px 20px -14px rgba(0,0,0,.7);
   color-scheme:dark }
 
 /* ===== Base ===== */
@@ -84,6 +84,7 @@ select{appearance:none;-webkit-appearance:none;padding-right:30px;background-ima
 .bar{height:6px;border-radius:999px;background:var(--soft);overflow:hidden}
 .bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:999px;transition:width .5s ease}
 .bar.cal i{background:var(--cal)}
+.bar.pro i{background:var(--pro)}
 .bar.good i{background:var(--good)}
 .tline{font-size:13px;color:var(--muted);min-height:16px}
 .line{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px;color:var(--muted);padding:2px 4px;min-width:0}
@@ -159,6 +160,7 @@ select{appearance:none;-webkit-appearance:none;padding-right:30px;background-ima
 .weigh button{flex:none;padding:0 14px;border-radius:12px;background:var(--navy);color:var(--on-navy);font-weight:600}
 .whatsnew{background:var(--card);border-radius:18px;padding:14px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;border-left:4px solid var(--accent)}
 .whatsnew ul{margin:0;padding-left:18px;font-size:14px;color:var(--ink-2);display:grid;gap:4px}
+.whatsnew .wnmore{align-self:flex-start;min-height:36px}
 
 /* ===== Workout: the focus screen ===== */
 .focus{position:relative;overflow:hidden;min-height:min(calc(100vh - 190px),620px);min-height:min(calc(100dvh - 190px),620px);display:flex;flex-direction:column;background:linear-gradient(170deg,var(--navy-2),var(--navy-deep));color:var(--on-navy);border-radius:22px;padding:16px 18px 20px;box-shadow:0 14px 30px -18px rgba(19,32,58,.6)}
@@ -184,7 +186,7 @@ select{appearance:none;-webkit-appearance:none;padding-right:30px;background-ima
 .nums input{width:100%;min-width:0;padding:16px 8px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08);color:#fff;font-family:var(--display);font-size:38px;font-weight:700;text-align:center;font-variant-numeric:tabular-nums;-moz-appearance:textfield}
 .nums input::-webkit-outer-spin-button,.nums input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .nums input:focus{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.5)}
-.nums input::placeholder{color:rgba(255,255,255,.35)}
+.nums input::placeholder{color:rgba(255,255,255,.82)}
 .dots{display:flex;gap:8px;margin-top:6px;align-items:center;flex-wrap:wrap}
 .dots button{width:14px;height:14px;padding:0;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;color:var(--pr)}
 .dots button.done{background:#8FE3B4}
@@ -193,9 +195,9 @@ select{appearance:none;-webkit-appearance:none;padding-right:30px;background-ima
 .dots button .ic{width:10px;height:10px;stroke-width:3}
 .dots .dadd{width:auto;height:auto;border-radius:999px;padding:3px 9px;font-size:13px;color:var(--navy-muted);background:transparent;margin-left:auto}
 .focus .btn{margin-top:8px}
-.focus .foot{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:var(--navy-muted);margin-top:14px;flex-wrap:wrap}
-.focus .foot button,.focus .foot a{color:var(--on-navy);background:transparent;padding:4px 0;font-weight:500;font-size:14px;text-decoration:underline;text-underline-offset:3px;display:inline-flex;align-items:center;gap:5px}
-.focus .foot .ic{width:15px;height:15px}
+.focus .foot{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:14px}
+.focus .foot button,.focus .foot a{color:var(--on-navy);background:rgba(255,255,255,.1);min-height:52px;padding:7px 2px;border-radius:14px;font-weight:600;font-size:12.5px;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;white-space:nowrap}
+.focus .foot .ic{width:18px;height:18px}
 .restrow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.1)}
 .restrow .t{font-family:var(--display);font-size:28px;font-weight:700;font-variant-numeric:tabular-nums}
 .restrow .t.zero{color:#8FE3B4}
@@ -396,6 +398,8 @@ svg.wchart text{font-family:var(--body)}
 .sparkrow .n{font-weight:600;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sparkrow .s{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
 .sparkrow svg{width:100px;height:34px;display:block}
+.sparkrow .spark{display:grid;justify-items:end;gap:2px}
+.sparkrow .sv{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .musc{display:grid;gap:8px}
 .musc div{display:grid;grid-template-columns:88px 1fr auto;gap:10px;align-items:center;font-size:14px}
 .musc .bar{margin:0}
@@ -520,7 +524,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
 .nw{white-space:nowrap}
 .qrow .nums{display:block;font-size:13px;line-height:1.45;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:2px}
 .qrow .tag{font:700 11px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:5px 7px;border-radius:999px;background:var(--chip);color:var(--muted)}
-.qrow .tag.food{color:var(--cal)} .qrow .tag.lift{color:var(--pro)} .qrow .tag.wt{color:var(--good-ink)} .qrow .tag.lib{color:var(--warn-ink)} .qrow .tag.rulebook{color:var(--hist)} .qrow .tag.cyc{color:var(--cyc)}
+.qrow .tag.food{color:var(--cal)} .qrow .tag.lift{color:var(--accent)} .qrow .tag.wt{color:var(--good-ink)} .qrow .tag.lib{color:var(--warn-ink)} .qrow .tag.rulebook{color:var(--hist)} .qrow .tag.cyc{color:var(--cyc)}
 .prchip{display:inline-flex;align-items:center;gap:4px;font:700 12px/1 var(--body);padding:4px 8px;border-radius:999px;background:var(--pr-t);color:var(--ink)}
 .prchip .ic{width:12px;height:12px;color:var(--pr)}
 .savedtag{font:700 12px var(--body);color:var(--good-ink);margin-top:6px;display:block}
@@ -571,7 +575,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
       <div class="tile">
         <div class="eyebrow">Food today</div>
         <div class="stat" id="hPro">–</div>
-        <div class="bar"><i id="hProBar"></i></div>
+        <div class="bar pro"><i id="hProBar"></i></div>
         <div class="tline" id="hProLeft"></div>
         <div class="tline" id="hCalLeft"></div>
       </div>
@@ -608,7 +612,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
       <div class="tile">
         <div class="eyebrow">Protein</div>
         <div class="stat" id="fPro">0</div>
-        <div class="bar"><i id="fProBar"></i></div>
+        <div class="bar pro"><i id="fProBar"></i></div>
         <div class="tline" id="fProLeft"></div>
       </div>
     </div>
@@ -676,7 +680,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
       <p>Built around you. Three steps and your first workout is on this screen.</p>
     </div>
     <ol class="steps">
-      <li><span class="stnum">1</span><div><b>Tell your coach about you</b><span>Go to your Claude chat and say "Set me up". Nine quick questions.</span></div></li>
+      <li><span class="stnum">1</span><div><b>Tell your coach about you</b><span>Go to your Claude chat and say "Set me up". Ten quick questions.</span></div></li>
       <li><span class="stnum">2</span><div><b>Get your plan</b><span>Your days, lifts and food targets land here. Change anything by asking.</span></div></li>
       <li><span class="stnum">3</span><div><b>Do day one</b><span>Tap Start. The page fills in your weights and times your rest.</span></div></li>
     </ol>
@@ -738,11 +742,12 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   // ---------- core: helpers, shared state, settings, profile ----------
   // Every module below shares this one scope (build.py pastes them in order inside one function).
   // Nothing personal lives in the code: the name, phase, plan, targets, accent color and rules all come from config/main in the database.
-  const PAGE_VERSION = "3.12.8";
+  const PAGE_VERSION = "3.12.9";
   const $ = id => document.getElementById(id);
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const iso = d => { const z = new Date(d.getTime() - d.getTimezoneOffset()*60000); return z.toISOString().slice(0,10); };
-  const today = iso(new Date());
+  const clockDay = () => iso(new Date());
+  let today = clockDay();   // moves on at midnight: rollDay (tabs.js) re-checks it whenever the page comes back to the front
   const parseD = s => { const [y,m,d] = s.split("-").map(Number); return new Date(y, m-1, d); };
   const addDays = (s, n) => { const d = parseD(s); d.setDate(d.getDate()+n); return iso(d); };
   const fmtD = s => parseD(s).toLocaleDateString(undefined,{month:"short",day:"numeric"});
@@ -755,6 +760,9 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   let woDirty = false, planPicked = false, noteDirty = {};
 
   const targets = () => Object.assign({}, DEFAULT_TARGETS, S.config && S.config.targets);
+  // DEFAULT_TARGETS only keeps the charts and averages working on a half-set-up tracker. Nothing on screen may present them as the person's own
+  // numbers: every "to go" line checks hasTargets() first.
+  const hasTargets = () => { const t = S.config && S.config.targets; return !!(t && +t.calMin > 0 && +t.proMin > 0); };
   const plan = () => (S.config && S.config.plan) || [];
   // settings live in config/main.settings: {sugar: true/false, sugarLimit: grams a day, cycle: true/false (period notes), units ("kg" or unset = lb), weeklyRate: [low, high] lb (or kg) a week
   // (negative = losing), gainPerWeek (older name for weeklyRate), weeklyGoal, week, rotation, blockStart, accent (a hex color), seenVersion (the last
@@ -771,14 +779,25 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   const beforeLabel = () => (S.baseline && S.baseline.label) || "earlier";   // what imported lift history is called (config/baseline.label, for example the name of the app it came from)
   const ruleList = v => (Array.isArray(v) ? v : v ? [v] : []).map(x => String(x || "").trim()).filter(Boolean);
   // the accent color is a setting (settings.accent, a hex color) so every install can pick its own; the page keeps text readable on it
-  const ACCENTS = [["Blue", "#2F6BFF"], ["Teal", "#0E9F8E"], ["Green", "#1E9E5B"], ["Coral", "#E8632E"], ["Rose", "#D6457A"], ["Violet", "#7A5CFF"], ["Gold", "#C98A12"], ["Slate", "#4A6A9E"]];
+  // every choice is dark enough for white button text (4.5 to 1 or better). ACCENT_WAS maps the lighter colors saved before 3.12.9 onto them.
+  const ACCENTS = [["Blue", "#2F6BFF"], ["Teal", "#0B8073"], ["Green", "#17824B"], ["Coral", "#C94A16"], ["Rose", "#CF3A70"], ["Violet", "#7253F5"], ["Gold", "#96690A"], ["Slate", "#4A6A9E"]];
+  const ACCENT_WAS = { "#0e9f8e": "#0B8073", "#1e9e5b": "#17824B", "#e8632e": "#C94A16", "#d6457a": "#CF3A70", "#7a5cff": "#7253F5", "#c98a12": "#96690A" };
+  const accentHex = () => { const a = String(sett().accent || ""); return ACCENT_WAS[a.toLowerCase()] || a; };
+  const hexLum = h => { const n = parseInt(h.slice(1), 16), f = c => { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }; return 0.2126 * f(n >> 16) + 0.7152 * f((n >> 8) & 255) + 0.0722 * f(n & 255); };
+  const contrast = (a, b) => { const x = hexLum(a), y = hexLum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+  const mixWhite = (h, t) => { const n = parseInt(h.slice(1), 16), m = c => Math.round(c + (255 - c) * t); return "#" + [n >> 16, (n >> 8) & 255, n & 255].map(c => m(c).toString(16).padStart(2, "0")).join(""); };
+  const darkMode = () => { const t = document.documentElement.dataset.theme; return t === "dark" || (t !== "light" && !!(window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches)); };
   const hexOk = v => /^#[0-9a-f]{6}$/i.test(String(v || ""));
   function applyAccent(){
-    const a = sett().accent, root = document.documentElement.style;
+    let a = accentHex(); const root = document.documentElement.style;
     if (!hexOk(a)){ root.removeProperty("--accent"); root.removeProperty("--accent-ink"); root.removeProperty("--accent-soft"); return; }
-    const n = parseInt(a.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255, lum = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
-    root.setProperty("--accent", a); root.setProperty("--accent-ink", lum > 0.6 ? "#13203A" : "#fff"); root.setProperty("--accent-soft", `rgba(${r},${g},${b},.14)`);
+    // at night the picked color is lightened until it reads on a dark card (the built-in blue has its own lighter night shade the same way)
+    if (darkMode()) for (let t = 0.1; t <= 0.8 && contrast(a, "#172238") < 5.5; t += 0.1) a = mixWhite(accentHex(), t);
+    const n = parseInt(a.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+    // button text is whichever of white or navy reads better on the color, so a custom color can never make a button unreadable
+    root.setProperty("--accent", a); root.setProperty("--accent-ink", contrast(a, "#FFFFFF") >= contrast(a, "#0B1426") || contrast(a, "#FFFFFF") >= 4.5 ? "#fff" : "#0B1426"); root.setProperty("--accent-soft", `rgba(${r},${g},${b},.14)`);
   }
+  try { matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => applyAccent()); } catch(e){}   // day to night while the page is open
   // a settings write from the page: re-read config/main first so nothing logged elsewhere is overwritten
   async function saveSettings(patch){
     if (!S.db || !S.config) throw new Error("nodb");
@@ -795,7 +814,12 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     rest: {   // seconds between sets. A plan exercise's own "rest" field wins; profile.restMain and profile.restSecondary add names to the lists.
       main: 150, secondary: 105, other: 75,   // heavy main lifts 2:30, secondary lifts 1:45, everything else 1:15
       mainLifts: ["Barbell bench press","Incline barbell press","Barbell back squat","Barbell Romanian deadlift","Barbell overhead press","Barbell bent-over row","Pull-ups","T-bar row","Barbell hip thrust"],
-      secondaryLifts: ["Close-grip bench press","Dumbbell Bulgarian split squat","Smith machine squat","Smith machine reverse lunge","Lat pulldown","Seated cable row","Cable pull-through"]
+      secondaryLifts: ["Close-grip bench press","Dumbbell Bulgarian split squat","Smith machine squat","Smith machine reverse lunge","Lat pulldown","Seated cable row","Cable pull-through"],
+      // any name not on a list is sorted by kind (liftKind in history.js): the big free-weight lifts are main; the same moves on a machine,
+      // with dumbbells or one leg at a time, and the other multi-joint pulls and presses, are secondary; the rest is "other"
+      mainLike: /bench press|squat|deadlift|overhead press|military press|shoulder press|bent[- ]over row|barbell row|t-bar row|pull-ups?|chin-ups?|hip thrust/i,
+      secondaryLike: /pulldown|pull-down|\brows?\b|\bpress\b|lunge|\bdips?\b|push-ups?|pull-through|step-ups?|good morning/i,
+      notMain: /dumbbell|\bdb\b|kettlebell|goblet|machine|smith|cable|band|split squat|single[- ]leg|one[- ]leg|close-grip|hack|assisted/i
     },
     effort: {   // the tap after the last set of a lift, saved as exercises[].effort (1 to 4). Old logs have no effort: every rule below still works without it.
       labels: ["", "Easy", "Good", "Hard", "Max"], hints: ["", "3+ reps left", "2 left", "1 left", "no reps left"],
@@ -870,12 +894,27 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     $("dateLabel").textContent = S.tab === "progress" ? "Progress" : fmtShort(S.date);
     $("topSub").textContent = bits.filter(Boolean).join(" · ");
     $("goToday").hidden = S.date === today;
+    $("prevDay").hidden = $("nextDay").hidden = S.tab === "progress";   // Progress always reads up to the date picked on the other tabs: no arrows beside its title
     const dn = $("dateNote"), off = S.date !== today && S.tab !== "progress", ahead = S.date > today;   // logging on another day should never be a surprise
     dn.hidden = !off; dn.classList.toggle("ahead", ahead);
     if (off) dn.innerHTML = `<span>${ahead ? "You're logging for" : "Viewing"} <b>${esc(fmtShort(S.date))}</b></span><span class="go">Back to today</span>`;
     if (P.name) document.title = `${P.name}'s Training Log`;
   }
   const setDate = d => { if (typingSet()) document.activeElement.blur(); flushWoSave(); mealEdit = null; showAllFlat = false; S.date = d; $("dateInput").value = d; S.draft = {}; S.touched = {}; S.filledEx = {}; S.editW = false; woDirty = false; planPicked = false; noteDirty = {}; pendingLog = null; FM.ei = null; FM.si = null; FM.after = null; FM.typed = null; FM.edit = false; renderAll(); renderLogPrev(); };
+  // A page left open overnight must not keep logging into yesterday. When the calendar day changes, "today" moves on. If the page was showing
+  // the old today it follows, unless a workout is still open or a set is being typed (a late-night session stays on its own day, with the
+  // "Back to today" line showing).
+  function rollDay(){
+    const n = clockDay(); if (n === today) return false;
+    if (typingSet()) return false;   // try again on the next tick
+    const was = today, w = S.date === was ? loggedOn(was) : null, midWorkout = woDirty || !!(w && !w.rest && !w.done && S.tab === "workout");
+    today = n;
+    if (S.date === was && !midWorkout) setDate(n); else renderAll();
+    return true;
+  }
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") rollDay(); });
+  window.addEventListener("focus", rollDay); window.addEventListener("pageshow", rollDay);
+  setInterval(rollDay, 60000);
   $("dateInput").addEventListener("change", e => e.target.value && setDate(e.target.value));
   let calMon = null;
   function renderCal(){   // month grid; a dot marks days with food or a workout logged
@@ -939,7 +978,8 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     const cl = t.calMin - tot.cal, pl = t.proMin - tot.pro;
     $("fCalLeft").textContent = cl > 0 ? `${Math.round(cl).toLocaleString()} to go` : tot.cal > t.calMax ? `${Math.round(tot.cal - t.calMax).toLocaleString()} over` : "In range";
     $("fProLeft").textContent = pl > 0 ? `${Math.round(pl)} g to go` : "Protein hit";
-    if (d === today && S.proWas != null && S.proWas < t.proMin && tot.pro >= t.proMin) setTimeout(() => burst($("fPro")), 200);
+    if (!hasTargets()){ $("fCalBar").style.width = $("fProBar").style.width = "0%"; $("fProBar").parentElement.classList.remove("good"); $("fCalLeft").textContent = "No target yet"; $("fProLeft").textContent = "Ask your coach to set one"; }
+    if (hasTargets() && d === today && S.proWas != null && S.proWas < t.proMin && tot.pro >= t.proMin) setTimeout(() => burst($("fPro")), 200);
     if (d === today) S.proWas = tot.pro;
     const meals = day.meals || [], sugOver = st.sugar && tot.sug > st.sugarLimit;
     $("mealCount").textContent = meals.length ? `${meals.length} logged` : (dayDoc(addDays(d, -1)).meals || []).length ? `Yesterday ${Math.round(totals(addDays(d, -1)).cal).toLocaleString()} cal · ${Math.round(totals(addDays(d, -1)).pro)} g protein` : "";
@@ -1028,30 +1068,49 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     $("mSave").onclick = async () => {
       const i = findEdited(), st = $("foodStatus");
       if (i < 0){ mealEdit = null; st.textContent = "That food changed while you were editing. Try again."; renderMeals(); return; }
-      const d = S.date, day = JSON.parse(JSON.stringify(dayDoc(d))), m = day.meals[i];
+      const d = S.date, was = JSON.stringify(dayDoc(d).meals[i]), m = JSON.parse(was);
       m.name = (q("name").value || m.name).trim().slice(0, 120);
       ["cal","protein","carbs","fat","addedSugar"].forEach(f => { const el = q(f); if (!el) return; const v = parseFloat(el.value); if (!isNaN(v)) m[f] = f === "cal" ? Math.round(v) : r05(v); });
       const ml = q("meal").value; if (ml) m.meal = ml; else delete m.meal;
       $("mSave").disabled = true;
       if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
-      if (await writeDay(d, day, st)){ mealEdit = null; st.textContent = `Saved ${m.name}.`; renderMeals(); }
+      if (await changeDay(d, day => { const k = mealAt(day.meals, i, was); if (k < 0) return false; day.meals[k] = m; }, st)){ mealEdit = null; st.textContent = `Saved ${m.name}.`; renderMeals(); }
       else if ($("mSave")) $("mSave").disabled = false;
     };
   }
   $("mealList").addEventListener("focusout", () => setTimeout(() => { if (mealsPending && !editingMeal()) renderMeals(); }, 80));
-  async function writeDay(d, body, statusEl){
-    if (!S.db){ if (statusEl) statusEl.textContent = "Open this page in Claude to save."; else toast("Open this page in Claude to save."); return false; }
-    try { await DB.set("days/"+d, body); if (statusEl) statusEl.textContent = "Saved."; return true; }
-    catch(e){ const msg = e && e.code === "invalid_argument" ? "You can view this log but not edit it." : "Couldn't save. Try again in a moment."; if (statusEl) statusEl.textContent = msg; else toast(msg); return false; }
+  // Every save to a day re-reads the day from the database first and applies ONE change to that fresh copy, so food or a weigh-in logged
+  // a moment ago in a chat, on another device, or by the tap just before this one is never overwritten by what this page had in memory.
+  // Saves run one after another. `change(day)` edits the fresh day in place; returning false means "what I wanted to change is gone".
+  let dayQueue = Promise.resolve();
+  function changeDayStrict(d, change){   // resolves true (saved) or false (change refused); rejects when the database does
+    const run = async () => {
+      const cur = await DB.get("days/"+d), day = cur.exists && cur.data ? JSON.parse(JSON.stringify(cur.data)) : {};
+      day.date = d; day.meals = Array.isArray(day.meals) ? day.meals : [];
+      if (change(day) === false) return false;
+      await DB.set("days/"+d, day);
+      S.days[d] = day;   // the live snapshot follows; until then the next tap already sees this save
+      return true;
+    };
+    const p = dayQueue.then(run, run); dayQueue = p.catch(() => {}); return p;
   }
+  async function changeDay(d, change, statusEl){
+    const say = msg => { if (statusEl) statusEl.textContent = msg; else toast(msg); };
+    if (!S.db){ say("Open this page in Claude to save."); return false; }
+    try {
+      if (!(await changeDayStrict(d, change))){ say("That changed somewhere else. Check it and try again."); return false; }
+      if (statusEl) statusEl.textContent = "Saved."; return true;
+    } catch(e){ say(e && e.code === "invalid_argument" ? "You can view this log but not edit it." : "Couldn't save. Try again in a moment."); return false; }
+  }
+  // where a meal seen on screen sits in the fresh day: the same spot if it is unchanged, else wherever an identical one is, else -1
+  const mealAt = (meals, i, was) => JSON.stringify(meals[i]) === was ? i : meals.findIndex(x => JSON.stringify(x) === was);
   // Quick add: calories and protein are enough (no name = "Quick add"). If carbs and fat are in and the calories are far below what
   // the macros add up to (protein and carbs 4 kcal a gram, fat 9), offer the macro total once before saving.
   const macroCal = (p, c, f) => Math.round(p * 4 + c * 4 + f * 9);
   let qaChecked = null;
   $("mealForm").addEventListener("submit", async e => {
     e.preventDefault();
-    const st = $("foodStatus"), day = JSON.parse(JSON.stringify(dayDoc(S.date)));
-    day.meals = day.meals || []; day.date = S.date;
+    const st = $("foodStatus"), d = S.date;
     const meal = { name:$("mealName").value.trim().slice(0, 120) || "Quick add", cal:Math.round(+$("mealCal").value), protein:r05(+$("mealPro").value),
       time:new Date().toLocaleTimeString([], {hour:"numeric", minute:"2-digit"}) };
     if (S.date === today) meal.meal = nowMeal();
@@ -1066,23 +1125,18 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
       return;
     }
     qaChecked = null;
-    day.meals.push(meal);
-    if (await writeDay(S.date, day, st)) { st.textContent = `Saved ${meal.name}.`; ["mealName","mealCal","mealPro","mealCarb","mealFat","mealSug"].forEach(id => $(id).value=""); }
+    if (await changeDay(d, day => { day.meals.push(meal); }, st)) { st.textContent = `Saved ${meal.name}.`; ["mealName","mealCal","mealPro","mealCarb","mealFat","mealSug"].forEach(id => $(id).value=""); }
   });
   let undoTimer = null;
   async function removeMeal(i){
-    const d = S.date, day = JSON.parse(JSON.stringify(dayDoc(d)));
-    const [gone] = day.meals.splice(i,1);
+    const d = S.date, gone = dayDoc(d).meals[i], was = JSON.stringify(gone);
     const st = $("foodStatus");
-    if (!(await writeDay(d, day, st))) return;
+    if (!gone || !(await changeDay(d, day => { const k = mealAt(day.meals, i, was); if (k < 0) return false; day.meals.splice(k, 1); }, st))) return;
     clearTimeout(undoTimer);
     st.innerHTML = `Deleted “${esc(gone.name)}”. <button class="ghost" id="undoMeal" style="color:var(--accent);font-weight:700">Undo</button>`;
     $("undoMeal").onclick = async () => {
       clearTimeout(undoTimer);
-      const cur = JSON.parse(JSON.stringify(dayDoc(d)));
-      cur.meals = cur.meals || [];
-      cur.meals.splice(Math.min(i, cur.meals.length), 0, gone);
-      if (await writeDay(d, cur, st)) st.textContent = `Restored “${gone.name}”.`;
+      if (await changeDay(d, day => { day.meals.splice(Math.min(i, day.meals.length), 0, gone); }, st)) st.textContent = `Restored “${gone.name}”.`;
     };
     undoTimer = setTimeout(() => { if ($("undoMeal")) st.textContent = ""; }, 10000);
   }
@@ -1106,7 +1160,16 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     const n = ex && ex.name, P = prof(), R = COACH_RULES.rest;
     const pe = plan().flatMap(p => p.exercises || []).find(e => e.name === n && +e.rest > 0);
     if (pe) return +pe.rest;
-    return R.mainLifts.concat(P.restMain || []).includes(n) ? R.main : R.secondaryLifts.concat(P.restSecondary || []).includes(n) ? R.secondary : R.other;
+    return R[liftKind(n)];
+  }
+  // "main", "secondary" or "other". Exact names on the lists win (COACH_RULES.rest plus profile.restMain and profile.restSecondary); any other
+  // name is sorted by what kind of lift it reads as, so a buyer's plan never depends on spelling a lift the way one plan did.
+  function liftKind(n){
+    const P = prof(), R = COACH_RULES.rest, s = String(n || "");
+    if (R.mainLifts.concat(P.restMain || []).includes(n)) return "main";
+    if (R.secondaryLifts.concat(P.restSecondary || []).includes(n)) return "secondary";
+    if (R.notMain.test(s)) return R.secondaryLike.test(s) || R.mainLike.test(s) ? "secondary" : "other";
+    return R.mainLike.test(s) ? "main" : R.secondaryLike.test(s) ? "secondary" : "other";
   }
   // The last session of a lift before a date. With dayId, the last time it was done ON THAT PLAN DAY: Day 1 incline and Day 4 incline
   // are different lifts (different sets, reps and loads), so history is keyed by exercise AND day. If this day has never had the
@@ -1192,13 +1255,18 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
       }
       return { kind:"hold", title:`Stay at ${at}`, sub:`one more try for ${lo}+ reps`, why:`${below} of ${reps.length} sets were under ${lo} last time (${txt}).`, nw:w, nr:lo };
     }
-    // no progress: the best set of this lift on this plan day didn't improve across the last stallSessions sessions in the window
+    // no progress: the last stallSessions sessions of this lift on this plan day (inside the window) were all at the same working weight and
+    // the newest one added no reps over either of the others. Reps are counted across the working sets, not just the best set, so
+    // 10,8,7 then 10,9,8 then 10,10,9 is progress. A change of weight inside the window (a jump up, or the drop rule) is never a stall.
     const N = PR.stallSessions, inWin = x => x.date < date && x.date >= addDays(date, -PR.stallWindowDays) && (!dayId || x.dayId === dayId);
     const sorted = S.workouts.filter(x => inWin(x) && (x.exercises || []).some(e => e.name === ex.name && (e.sets || []).some(s => +s.r > 0))).sort((a, b) => a.date < b.date ? 1 : -1).slice(0, N);
     if (sorted.length >= N){
-      const sc = sorted.map(x => { const t = topSet(ex.name, (x.exercises.find(e => e.name === ex.name) || {}).sets); return t ? setScore(ex.name, t) : 0; });
-      if (sc.length === N && sc[0] <= sc[N - 1] + 1e-9 && sc[0] <= sc[1] + 1e-9)
-        return { kind:"hold", title:`Stay at ${at}, or swap it`, sub:`no progress in ${N} sessions`, why:`Same numbers ${N} times (${txt}). A similar lift for a few weeks often gets things moving. Ask the coach for one.`, nw:w };
+      const st = sorted.map(x => cueStats(ex, x.exercises.find(e => e.name === ex.name))).filter(Boolean);
+      if (st.length === N && st.every(x => x.w === st[0].w)){
+        const k = Math.min(...st.map(x => x.reps.length)), tot = st.map(x => x.reps.slice().sort((a, b) => b - a).slice(0, k).reduce((a, r) => a + r, 0));   // the same number of sets from each session
+        if (tot[0] <= tot[N - 1] && tot[0] <= tot[1])
+          return { kind:"hold", title:`Stay at ${at}, or swap it`, sub:`no progress in ${N} sessions`, why:`No reps added in ${N} sessions at this weight (${txt}). A similar lift for a few weeks often gets things moving. Ask the coach for one.`, nw:w };
+      }
     }
     if (reps.length < planned) return { kind:"hold", title:`Stay at ${at}`, sub:`finish all ${planned} sets`, why:`Last time: ${txt}.`, nw:w };
     if (below) return { kind:"hold", title:`Stay at ${at}`, sub:`aim for ${lo}+ on every set`, why:`Last time: ${txt}.`, nw:w, nr:lo };
@@ -2130,7 +2198,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     if (where === "meas") return openMeasSheet();
     if (where === "ck") return openCheckinSheet();
   }
-  const mainLiftNames = () => { const R = COACH_RULES.rest, main = new Set(R.mainLifts.concat(prof().restMain || [])); return [...new Set(plan().flatMap(p => p.exercises.map(e => e.name)))].filter(n => main.has(n)); };
+  const mainLiftNames = () => [...new Set(plan().flatMap(p => (p.exercises || []).map(e => e.name)))].filter(n => liftKind(n) === "main");
   function liftPoints(name){   // best set per session, as an estimated one-rep max (reps for bodyweight moves)
     const bw = isBW(name), score = s => bw ? +s.r : (+s.w || 0) * (1 + (+s.r || 0) / 30);
     const pts = [];
@@ -2159,9 +2227,10 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     weightTrend($("weightChart"), ws, { label: "Daily weight with 7-day average" });
     $("pAllCharts").onclick = openChartsSheet; $("pAllPhotos").onclick = openPhotosSheet;
     // main lifts
-    const names = mainLiftNames(), rows = names.map(n => { const pts = liftPoints(n).filter(x => x.date <= d), logged = pts.filter(x => !(S.baseline && x.date === S.baseline.asOf)); if (!logged.length) return "";
+    const weekBest = a => Object.values(a.reduce((m, x) => { const k = sundayOf(x.date); if (!m[k] || x.v > m[k].v) m[k] = x; return m; }, {})).sort((x, y) => x.date < y.date ? -1 : 1);   // one point a week (its best set): a lift done heavy on one day and lighter on another doesn't draw a zigzag
+    const names = mainLiftNames(), rows = names.map(n => { const pts = weekBest(liftPoints(n).filter(x => x.date <= d)), logged = pts.filter(x => !(S.baseline && x.date === S.baseline.asOf)); if (!logged.length) return "";
       const best = pts.reduce((b, x) => !b || x.v > b.v ? x : b, null), bw = isBW(n);
-      return `<div class="sparkrow"><div><div class="n">${esc(n)}</div><div class="s">best ${esc(fmtSet(best.set, n))}${bw ? "" : ` · est. max ${best.v} ${U()}`}</div></div>${sparkSvg(pts.map(x => x.v))}</div>`; }).filter(Boolean);
+      return `<div class="sparkrow"><div><div class="n">${esc(n)}</div><div class="s">best ${esc(fmtSet(best.set, n))}${bw || +best.set.r > 12 ? "" : ` · est. max ${best.v} ${U()}`}</div></div><div class="spark">${sparkSvg(pts.map(x => x.v))}${pts.length > 1 ? `<div class="sv">${esc(pts[0].label.replace(/ \(.*$/, ""))} → ${esc(pts[pts.length - 1].label)}</div>` : ""}</div></div>`; }).filter(Boolean);
     $("pLifts").innerHTML = rows.length ? rows.join("") : `<div class="empty">Your main lifts chart here once you log them.</div>`;
     // sets by muscle this week
     const ms = muscleSets(sun), dow = parseD(d).getDay();
@@ -2185,14 +2254,15 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
           { id: "meas", k: "Monthly tape", v: S.meas.length ? `last ${fmtD([...S.meas].sort((a, b) => a.date < b.date ? 1 : -1)[0].date)}` : "none yet" }]],
         ["My plan", [
           { id: "plan", k: "My plan", v: `${wk.length} days · goal ${weekGoal(sun)}` },
-          { id: "targets", k: "Food targets", sub: `${t.calMin.toLocaleString()} to ${t.calMax.toLocaleString()} calories · ${t.proMin}+ g protein` },
+          { id: "targets", k: "Food targets", sub: hasTargets() ? `${t.calMin.toLocaleString()} to ${t.calMax.toLocaleString()} calories · ${t.proMin}+ g protein` : "Not set yet. Tap to ask your coach." },
           { id: "block", k: "Training block", v: b.head },
           { id: "len", k: "Session length", v: lp ? `${lp} minutes` : "full workouts" }]],
         ["Settings", [
           { id: "prefill", k: "Suggested sets", v: pfOn() ? "on" : "off" },
           { id: "units", k: "Weights in", v: kgOn() ? "kilograms" : "pounds" },
-          { id: "look", k: "Accent color", v: (ACCENTS.find(a => a[1].toLowerCase() === String(sett().accent || "").toLowerCase()) || ["Blue"])[0] },
+          { id: "look", k: "Accent color", v: (ACCENTS.find(a => a[1].toLowerCase() === accentHex().toLowerCase()) || ["Blue"])[0] },
           { id: "a2hs", k: "Add to Home Screen", v: "how to" },
+          { id: "privacy", k: "Privacy and feedback", v: "your data is yours" },
           { id: "about", k: "About this page", v: PAGE_VERSION }]]
       ];
       return groups.map(([h, rows]) => `<div class="gh">${h}</div>` + rowsHtml(rows)).join("");
@@ -2213,6 +2283,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
       if (r === "units") return openUnitsSheet();
       if (r === "look") return openLookSheet();
       if (r === "a2hs") return openHomeScreenSheet();
+      if (r === "privacy") return openPrivacySheet();
       if (r === "about") return openAboutSheet();
     });
     openSheet({ title: "Settings and my plan", html: build(), wire, tall: true, refresh(){ $("uiSheetBody").innerHTML = build(); wire($("uiSheetBody")); } });
@@ -2221,6 +2292,10 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     const k = kgOn();
     openSheet({ title: "Weights in", html: `<div class="note">Pick what your plates and your scale use. This changes the labels only (kg also shows the tape in cm). Numbers you already logged are not converted, so pick this before you start logging.</div><div class="lenpick"><button type="button" data-un="lb" aria-pressed="${!k}">Pounds (lb)</button><button type="button" data-un="kg" aria-pressed="${k}">Kilograms (kg)</button></div>`,
       wire(body){ body.querySelectorAll("[data-un]").forEach(b => b.onclick = async () => { const kg = b.dataset.un === "kg"; try { await saveSettings({ units: kg ? "kg" : null }); toast(kg ? "Weights now show in kg." : "Weights now show in lb."); sheetBack(); } catch(e){ toast("Open this page in Claude to save."); } }); } });
+  }
+  function openPrivacySheet(){   // nothing on this page sends data anywhere; feedback and sharing go through the coach chat, and the person sends it
+    openSheet({ title: "Privacy and feedback", html: `<div class="note">Everything you log lives in your own Claude account. Nobody else can see it, including the people who made this tracker. This page never sends your data anywhere.</div>
+      <ol class="howto"><li><b>Send feedback:</b> in a chat in your coach project, say <b>send feedback</b>. Your coach drafts a short note, you decide what goes in, and you send it yourself.</li><li><b>Share your results:</b> say <b>share my results</b>. You get a short summary you can share or keep. Your weight and photos are left out unless you ask for them.</li></ol>` });
   }
   function openHomeScreenSheet(){
     openSheet({ title: "Add to Home Screen", html: `<div class="note">Put a shortcut to this page on your phone, next to your apps.</div>
@@ -2233,7 +2308,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     const t = targets(), g = +sett().weeklyGoal, sun = sundayOf(today), wk = weekBase();
     const dayRows = wk.map((id, i) => { const p = plan().find(x => x.id === id); return { id: "d" + i, k: WDAYL[i], v: isRestId(id) || !p ? "Rest" : p.name, chev: false }; });
     const html = `<div class="note">Targets, days and lifts change through a chat with your coach. Tap a line to ask.</div>` + rowsHtml([
-      { id: "targets", k: "Food targets", sub: `${t.calMin.toLocaleString()} to ${t.calMax.toLocaleString()} calories · ${t.proMin}+ g protein` },
+      { id: "targets", k: "Food targets", sub: hasTargets() ? `${t.calMin.toLocaleString()} to ${t.calMax.toLocaleString()} calories · ${t.proMin}+ g protein` : "Not set yet. Tap to ask your coach." },
       { id: "goal", k: "Weekly goal", v: `${weekGoal(sun)} workouts${g ? "" : " (from the plan)"}` },
       { id: "ex", k: "Lifts", v: `${plan().filter(p => !isRest(p)).reduce((a, p) => a + p.exercises.length, 0)} across ${plan().filter(p => !isRest(p)).length} days` }
     ]) + `<h3>Usual week</h3>` + rowsHtml(dayRows) + `<div class="sheetacts"><button type="button" id="plWeek">Change which days I train</button></div>`;
@@ -2248,7 +2323,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
       wire(body){ body.querySelectorAll("[data-len]").forEach(b => b.onclick = () => { memLen = +b.dataset.len; try { localStorage.setItem("tl-len", b.dataset.len); } catch(e){} closeSheet(); renderWorkout(); toast(memLen ? `Workouts trimmed to ${memLen} minutes.` : "Full workouts."); }); } });
   }
   function openLookSheet(){
-    const cur = String(sett().accent || "").toLowerCase();
+    const cur = accentHex().toLowerCase();
     openSheet({ title: "Accent color", html: `<div class="note">The color of buttons, bars and the trend line.</div><div class="swatches">${ACCENTS.map(([n, c]) => `<button type="button" data-acc="${c}" style="--c:${c}" aria-label="${n}" aria-pressed="${cur === c.toLowerCase() || (!cur && c === ACCENTS[0][1])}"></button>`).join("")}</div>`,
       wire(body){ body.querySelectorAll("[data-acc]").forEach(b => b.onclick = async () => { const c = b.dataset.acc; try { await saveSettings({ accent: c === ACCENTS[0][1] ? null : c }); toast("Accent saved."); } catch(e){ toast("Open this page in Claude to save."); } }); } });
   }
@@ -2301,7 +2376,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
       pick.onchange = () => { S.liftPick = pick.value; drawGearChart(); };
       const name = pick.value, bw = isBW(name);
       note.textContent = bw ? "Best set, in reps." : "Estimated one-rep max from your best set each session, so heavier weight and extra reps both count.";
-      lineChart(el, [{pts: liftPoints(name), color:"var(--pro)", dots:true, endLabel:true, area:true}], {unit: bw ? "" : " " + U(), label: name + " progress", empty:"No sessions for this lift yet.", minPad: bw ? 1 : 5, from: rangeFrom(), cmpMode:"max", cmpLabel:"Best"});
+      lineChart(el, [{pts: liftPoints(name), color:"var(--accent)", dots:true, endLabel:true, area:true}], {unit: bw ? "" : " " + U(), label: name + " progress", empty:"No sessions for this lift yet.", minPad: bw ? 1 : 5, from: rangeFrom(), cmpMode:"max", cmpLabel:"Best"});
     } else {
       const keys = measKeys(), pick = $("measPick");
       pick.innerHTML = keys.map(k => `<option value="${k}">${MEAS[k][0]}</option>`).join(""); if (S.measPick && keys.includes(S.measPick)) pick.value = S.measPick;
@@ -2409,7 +2484,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     const el = $("hCycle"), on = sett().cycle; el.hidden = !on; if (!on) return;
     const d = S.date, day = dayDoc(d), was = !!day.period, cd = cycleDay(d);
     el.innerHTML = `<span>Cycle${cd && cd <= 45 ? ` · day ${cd}` : ""}</span><span class="${was ? "hot" : ""}">${was ? "Period started this day ✓" : "Period started today? Tap"}</span>`;
-    el.onclick = async () => { const x = JSON.parse(JSON.stringify(dayDoc(d))); x.date = d; x.meals = x.meals || []; if (x.period) delete x.period; else x.period = true; if (await writeDay(d, x)) toast(x.period ? "Noted. Your weight chart marks it." : "Period note removed."); };
+    el.onclick = async () => { let on = false; if (await changeDay(d, x => { if (x.period) delete x.period; else x.period = true; on = !!x.period; })) toast(on ? "Noted. Your weight chart marks it." : "Period note removed."); };
   }
   function foodStreak(d){   // days in a row with food logged, counting today once something is logged
     let n = (dayDoc(d).meals || []).length ? 1 : 0, k = 1;
@@ -2449,6 +2524,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     $("hProBar").style.width = Math.min(100, tot.pro / t.proMin * 100) + "%"; $("hProBar").parentElement.classList.toggle("good", tot.pro >= t.proMin);
     $("hProLeft").textContent = tot.pro >= t.proMin ? "Protein hit" : `${Math.round(t.proMin - tot.pro)} g protein to go`;
     $("hCalLeft").textContent = tot.cal < t.calMin ? `${Math.round(t.calMin - tot.cal).toLocaleString()} calories to go` : tot.cal > t.calMax ? `${Math.round(tot.cal - t.calMax).toLocaleString()} calories over` : "Calories in range";
+    if (!hasTargets()){ $("hPro").innerHTML = `${Math.round(tot.pro)}<small>g protein</small>`; $("hProBar").style.width = "0%"; $("hProBar").parentElement.classList.remove("good"); $("hProLeft").textContent = "No food targets yet"; $("hCalLeft").textContent = "Ask your coach to set them"; }
     const hasW = typeof day.weight === "number", avg = avg7(d);
     $("hAvg").innerHTML = hasW && !S.editW ? `${esc(day.weight)}<small>${U()}${avg ? ` · 7-day ${avg.toFixed(1)}` : ""}</small>` : avg ? `${avg.toFixed(1)}<small>7-day avg</small>` : `–<small>${U()}</small>`;
     $("hWeighTitle").textContent = hasW ? "Weighed in" : d === today ? "Morning weigh-in" : "Weigh-in";
@@ -2462,10 +2538,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   $("weightForm").addEventListener("submit", async e => {
     e.preventDefault();
     const v = parseFloat($("weightInput").value);
-    const day = JSON.parse(JSON.stringify(dayDoc(S.date)));
-    if (isNaN(v)) delete day.weight; else day.weight = v;
-    day.meals = day.meals || []; day.date = S.date;
-    if (await writeDay(S.date, day, $("wStatus"))){ S.editW = false; $("wStatus").textContent = ""; $("weightInput").blur(); renderHomeTiles(); }
+    if (await changeDay(S.date, day => { if (isNaN(v)) delete day.weight; else day.weight = v; }, $("wStatus"))){ S.editW = false; $("wStatus").textContent = ""; $("weightInput").blur(); renderHomeTiles(); }
   });
   function dueItems(){   // what's due on this date, each one line, newest first: check-in, measurements, photos, a missed workout
     const d = S.date, mon = d.slice(0, 7), dom = +d.slice(8), dow = parseD(d).getDay(), wk = sundayOf(d), out = [];
@@ -2498,11 +2571,12 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     $("hStreak").innerHTML = bits.length ? `<span>Streaks</span><span>${esc(bits.join(" · "))}</span>` : `<span>Streaks</span><span>Log a workout and your food to start one</span>`;
   }
   // one-time "What's new" card after an update, closed with a tap and remembered in settings.seenVersion
-  const WHATS_NEW = ["Food numbers are in plain words now: cal, protein, carbs and fat. No more kcal, P, C or F.", "The coach's Save card is easier to read: each food's numbers stay together on their own line.", "Bigger text and bigger buttons all over the page.", "Home shows calories to go next to protein.", "Settings is sorted into four groups. All charts and All photos also sit right on Progress.", "Your main lifts show an estimated max, labeled as an estimate.", "The monthly tape has a picture of where to measure.", "New in Settings: weights in kilograms, and how to add this page to your Home Screen."];
+  const WHATS_NEW = ["Safer saving: the page checks for anything you logged in a chat or on another device before every save, so nothing gets written over.", "A page left open overnight now moves on to the new day by itself.", "\"No progress\" only shows when you really added no reps for 3 sessions at the same weight.", "Workout screen: the suggested weight and reps are easier to read, and Form video, Swap, Skip lift and Note are bigger buttons.", "Progress: each main lift shows where it started and where it is now. The estimated max is left off for sets over 12 reps, where it isn't reliable.", "In kilograms, the coach now saves weigh-ins under 60 kg.", "New in Settings: Privacy and feedback. Your data stays in your account, and you choose what to share.", "Colors: every accent color is easier to read, a picked accent gets a lighter night shade, cards have a thin outline at night, and protein has its own color."];
   function renderWhatsNew(){
     const el = $("whatsNew"), show = !!(S.db && S.config && plan().length && sett().seenVersion !== PAGE_VERSION && !S.first && !S.wnClosed);
     el.hidden = !show; if (!show) return;
-    el.innerHTML = `<div class="cardhead"><span class="eyebrow">What's new in ${esc(PAGE_VERSION)}</span><button type="button" class="linkbtn" id="wnOk">Got it</button></div><ul>${WHATS_NEW.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`;
+    el.innerHTML = `<div class="cardhead"><span class="eyebrow">What's new in ${esc(PAGE_VERSION)}</span><button type="button" class="linkbtn" id="wnOk">Got it</button></div><ul>${(S.wnAll ? WHATS_NEW : WHATS_NEW.slice(0, 2)).map(x => `<li>${esc(x)}</li>`).join("")}</ul>${!S.wnAll && WHATS_NEW.length > 2 ? `<button type="button" class="linkbtn wnmore" id="wnMore">See all ${WHATS_NEW.length}</button>` : ""}`;
+    if ($("wnMore")) $("wnMore").onclick = () => { S.wnAll = true; renderWhatsNew(); };
     $("wnOk").onclick = async () => { S.wnClosed = true; el.hidden = true; try { await saveSettings({ seenVersion: PAGE_VERSION }); } catch(e){} };
   }
   const renderStats = () => { if (S.tab === "dash") renderDash(); else if (S.tab === "progress") renderProgress(); refreshSheet(); };
@@ -2668,9 +2742,8 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   }
   async function addLines(added, label, stEl){   // write foods to the day, then "Added ... ½× 1× 1½× 2× Undo" for 10 seconds
     const st = stEl || $("logStatus"), undoId = st.id + "Undo", base = added.map(m => Object.assign({}, m));
-    const d = S.date, day = JSON.parse(JSON.stringify(dayDoc(d)));
-    day.meals = day.meals || []; day.date = d; day.meals.push(...added);
-    if (!(await writeDay(d, day, st))) return false;
+    const d = S.date;
+    if (!(await changeDay(d, day => { day.meals.push(...added); }, st))) return false;
     let now = added, k = 1;
     const at = (cur, m) => cur.meals.map(x => x.name + x.time).lastIndexOf(m.name + m.time);
     const hold = () => { clearTimeout(favUndo); favUndo = setTimeout(() => { if ($(undoId)) st.textContent = ""; }, 10000); };
@@ -2678,19 +2751,13 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
       st.innerHTML = `Added ${esc(label)}.${amtBtns(k, "data-amt")}<button class="ghost" id="${undoId}" style="color:var(--accent);font-weight:700">Undo</button>`;
       st.querySelectorAll("[data-amt]").forEach(b => b.onclick = async () => {   // change the amount: rewrite the same lines, scaled from what was added
         const k2 = +b.dataset.amt; if (k2 === k) return;
-        const cur = JSON.parse(JSON.stringify(dayDoc(d))); cur.meals = cur.meals || [];
         const next = base.map(m => scaleLine(m, k2));
-        let hit = 0; now.forEach((m, j) => { const i = at(cur, m); if (i >= 0){ cur.meals[i] = next[j]; hit++; } });
-        if (!hit){ st.textContent = "That food changed. Edit it under Meals."; return; }
         hold();
-        if (await writeDay(d, cur, st)){ now = next; k = k2; draw(); }
+        if (await changeDay(d, cur => { let hit = 0; now.forEach((m, j) => { const i = at(cur, m); if (i >= 0){ cur.meals[i] = next[j]; hit++; } }); if (!hit) return false; }, st)){ now = next; k = k2; draw(); }
       });
       $(undoId).onclick = async () => {
         clearTimeout(favUndo);
-        const cur = JSON.parse(JSON.stringify(dayDoc(d))); cur.meals = cur.meals || [];
-        let gone = 0;
-        now.slice().reverse().forEach(m => { const i = at(cur, m); if (i >= 0){ cur.meals.splice(i, 1); gone++; } });
-        if (gone && await writeDay(d, cur, st)) st.textContent = "Removed.";
+        if (await changeDay(d, cur => { let gone = 0; now.slice().reverse().forEach(m => { const i = at(cur, m); if (i >= 0){ cur.meals.splice(i, 1); gone++; } }); if (!gone) return false; }, st)) st.textContent = "Removed.";
       };
     };
     draw(); hold();
@@ -2839,7 +2906,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     const ck = S.weekly[sundayOf(d)];
     const ctx = {
       date: d, weekday: parseD(d).toLocaleDateString("en-US",{weekday:"long"}),
-      targets: t, today: { calories: Math.round(tot.cal), protein: Math.round(tot.pro*2)/2, carbs: Math.round(tot.carb), fat: Math.round(tot.fat), foods: (day.meals||[]).map(m => `${m.name} (${Math.round(+m.cal||0)} cal, ${m.protein} g protein)`), weight: day.weight ?? null },
+      targets: hasTargets() ? t : "not set yet (do not quote any target numbers; say the coach chat in their project sets them)", today: { calories: Math.round(tot.cal), protein: Math.round(tot.pro*2)/2, carbs: Math.round(tot.carb), fat: Math.round(tot.fat), foods: (day.meals||[]).map(m => `${m.name} (${Math.round(+m.cal||0)} cal, ${m.protein} g protein)`), weight: day.weight ?? null },
       last7Days: Array.from({length:7}, (_, i) => addDays(d, i - 7)).filter(x => (dayDoc(x).meals||[]).length).map(x => { const tt = totals(x); return { date:x, calories:Math.round(tt.cal), protein:Math.round(tt.pro), light: lightDay(tt.cal, t) }; }),
       yesterdayFoods: (yday.meals||[]).map(m => ({name:m.name, cal:m.cal, protein:m.protein, carbs:m.carbs, fat:m.fat, addedSugar:m.addedSugar||0})),
       weight7dayAvg: avg7(d) ? +avg7(d).toFixed(1) : null, weight7dayAvgPrevWeek: avg7(addDays(d,-7)) ? +avg7(addDays(d,-7)).toFixed(1) : null,
@@ -2918,7 +2985,8 @@ Context (JSON): ${JSON.stringify(ctx)}`;
     r = r && typeof r === "object" ? r : {};
     const meals = (Array.isArray(r.meals) ? r.meals : []).filter(m => m && m.name)
       .map(m => Object.assign({ name:String(m.name).slice(0,120), cal:Math.round(num(m.cal)), protein:r05(m.protein), carbs:r05(m.carbs), fat:r05(m.fat), addedSugar:r05(m.addedSugar) }, validMeal(m.meal) ? { meal: m.meal } : {}));
-    const weight = typeof r.weight === "number" && r.weight > 60 && r.weight < 400 ? Math.round(r.weight*10)/10 : null;
+    const wLo = kgOn() ? 25 : 60, wHi = kgOn() ? 200 : 400;   // the same limits as the Home weigh-in box, in the person's own unit
+    const weight = typeof r.weight === "number" && r.weight > wLo && r.weight < wHi ? Math.round(r.weight*10)/10 : null;
     let workout = null;
     if (r.workout && Array.isArray(r.workout.exercises)){
       const ex = r.workout.exercises.filter(x => x && x.name && Array.isArray(x.sets))
@@ -2947,13 +3015,14 @@ Context (JSON): ${JSON.stringify(ctx)}`;
     if (!S.db){ const e = new Error("nodb"); e.done = done; throw e; }
     try {
       if (R.meals.length || R.weight != null || R.periodStart){
-        const day = JSON.parse(JSON.stringify(dayDoc(d))); day.date = d; day.meals = day.meals || [];
         const t = nowTime();
-        R.meals.forEach(m => day.meals.push(Object.assign({}, m, {time:t}, m.meal || d !== today ? {} : { meal: nowMeal() })));
-        if (R.weight != null) day.weight = R.weight;
-        if (R.periodStart) day.period = true;
-        await DB.set("days/"+d, day);
+        await changeDayStrict(d, day => {
+          R.meals.forEach(m => day.meals.push(Object.assign({}, m, {time:t}, m.meal || d !== today ? {} : { meal: nowMeal() })));
+          if (R.weight != null) day.weight = R.weight;
+          if (R.periodStart) day.period = true;
+        });
         if (R.meals.length) done.push("food"); if (R.weight != null) done.push("weight"); if (R.periodStart) done.push("cycle note");
+        R.meals = []; R.weight = null; R.periodStart = false;   // saved: a second tap on Save (after a later step failed) must not add them again
       }
       if (R.workout){
         const id = woId(d, R.workout.dayId), p = plan().find(x => x.id === R.workout.dayId);
@@ -2963,13 +3032,14 @@ Context (JSON): ${JSON.stringify(ctx)}`;
         await DB.set("workouts/"+id, Object.assign({ date:d, dayId:R.workout.dayId, dayName:p ? p.name : R.workout.dayId, exercises, savedAt:new Date().toISOString() }, prev && prev.note ? { note: prev.note } : {}, prev && prev.rest ? { rest:true } : {}, prev && prev.done ? { done:true } : {}, { startedAt: (prev && prev.startedAt) || new Date().toISOString() }));
         woDirty = false; done.push("sets");
         if (R.workout.exercises.length){ const last = R.workout.exercises[R.workout.exercises.length-1]; startTimer(restFor({name:last.name}), last.name); }
+        R.workout = null;
       }
       if (R.newFoods.length){
         const cur = await DB.get("config/foods"), items = (cur.data && cur.data.items) || JSON.parse(JSON.stringify(S.foods));
         const low = v => String(v || "").toLowerCase();   // same food = same name, or the same short name when it's updated (like the shake going to 2 scoops)
         R.newFoods.forEach(f => { const k = items.findIndex(x => low(x.name) === low(f.name) || (f.short && low(x.short) === low(f.short))); if (k >= 0) items[k] = Object.assign(items[k], f); else items.push(Object.assign({chip:true}, f)); });
         await saveFoods(items);
-        done.push("saved food");
+        done.push("saved food"); R.newFoods = [];
       }
       if ((R.rules || []).length){
         const cur = await DB.get("config/main"), cfg = JSON.parse(JSON.stringify(cur.data || S.config || {})), p = Object.assign({}, cfg.profile);
@@ -2986,13 +3056,15 @@ Context (JSON): ${JSON.stringify(ctx)}`;
     const d = S.date, st = $("qlStatus"), ms = chatMsgs(d).slice(), R = ms[i] && ms[i].items;
     if (!R || !S.db){ st.textContent = "Open this page in Claude to save."; return; }
     if (btn) btn.disabled = true;
+    const whole = ms[i].items, left = JSON.parse(JSON.stringify(R));   // saveR empties each part of `left` as it saves it
     try {
-      await saveR(R);
-      ms[i] = Object.assign({}, ms[i], { status:"saved" });
+      await saveR(left);
+      ms[i] = Object.assign({}, ms[i], { items: whole, status:"saved" });
       await saveChat(d, ms);
       st.textContent = "";
     } catch(e){
       st.textContent = (e.done && e.done.length ? "Saved " + e.done.join(", ") + ", but the rest didn't save. " : "") + "Couldn't save. Try again in a moment.";
+      if (e.done && e.done.length){ ms[i] = Object.assign({}, ms[i], { items: left }); try { await saveChat(d, ms); } catch(e2){} }   // keep only what is still unsaved on the card
       if (btn) btn.disabled = false;
     }
   }
@@ -3187,7 +3259,8 @@ Context (JSON): ${JSON.stringify(ctx)}`;
     const db = await DB.connect();
     if (!db){ $("dbNotice").hidden = false; return; }
     S.db = db;
-    const fail = () => {};
+    let failed = false;   // a list that stops loading must not fail silently: say so once
+    const fail = () => { if (failed) return; failed = true; toast("Couldn't load part of your log. Close this page and open it again."); };
     DB.watchCollection("days", docs => { S.days = {}; docs.forEach(d => S.days[d.id] = d.data); renderFood(); renderQuick(); renderStats(); }, fail);
     // a workout with no sets and no note (every set typed then cleared) doesn't count as done; a checked-off rest day does
     DB.watchCollection("workouts", docs => { S.workouts = docs.map(d => ({id:d.id, ...d.data})).filter(w => w.rest || (w.exercises||[]).some(x => (x.sets||[]).length) || (w.note||"").trim()); quietWorkout(); renderStats(); }, fail);
