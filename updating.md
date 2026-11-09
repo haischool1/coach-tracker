@@ -61,7 +61,12 @@ Publish with `url` set to their tracker's URL. Don't pass capabilities; the trac
 
 Do only the steps for the version they came from. Always `get` a doc, change it, and `set` it back with `if_version`, keeping everything else.
 
-**From kit 3.3.x to 3.4** (also do the earlier steps below for older trackers)
+**From kit 3.4.0 to 3.4.1** (also do the earlier steps below for older trackers)
+
+- Nothing has to change. One new optional setting: `settings.units` (`"kg"` for kilograms, see `tracker-data.md`). Ask once whether they use pounds or kilograms only if they are new or have said kg before; never switch it for someone with numbers already logged in the other unit.
+- Update the logging rules in their `coach-playbook.md` so replies use plain words: calories, protein, carbs, fat. Never kcal, P, C, F or macros (rule 10 in `coaching-rules.md`).
+
+**From kit 3.3.x to 3.4**
 
 - Nothing has to change. No new fields. The meal-time card works from the meals they already log, and works best when food has a `meal` tag or a clock `time`.
 
@@ -91,11 +96,23 @@ Do only the steps for the version they came from. Always `get` a doc, change it,
 2. Update `tracker-notes.md`: the new kit version and today's date, a changelog line "Updated to kit <version>", and their "Custom:" lines (reworded if a feature changed). Update the logging rules in `coach-playbook.md` from `coaching-rules.md` (meal tags, combos, the one rule book).
 3. Tell them in 3 lines what changed and one thing to try first, for example: "Tap Start on the Home card. The Workout screen walks you through one set at a time and times your rest."
 
+## What's new in 3.4.1
+
+- **Plain food words:** the page says "144 cal, 13 g protein, 1 g carbs, 10 g fat" everywhere. No more kcal, P, C or F. The page's coach uses the same words.
+- **Save card fix:** each food's numbers sit on their own lines under the food and no longer break in odd places.
+- **Bigger text and buttons** across the page.
+- **Home:** the food tile shows protein to go and calories to go.
+- **Settings** is sorted into four groups (Look back, Check in, My plan, Settings). All charts and All photos also sit on Progress.
+- **Main lifts** show an "est. max" (an estimate of the most they could lift once), labeled as an estimate.
+- **Monthly tape** has a picture of where to measure.
+- **Kilograms:** Settings, Weights in. Labels only, nothing is converted.
+- **Add to Home Screen:** a short how-to in Settings.
+
 ## What's new in 3.4
 
 - **Meal-time card on Food:** at breakfast, lunch or dinner, "Your usual lunch" (foods eaten together at that meal on 4 or more of the last 14 days) or "Dinner like yesterday?" (leftovers). Log it adds the whole meal with Undo, Change opens a tick list, ✕ hides it for that meal.
 - **Amount buttons:** after a chip tap, and for each food on the Save card: ½×, 1×, 1½×, 2×. They change that same food, not a second one.
-- **Quick add:** the form at the bottom of Food takes just calories and protein, with no food name. It offers the macro total if the calories look too low.
+- **Quick add:** the form at the bottom of Food takes just calories and protein, with no food name. It offers the total worked out from protein, carbs and fat if the calories look too low.
 - **Light days:** a day logged under 60% of the calorie minimum is left out of This week's averages, and the coach asks before changing calories because of one.
 - **Workout:** a grey warm-up line before set 1 of a barbell, Smith, T-bar or landmine lift (never logged). The finish card adds a fun weight line and how it compares with last time on the same day. "All lifts" is now "Today's lifts", and the day button has a calendar.
 - **Swapping days** moves them right away. When two hard days for one muscle end up back to back, a heads-up shows with Undo instead of an extra step.
