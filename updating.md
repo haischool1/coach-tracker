@@ -71,6 +71,11 @@ Publish with `url` set to their tracker's URL. Don't pass capabilities; the trac
 
 Do only the steps for the version they came from. Always `get` a doc, change it, and `set` it back with `if_version`, keeping everything else. Only the docs backed up in step 3 may be changed here.
 
+**From kit 3.4.2 to 3.4.3** (also do the earlier steps below for older trackers)
+
+- No data changes.
+- If their `my-answers.md` or `coachNotes` says pregnant, postpartum or breastfeeding (or "rather not say"), ask once whether that's still true. If it is, add the health line (see "Safety limits" in `targets-and-plan.md`) to `coachNotes`, their `coach-playbook.md` and each scheduled check-in prompt. Then read their check-in prompts and playbook for any rule that would cut calories below that line (for example "waist up, take away 100 to 150") and change it to hold instead. Show them each change before you save it.
+
 **From kit 3.4.1 to 3.4.2** (also do the earlier steps below for older trackers)
 
 - No data changes. The page fixes are automatic.
@@ -111,6 +116,16 @@ Do only the steps for the version they came from. Always `get` a doc, change it,
 1. Open it with the Artifact tool (`action: "open"`) and check it loads with their data: Home should show their name's page title, the phase and day count under the date, and today's workout card.
 2. Update `tracker-notes.md`: the new kit version and today's date, a changelog line "Updated to kit <version>", and their "Custom:" lines (reworded if a feature changed). Update the logging rules in `coach-playbook.md` from `coaching-rules.md` (meal tags, combos, the one rule book).
 3. Tell them in 3 lines what changed and one thing to try first, for example: "Tap Start on the Home card. The Workout screen walks you through one set at a time and times your rest."
+
+## What's new in 3.4.3
+
+- **A new Workout screen:** your week sits at the top. Hold a day and drag it onto another to swap them for this week, with Undo, or "Set as default" to keep it. A green check, red X or orange ring shows how each day went. Tap a day to see its lifts, do it today, or do just one of its lifts early.
+- **One row per set:** faded numbers show today's suggested weight and last time's reps. Leave a box empty and Log set saves the faded number. A thin line fills as you go, and Log set sits just above the menu so it never hides.
+- **Change the lift order:** drag the three-line handle on any lift. "Set as default" keeps the order for that day.
+- **"How hard was it?"** is asked once, when the workout is done, not after every lift.
+- **The date at the top** turns blue on an earlier day and amber on a future day. Tap the small calendar to jump to any day. The settings gear is on every tab.
+- **A short pop-up** the first time you open Workout shows how it all works.
+- **Safer coaching while pregnant, postpartum or breastfeeding:** the check-ins carry a line that's never crossed, so a growing waist means holding calories, never a cut. The monthly check-in asks if it still applies.
 
 ## What's new in 3.4.2
 

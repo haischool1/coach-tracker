@@ -13,8 +13,9 @@
 # The kit's build fills in LATEST and KNOWN. Don't edit them by hand.
 import hashlib, json, re, sys
 
-LATEST = "3.4.2"
+LATEST = "3.4.3"
 KNOWN = {
+    "0bdefef177939a8e": "3.4.3",
     "1fd87ccd81091261": "3.4.0",
     "4adf5baa31129e14": "3.4.1",
     "72dbed3f92ee4e2d": "3.3.2",

@@ -1,5 +1,5 @@
 <title>My Training Log</title>
-<meta name="byoc-version" content="3.4.2">
+<meta name="byoc-version" content="3.4.3">
 <meta name="theme-color" content="#ECF0F5">
 <style>
 /* ===== Training Log 3.12: the look from the Oct 26 mockup =====
@@ -108,12 +108,13 @@ select{appearance:none;-webkit-appearance:none;padding-right:30px;background-ima
 #datePill{position:relative;background:transparent;padding:2px 4px;border-radius:10px;font:600 22px/1.15 var(--display);letter-spacing:-.01em;color:var(--ink);text-align:left}
 #datePill input{position:absolute;inset:0;opacity:0;width:100%;height:100%;padding:0;border:0;cursor:pointer}
 .topsub{color:var(--muted);font-size:13px;padding-left:4px}
+#datePill{display:inline-flex;align-items:center;gap:6px;padding:2px 2px} #dateLabel{white-space:nowrap} .datenav .dnav{width:32px} #datePill .calic{width:18px;height:18px;color:var(--muted);flex:none}
+#datePill.off,#datePill.off #dateLabel,#datePill.off .calic{color:var(--accent)} #datePill.off.ahead,#datePill.off.ahead #dateLabel,#datePill.off.ahead .calic{color:var(--warn-ink)}
 .topacts{display:flex;align-items:center;gap:8px;flex:none}
 .roundbtn{width:40px;height:40px;border-radius:50%;padding:0;display:grid;place-items:center;flex:none}
 .roundbtn .ic{width:20px;height:20px}
 .coachbtn{background:var(--navy);color:var(--on-navy)}
 .gearbtn{background:var(--card);color:var(--muted);box-shadow:var(--shadow)}
-.today-link{background:transparent;color:var(--accent);font:600 13px var(--body);padding:4px 6px}
 .calpop{position:fixed;z-index:90;left:50%;transform:translateX(-50%);width:min(340px,calc(100% - 32px));padding:12px;border-radius:20px;background:var(--surface);box-shadow:0 24px 50px -16px rgba(10,20,45,.55);color:var(--ink)}
 .calhd{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font:700 15px var(--body)}
 .calnav{width:42px;height:42px;border-radius:50%;background:var(--chip);font:700 18px var(--body);color:var(--ink);padding:0}
@@ -142,7 +143,7 @@ select{appearance:none;-webkit-appearance:none;padding-right:30px;background-ima
 .hero .eyebrow{color:var(--navy-muted)}
 .hero h2{color:var(--on-navy)}
 .hero .meta{color:var(--navy-muted);font-size:14px}
-.lifts{list-style:none;margin:2px 0 0;padding:0;display:grid;gap:8px}
+.lifts{list-style:none;margin:2px 0 0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
 .lifts li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:10px 12px;border-radius:12px;background:var(--navy-soft);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .lifts .n{font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lifts .t{color:var(--navy-muted);font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -163,7 +164,7 @@ select{appearance:none;-webkit-appearance:none;padding-right:30px;background-ima
 .whatsnew .wnmore{align-self:flex-start;min-height:36px}
 
 /* ===== Workout: the focus screen ===== */
-.focus{position:relative;overflow:hidden;min-height:min(calc(100vh - 190px),620px);min-height:min(calc(100dvh - 190px),620px);display:flex;flex-direction:column;background:linear-gradient(170deg,var(--navy-2),var(--navy-deep));color:var(--on-navy);border-radius:22px;padding:16px 18px 20px;box-shadow:0 14px 30px -18px rgba(19,32,58,.6)}
+.focus{position:relative;overflow:hidden;overflow:clip;min-height:min(calc(100vh - 190px),620px);min-height:min(calc(100dvh - 190px),620px);display:flex;flex-direction:column;background:linear-gradient(170deg,var(--navy-2),var(--navy-deep));color:var(--on-navy);border-radius:22px;padding:16px 18px 20px;box-shadow:0 14px 30px -18px rgba(19,32,58,.6)}
 .focus::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 70% at 100% 0%,rgba(255,255,255,.12),transparent 55%);pointer-events:none}
 .focus > *{position:relative}
 .focus .hdr{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;color:var(--navy-muted)}
@@ -171,6 +172,8 @@ select{appearance:none;-webkit-appearance:none;padding-right:30px;background-ima
 .focus .hdr .daybtn{display:inline-flex;align-items:center;gap:5px;min-width:0}
 .focus .hdr .num{white-space:nowrap}
 .focus .hdr .daybtn .ic{width:14px;height:14px;flex:none}
+.focus .hdr .daybtn span{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.focus .hdr .daybtn .dn{transform:rotate(90deg);opacity:.7}
 .focus .mid{flex:1;display:flex;flex-direction:column;justify-content:center;gap:10px;padding-block:18px 8px}
 .focus h2{font-size:28px;color:var(--on-navy)}
 .focus .meta{color:var(--navy-muted);font-size:15px;font-variant-numeric:tabular-nums}
@@ -186,15 +189,32 @@ select{appearance:none;-webkit-appearance:none;padding-right:30px;background-ima
 .nums input{width:100%;min-width:0;padding:16px 8px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08);color:#fff;font-family:var(--display);font-size:38px;font-weight:700;text-align:center;font-variant-numeric:tabular-nums;-moz-appearance:textfield}
 .nums input::-webkit-outer-spin-button,.nums input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .nums input:focus{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.5)}
-.nums input::placeholder{color:rgba(255,255,255,.82)}
-.dots{display:flex;gap:8px;margin-top:6px;align-items:center;flex-wrap:wrap}
-.dots button{width:14px;height:14px;padding:0;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;color:var(--pr)}
-.dots button.done{background:#8FE3B4}
-.dots button.now{background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.25)}
-.dots button.best{background:var(--pr);color:#1C1C1E}
-.dots button .ic{width:10px;height:10px;stroke-width:3}
-.dots .dadd{width:auto;height:auto;border-radius:999px;padding:3px 9px;font-size:13px;color:var(--navy-muted);background:transparent;margin-left:auto}
+.nums input::placeholder{color:rgba(255,255,255,.26);font-weight:500}
+.numhint{font-size:13px;line-height:1.35;color:var(--navy-muted)}
+.sets{display:grid;gap:6px;margin-top:4px}
+.sethead,.setrow{display:grid;grid-template-columns:54px minmax(0,1fr) minmax(0,1fr) 34px;gap:8px;align-items:center}
+.sethead{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--navy-muted);padding:0 10px} .sethead span:nth-child(2),.sethead span:nth-child(3){text-align:center}
+.setrow{width:100%;min-height:48px;padding:6px 10px;border-radius:14px;background:rgba(255,255,255,.06);border:1.5px solid transparent;color:var(--navy-muted);font:inherit;text-align:left}
+.setrow small{font-size:13px;font-weight:600;white-space:nowrap}
+.setrow .w,.setrow .r{text-align:center;font-family:var(--display);font-size:20px;font-weight:500;font-variant-numeric:tabular-nums;color:rgba(255,255,255,.26)}
+.setrow.done .w,.setrow.done .r{font-weight:700}
+.tipdemo{display:flex;gap:10px;align-items:center;justify-content:center;padding:14px;border-radius:14px;background:var(--navy);color:var(--on-navy)} .tipdemo .old{font:500 26px var(--display);color:rgba(255,255,255,.3);padding:6px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.18)} .tipdemo b{font-size:13px;color:var(--navy-muted);font-weight:600}
+.tiptext{margin:0;font-size:15px;line-height:1.45}
+.setrow .st{display:grid;place-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase} .setrow .st .ic{width:16px;height:16px;stroke-width:3}
+.setrow.done{background:rgba(143,227,180,.12)} .setrow.done small{color:#fff} .setrow.done .w,.setrow.done .r{color:#fff} .setrow.done .st{color:#8FE3B4} .setrow.best .st{color:var(--pr)}
+.setrow.now{background:rgba(255,255,255,.14);border-color:#fff;color:#fff;padding-block:8px}
+.setrow.now input{width:100%;min-width:0;padding:9px 4px;border-radius:11px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.1);color:#fff;font-family:var(--display);font-size:26px;font-weight:700;text-align:center;font-variant-numeric:tabular-nums;-moz-appearance:textfield}
+.setrow.now input::-webkit-outer-spin-button,.setrow.now input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.setrow.now input:focus{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.6);outline:none}
+.setrow.now input::placeholder{color:rgba(255,255,255,.26);font-weight:500}
+.setadd{justify-self:start;background:transparent;color:var(--navy-muted);font-size:13.5px;font-weight:600;padding:8px 10px;border-radius:10px}
+.effrow{display:grid;gap:8px;padding:10px 0;border-top:1px solid var(--line)} .effrow:first-of-type{border-top:0}
+.effbtns.lite button{background:var(--chip);color:var(--ink)} .effbtns.lite button small{color:var(--muted)}
+.effbtns.lite button[aria-pressed="true"]{background:var(--navy);color:var(--on-navy)} .effbtns.lite button[aria-pressed="true"] small{color:var(--navy-muted)}
 .focus .btn{margin-top:8px}
+.logdock{position:sticky;bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:3;display:grid;gap:8px;margin-top:8px}
+.logdock .btn{margin-top:0;box-shadow:0 8px 22px -6px rgba(5,12,30,.6)} .logdock .restrow{margin-top:0;background:#34476d;box-shadow:0 8px 22px -6px rgba(5,12,30,.6)}
+.woprog{height:4px;border-radius:2px;background:rgba(255,255,255,.14);overflow:hidden;margin:0 0 2px} .woprog i{display:block;height:100%;border-radius:2px;background:#8FE3B4;transition:width .35s ease}
 .focus .foot{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:14px}
 .focus .foot button,.focus .foot a{color:var(--on-navy);background:rgba(255,255,255,.1);min-height:52px;padding:7px 2px;border-radius:14px;font-weight:600;font-size:12.5px;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;white-space:nowrap}
 .focus .foot .ic{width:18px;height:18px}
@@ -228,10 +248,6 @@ select{appearance:none;-webkit-appearance:none;padding-right:30px;background-ima
 .restpill.on{display:flex}
 body.resting .wrap{padding-bottom:calc(164px + env(safe-area-inset-bottom,0px))}
 .focus .mid.midtop{justify-content:flex-start}
-.datenote{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;padding:10px 14px;border-radius:14px;background:var(--chip);color:var(--ink-2);font:500 14px var(--body);text-align:left}
-.datenote b{font-weight:700}
-.datenote .go{color:var(--accent);font-weight:600;white-space:nowrap}
-.datenote.ahead{background:rgba(201,122,18,.16);color:var(--warn-ink)}
 .restpill b{font-family:var(--display);font-variant-numeric:tabular-nums;font-size:18px;min-width:52px;text-align:center}
 .restpill b.zero{color:#8FE3B4}
 .restpill button{background:rgba(255,255,255,.14);color:var(--on-navy);padding:6px 10px;border-radius:999px;font-size:13px}
@@ -296,19 +312,67 @@ button.rowi:active{background:var(--chip)}
 .sheetacts{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
 /* week sheet */
 .wkgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
-.wkday{display:grid;gap:3px;justify-items:center;padding:8px 2px;border-radius:12px;background:var(--chip);min-width:0;text-align:center}
+.wkday{display:grid;gap:4px;justify-items:center;align-content:start;padding:8px 0 7px;border-radius:14px;background:var(--card);box-shadow:var(--shadow);min-width:0;text-align:center}
 .wkday b{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
-.wkday span{font-size:12px;line-height:1.2;color:var(--ink-2);overflow:hidden;max-width:100%;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow-wrap:anywhere;min-height:2.4em}
-.wkday i{font-style:normal;font-size:12px;color:var(--good-ink);height:13px;display:grid;place-items:center}
+.wkday span{font-size:11px;line-height:1.25;letter-spacing:-.02em;font-weight:500;color:var(--ink-2);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wkday i{font-style:normal;height:16px;display:grid;place-items:center}
+.wkst{width:15px;height:15px;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.wkst.ok circle{fill:var(--good)} .wkst.ok path{stroke:#fff}
+.wkst.no{stroke:var(--bad);stroke-width:2.6}
+.wkst.half circle{stroke:var(--warn);stroke-width:1.8} .wkst.half path{fill:var(--warn)}
+.wkst.skip{stroke:var(--muted)}
+.wkday.me .wkst.no{stroke:#FF8A82} .wkday.me .wkst.half circle{stroke:#FFCF8A} .wkday.me .wkst.half path{fill:#FFCF8A} .wkday.me .wkst.skip{stroke:var(--on-navy)}
+.wkday.done,.wkday.restdone,.wkday.moved{background:var(--good-soft,rgba(23,130,75,.12))}
+.wkday.miss i,.wkday.skip i{color:var(--warn-ink)} .wkday.part i{color:var(--accent)}
+.wkday{transition:transform .18s ease}
+.wklifts li button{display:flex;justify-content:space-between;gap:10px;width:100%;padding:9px 10px;margin:0 -2px;border-radius:10px;background:var(--chip);font:inherit;color:inherit;text-align:left} .wklifts li button span:last-child{color:var(--muted);white-space:nowrap}
+.wklifts .got{color:var(--good-ink) !important;display:inline-flex;align-items:center;gap:3px} .wklifts .got .ic{width:13px;height:13px}
 .wkday i .ic{width:12px;height:12px;stroke-width:2.6}
-.wkday.now{box-shadow:inset 0 0 0 1.5px var(--accent)}
-.wkday.sel{background:var(--navy);color:var(--on-navy)} .wkday.sel b,.wkday.sel span{color:var(--on-navy)} .wkday.sel i{color:#8FE3B4}
+.wkday.now b{color:var(--accent)}
+.wkday.me{background:var(--navy)} .wkday.me b,.wkday.me span{color:var(--on-navy)} .wkday.me i{color:#8FE3B4} .wkday.me.miss i{color:#FFCF8A} .wkday.me.part i{color:#C9D8FF}
+.wkday.miss span,.wkday.skip span,.wkday.moved span{color:var(--muted)} .wkday.me.miss span,.wkday.me.skip span,.wkday.me.moved span{color:var(--on-navy)}
+#woBelow{display:grid;gap:12px;margin-top:12px}
+.wolifts{display:flex;flex-direction:column}
+.wolift{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 8px;min-height:56px;border-top:1px solid var(--line);background:transparent;border-radius:12px;text-align:left;font:inherit;font-weight:400;color:inherit;width:100%}
+.wolifts .wolift:first-child{border-top:0}
+.wolift:not(.now){border-radius:0} .wolift.now,.wolift.now + .wolift{border-top-color:transparent}
+.wolift .n{width:26px;height:26px;border-radius:50%;background:var(--chip);display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--ink-2)}
+.wolift .t{min-width:0;display:grid;gap:2px} .wolift .t b{font-weight:600} .wolift .t small{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wolift .v{font-size:13px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;gap:3px} .wolift .v .ic{width:14px;height:14px}
+.wolift .v.done{color:var(--good-ink);font-weight:600} .wolift .v.part{color:var(--warn-ink);font-weight:600}
+.wolift.now{background:var(--accent-soft)} .wolift.now .t b{color:var(--accent)} .wolift.now .n{background:var(--accent);color:var(--accent-ink)}
+.wolift.cut{opacity:.5}
+.wolift{grid-template-columns:26px minmax(0,1fr) auto 22px;gap:8px}
+.wolift .grip{display:grid;place-items:center;align-self:stretch;margin:-10px -8px -10px -4px;padding:0 6px;touch-action:none;cursor:grab;color:var(--muted);opacity:.75} .wolift .grip .ic{width:20px;height:20px;stroke-width:2.1}
+.wolift.press{background:var(--chip);transform:scale(.985);transition:background .3s ease,transform .3s ease}
+.wolift.woliftfly .grip{opacity:1;color:var(--accent)}
+.wkday.press{transform:scale(.94)}
+@keyframes wkjig{0%,100%{transform:rotate(-1.8deg)}50%{transform:rotate(1.8deg)}}
+.wkgrid.jiggle .wkday{animation:wkjig .26s ease-in-out infinite} .wkgrid.jiggle .wkday:nth-child(even){animation-delay:-.13s}
+.wkgrid.jiggle .wkday.press{animation:none;transform:scale(1.08);box-shadow:0 10px 24px -8px rgba(10,20,50,.45);z-index:2;position:relative}
+.wkgrid.nudge .wkday{animation:wkjig .26s ease-in-out 4} .wkgrid.nudge .wkday:nth-child(even){animation-delay:-.13s}
+@media (prefers-reduced-motion:reduce){.wkgrid.jiggle .wkday,.wkgrid.nudge .wkday{animation:none}}
+.tiprow{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:center} .tipic{width:40px;height:40px;border-radius:12px;background:var(--chip);display:grid;place-items:center;color:var(--ink-2)} .tipic .ic{width:20px;height:20px} .tipic.day{font-size:11px;font-weight:700;letter-spacing:.04em;background:var(--navy);color:var(--on-navy)}
+.wolift{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+.wolifts.sorting .wolift{transition:transform .16s ease}
+.wolift.held{visibility:hidden}
+.wolift.woliftfly{position:fixed;z-index:95;pointer-events:none;margin:0;border:0;border-radius:12px;background:var(--card);color:var(--ink);box-shadow:0 16px 36px -10px rgba(10,20,50,.55);transition:transform .12s ease;transform-origin:center}
+.wolifts + .wkchanged,.wolifts + .note{margin-top:8px}
+.wktop{display:grid;gap:10px;margin-bottom:12px} .wktop:empty{display:none}
+.wkhow{text-align:center}
+.wkchanged{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;font-size:13.5px;color:var(--muted);padding:0 4px} .wkchanged span{margin-right:auto} .wkchanged .linkbtn{min-height:36px}
+.focus .hdr .dayname{color:var(--on-navy);font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wkpick{display:grid;gap:10px;padding:12px;border-radius:14px;background:var(--card);box-shadow:var(--shadow)}
+.wkpickhd{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:15px} .wkpickhd span{font-size:13px;color:var(--muted);white-space:nowrap}
+.wklifts{list-style:none;margin:0;padding:0;display:grid;gap:5px;font-size:14px} .wklifts li{display:flex;justify-content:space-between;gap:10px} .wklifts li span:last-child{color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.wkday.sel{box-shadow:0 0 0 2px var(--accent)}
 .wkday.done i{color:var(--good-ink)} .wkday.miss i{color:var(--warn-ink)} .wkday.rest span{color:var(--muted)}
 .wkday.part i{color:var(--warn-ink)}
-.wkday{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.wkday{touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .wkday.tgt{box-shadow:inset 0 0 0 1.5px var(--accent);background:var(--accent-soft)}
+.wkday.tgt.me b,.wkday.tgt.me span{color:var(--ink-2)}
 .wkday.over{background:var(--accent);color:var(--accent-ink)} .wkday.over b,.wkday.over span{color:var(--accent-ink)}
-.wkday.drag{opacity:.35}
+.wkday.drag{opacity:0}
 .wkfly{position:fixed;z-index:95;pointer-events:none;background:var(--navy);box-shadow:0 12px 30px -10px rgba(10,20,50,.6);transform:scale(1.1)} .wkfly b,.wkfly span{color:var(--on-navy)}
 .undoline{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--chip);font-size:14px}
 .undoline button{background:var(--card);color:var(--accent);box-shadow:var(--shadow);padding:7px 12px}
@@ -551,19 +615,17 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     <div class="tophead">
       <div class="datenav">
         <button type="button" class="dnav" id="prevDay" aria-label="Previous day"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
-        <button type="button" id="datePill" aria-haspopup="dialog" aria-expanded="false"><span id="dateLabel">Today</span><input type="date" id="dateInput" tabindex="-1" aria-hidden="true" hidden></button>
+        <button type="button" id="datePill" aria-haspopup="dialog" aria-expanded="false"><span id="dateLabel">Today</span><svg class="ic calic" id="calIc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M8 3v4M16 3v4M4 10h16"/></svg><input type="date" id="dateInput" tabindex="-1" aria-hidden="true" hidden></button>
         <button type="button" class="dnav" id="nextDay" aria-label="Next day"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
       </div>
       <div class="topsub" id="topSub"></div>
     </div>
     <div class="topacts">
-      <button type="button" class="today-link" id="goToday" hidden>Today</button>
-      <button type="button" class="roundbtn gearbtn" id="gearBtn" aria-label="Settings and my plan" hidden><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+      <button type="button" class="roundbtn gearbtn" id="gearBtn" aria-label="Settings and my plan"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
       <button type="button" class="roundbtn coachbtn" id="coachBtn" aria-haspopup="dialog" aria-label="Coach"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.1A8 8 0 1 1 20 12z"/></svg></button>
     </div>
   </header>
 
-  <button type="button" class="datenote" id="dateNote" hidden></button>
 
   <div id="dbNotice" class="notice" hidden>Your saved log loads when this page is opened in Claude. Nothing shown here is saved yet.</div>
 
@@ -597,7 +659,9 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
 
   <!-- WORKOUT: the focus screen is the workout screen -->
   <section class="panel" id="panel-workout" hidden>
+    <div class="wktop" id="woWeek" lang="en"></div>
     <div class="focus" id="focusCard"></div>
+    <div id="woBelow"></div>
   </section>
 
   <!-- FOOD -->
@@ -742,7 +806,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   // ---------- core: helpers, shared state, settings, profile ----------
   // Every module below shares this one scope (build.py pastes them in order inside one function).
   // Nothing personal lives in the code: the name, phase, plan, targets, accent color and rules all come from config/main in the database.
-  const PAGE_VERSION = "3.12.9";
+  const PAGE_VERSION = "3.12.10";
   const $ = id => document.getElementById(id);
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const iso = d => { const z = new Date(d.getTime() - d.getTimezoneOffset()*60000); return z.toISOString().slice(0,10); };
@@ -872,8 +936,8 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     ["today","workout","dash","progress"].forEach(k => $("panel-"+k).hidden = k !== tab || (k === "dash" && S.first));
     $("panel-first").hidden = !(tab === "dash" && S.first);
     document.body.dataset.tab = tab;
-    $("gearBtn").hidden = tab !== "progress";
     try { localStorage.setItem("tl-tab", tab); } catch(e){}
+    if (tab === "workout") howToSoon();
     renderTop();
     if (tab === "progress") renderProgress();
     if (tab === "dash") renderDash();
@@ -892,15 +956,16 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     if (phase) bits.push(ps ? (days >= 1 ? `${phase} · day ${days}` : `${phase} starts ${fmtD(ps)}`) : phase);
     else if (P.name) bits.push(`${P.name}'s Training Log`);
     $("dateLabel").textContent = S.tab === "progress" ? "Progress" : fmtShort(S.date);
+    // No sentence about which day you are on. The date itself says it: dark on today, blue on an earlier day, amber on a future one, so
+    // logging on another day is never a surprise. The small calendar after the date shows it opens the month (which has a Today button).
+    const off = S.date !== today && S.tab !== "progress", ahead = S.date > today, dp = $("datePill");
     $("topSub").textContent = bits.filter(Boolean).join(" · ");
-    $("goToday").hidden = S.date === today;
+    dp.classList.toggle("off", off); dp.classList.toggle("ahead", off && ahead); $("calIc").style.display = S.tab === "progress" ? "none" : "";
+    dp.setAttribute("aria-label", S.tab === "progress" ? "Progress" : `${fmtShort(S.date)}${off ? (ahead ? ", a future day" : ", an earlier day") : ", today"}. Open the calendar`);
     $("prevDay").hidden = $("nextDay").hidden = S.tab === "progress";   // Progress always reads up to the date picked on the other tabs: no arrows beside its title
-    const dn = $("dateNote"), off = S.date !== today && S.tab !== "progress", ahead = S.date > today;   // logging on another day should never be a surprise
-    dn.hidden = !off; dn.classList.toggle("ahead", ahead);
-    if (off) dn.innerHTML = `<span>${ahead ? "You're logging for" : "Viewing"} <b>${esc(fmtShort(S.date))}</b></span><span class="go">Back to today</span>`;
     if (P.name) document.title = `${P.name}'s Training Log`;
   }
-  const setDate = d => { if (typingSet()) document.activeElement.blur(); flushWoSave(); mealEdit = null; showAllFlat = false; S.date = d; $("dateInput").value = d; S.draft = {}; S.touched = {}; S.filledEx = {}; S.editW = false; woDirty = false; planPicked = false; noteDirty = {}; pendingLog = null; FM.ei = null; FM.si = null; FM.after = null; FM.typed = null; FM.edit = false; renderAll(); renderLogPrev(); };
+  const setDate = d => { if (typingSet()) document.activeElement.blur(); flushWoSave(); mealEdit = null; showAllFlat = false; S.date = d; $("dateInput").value = d; S.draft = {}; S.touched = {}; S.filledEx = {}; S.editW = false; woDirty = false; planPicked = false; wkSel = null; wkUndo = null; FM.guest = null; noteDirty = {}; pendingLog = null; FM.ei = null; FM.si = null; FM.after = null; FM.typed = null; FM.edit = false; renderAll(); renderLogPrev(); };
   // A page left open overnight must not keep logging into yesterday. When the calendar day changes, "today" moves on. If the page was showing
   // the old today it follows, unless a workout is still open or a set is being typed (a late-night session stays on its own day, with the
   // "Back to today" line showing).
@@ -943,8 +1008,6 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   window.addEventListener("scroll", closeCal, { passive: true });
   $("prevDay").onclick = () => setDate(addDays(S.date,-1));
   $("nextDay").onclick = () => setDate(addDays(S.date,1));
-  $("goToday").onclick = () => setDate(today);
-  $("dateNote").onclick = () => setDate(today);
   // ---------- food: totals, the two bars, meals grouped by meal, the weigh-in write ----------
   function dayDoc(d){ return S.days[d] || {date:d, meals:[]}; }
   // amounts: one set of buttons everywhere (chip status line, Save card, meal editor). scaleLine scales from the food as first logged.
@@ -1306,6 +1369,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     minus: '<path d="M5 12h14"/>',
     x: '<path d="M6 6l12 12M18 6 6 18"/>',
     info: '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8v.5"/>',
+    bars: '<path d="M5 8h14M5 12h14M5 16h14"/>',
     grip: '<path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/>',
     skip: '<path d="M6 5l9 7-9 7zM18 5v14"/>',
     note: '<path d="M4 20h4l10-10-4-4L4 16zM13 7l4 4"/>',
@@ -1359,7 +1423,8 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     sh.classList.toggle("tall", !!o.tall);
     body.innerHTML = o.html || ""; body.scrollTop = 0;
     if (o.wire) o.wire(body);
-    if (sh.hidden){ sh.hidden = false; document.body.classList.add("sheet-open"); requestAnimationFrame(() => sh.classList.add("open")); }
+    // also when a sheet is opened while the last one is still sliding away: without this it came up blank
+    if (sh.hidden || !sh.classList.contains("open")){ sh.hidden = false; document.body.classList.add("sheet-open"); requestAnimationFrame(() => { if (SH.open) sh.classList.add("open"); }); }
   }
   function sheetBack(){ const prev = SH.stack.pop(); if (!prev) return closeSheet(); SH.open = false; openSheet(Object.assign({}, prev, { replace: true })); SH.stack = SH.stack; $("uiSheetBack").hidden = !SH.stack.length; }
   function closeSheet(){
@@ -1404,6 +1469,11 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   const WDAY = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], WDAYL = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   const RESTID = () => (restPlan() || {}).id || "rest";
   const isRestId = id => id === "rest" || id === RESTID();
+  // the name on a week tile, one line in about 40px: the first part only, with "+" when the day trains more ("Back + Biceps" reads "Back +",
+  // "Light (optional)" reads "Light"). Long words get a short form so nothing is cut mid-word. The full name shows when the day is tapped.
+  const TILE_SHORT = { shoulders: "Shldrs", hamstrings: "Hams", "full body": "Full", "upper body": "Upper", "lower body": "Lower", conditioning: "Cardio", stretching: "Stretch", mobility: "Mobil." };
+  const tileName = id => { const n = shortName(id).replace(/\s*\([^)]*\)\s*$/, "").trim() || shortName(id), parts = n.split(/\s*(?:\+|&|,| and )\s*/i).filter(Boolean);
+    const a = TILE_SHORT[(parts[0] || n).toLowerCase()] || parts[0] || n; return parts.length > 1 ? (a.length > 5 ? `${a}+` : `${a} +`) : a; };
   const shortName = id => { const p = plan().find(x => x.id === id); return isRestId(id) ? "Rest" : p ? (p.name || "").replace(/^\s*day\s*\d+\s*/i, "") || p.name : "?"; };
   function weekBase(){   // settings.week: 7 plan ids, Sunday first, "rest" for rest days; otherwise built from the rotation, Day 1 on Monday
     const ids = new Set(plan().map(p => p.id)), w = sett().week, rid = RESTID();
@@ -1418,17 +1488,52 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   }
   const plannedOn = d => weekFor(sundayOf(d))[parseD(d).getDay()];
   const liftOn = d => S.workouts.filter(w => w.date === d && !w.rest && !isRestId(w.dayId) && plan().some(p => p.id === w.dayId)).sort((a, b) => (a.savedAt||"") < (b.savedAt||"") ? 1 : -1)[0];
-  function woProgress(w){   // lifts with at least one set, out of the plan's lifts; Finish marks it done on purpose
+  // Which logged workout a date shows. A past day shows what was done. Today (or later) the week plan comes first while it is still open:
+  // a few sets of another workout (you started one, then moved the days) never hide the workout now planned. null = nothing logged counts
+  // yet, so the plan shows. The week sheet, the Workout screen and Home all ask this one function.
+  const liftsOn = d => S.workouts.filter(w => w.date === d && !w.rest && !isRestId(w.dayId) && plan().some(p => p.id === w.dayId)).sort((a, b) => (a.savedAt||"") < (b.savedAt||"") ? 1 : -1);
+  const woIsDone = w => { const pr = woProgress(w); return !!(pr && pr.done); };
+  function shownOn(d){
+    const L = liftsOn(d); if (!L.length) return null;
+    if (d < today) return L[0];
+    const P = plannedOn(d), lp = L.find(w => w.dayId === P);
+    if (lp && !woIsDone(lp)) return lp;
+    if (!lp && !isRestId(P) && !L.some(woIsDone)) return null;
+    return L.find(w => !woIsDone(w)) || L[0];
+  }
+  // A workout counts as "done on another day this week" when it was finished there, or is the workout that day shows.
+  function doneElsewhere(id, d){
+    const sun = sundayOf(d), sat = addDays(sun, 6);
+    return S.workouts.find(w => w.dayId === id && w.date !== d && w.date >= sun && w.date <= sat && !w.rest && (woIsDone(w) || (shownOn(w.date) || {}).id === w.id)) || null;
+  }
+  // What to offer on a date: the planned workout, unless it was already done on another day this week. Then it is the workout that day
+  // gave up (if it is still open), else rest. So a workout done early is never offered twice.
+  function standIn(d){
+    const id = plannedOn(d); if (!id || isRestId(id)) return id;
+    const w = doneElsewhere(id, d); if (!w) return id;
+    const alt = plannedOn(w.date);
+    if (alt && alt !== id && !isRestId(alt) && sundayOf(w.date) === sundayOf(d) && !S.workouts.some(x => x.dayId === alt && !x.rest && x.date >= sundayOf(d) && x.date <= addDays(sundayOf(d), 6))) return alt;
+    return RESTID();
+  }
+  // Lifts done early: every planned set of a lift logged on an earlier day of the same week, under the same plan day (Friday's lateral
+  // raises done on Wednesday). They count as done when that workout's own day comes. {name: {sets, date}}
+  function earlyLifts(dayId, d){
+    const sun = sundayOf(d), p = plan().find(x => x.id === dayId), out = {}; if (!p) return out;
+    S.workouts.filter(w => w.dayId === dayId && !w.rest && w.date >= sun && w.date < d).sort((a, b) => a.date < b.date ? -1 : 1).forEach(w => (w.exercises || []).forEach(x => {
+      const ex = p.exercises.find(e => e.name === x.name), n = (x.sets || []).length; if (ex && n >= Math.max(1, +ex.sets || 1)) out[x.name] = { sets: x.sets, date: w.date }; }));
+    return out;
+  }
+  function woProgress(w){   // lifts with at least one set (or done early this week), out of the plan's lifts; Finish marks it done on purpose
     const p = plan().find(x => x.id === (w && w.dayId)); if (!p || !w) return null;
-    const names = new Set((w.exercises || []).filter(x => (x.sets || []).length).map(x => x.name)), total = p.exercises.length;
+    const names = new Set((w.exercises || []).filter(x => (x.sets || []).length).map(x => x.name).concat(Object.keys(earlyLifts(w.dayId, w.date)))), total = p.exercises.length;
     const n = p.exercises.filter(e => names.has(e.name)).length;
     return { n, total, done: !!w.done || n >= total };
   }
   function weekState(sun){   // per day: what's planned, what happened, and which planned workouts were missed
     const days = Array.from({length: 7}, (_, i) => addDays(sun, i)), plan7 = weekFor(sun), doc = S.sched[sun] || {}, skipped = new Set(doc.skipped || []);
-    const loggedIds = new Set(S.workouts.filter(w => w.date >= sun && w.date <= days[6] && !w.rest).map(w => w.dayId));
+    const loggedIds = new Set(plan7.filter((id, i) => !isRestId(id) && doneElsewhere(id, days[i])));
     return days.map((d, i) => {
-      const id = plan7[i], w = liftOn(d), pr = w ? woProgress(w) : null;
+      const id = plan7[i], w = shownOn(d), pr = w ? woProgress(w) : null;
       let st = "plan";
       if (w) st = pr && pr.done ? "done" : "part";
       else if (isRestId(id)) st = restDone(d) ? "restdone" : "rest";
@@ -1449,6 +1554,8 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   }
   function swapDays(sun, a, b){   // future days swap; a past day's workout moves forward and the later workouts slide into the next rest day
     if (a === b) return;
+    const missed = i => addDays(sun, i) < today && !liftOn(addDays(sun, i)) && !isRestId(weekFor(sun)[i]);
+    if (b < a && missed(b) && !missed(a) && addDays(sun, a) >= today) [a, b] = [b, a];   // picked the other way round: same move
     const w = weekFor(sun).slice(), past = addDays(sun, a) < today && !liftOn(addDays(sun, a)) && b > a;
     if (!past || isRestId(w[b])){ [w[a], w[b]] = [w[b], w[a]]; saveWeek(sun, w); toast(`${shortName(w[b])} moved to ${WDAYL[b]}${isRestId(w[a]) ? "" : `, ${shortName(w[a])} to ${WDAYL[a]}`}.`); return; }
     const moving = w[a]; w[a] = RESTID();
@@ -1540,10 +1647,11 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   // ---------- the Workout screen: one lift, one set at a time. Log set starts the rest clock; set dots are the planned sets ----------
   const FM = { ei: null, si: null, skip: new Set(), effAsk: null, typed: null, after: null, pf: null, edit: false };   // edit = you tapped a set dot to change a logged set   // typed = what you've typed in the boxes, kept across redraws
   function fmNext(p, after){   // the next lift (in the order picked) with an empty set, starting after the lift you just finished
-    const d = ensureDraft(p), all = keptOrder(p), k = all.indexOf(after);
+    const d = ensureDraft(p), all = keptOrder(p), k = all.indexOf(after), early = earlyLifts(p.id, S.date);
     const order = k >= 0 ? all.slice(k + 1).concat(all.slice(0, k + 1)) : all;
     for (const ei of order){
       if (FM.skip.has(ei)) continue;
+      if (early[p.exercises[ei].name] && !setsIn(d[ei]).length) continue;   // done earlier this week: not asked again
       const si = d[ei].sets.findIndex(x => !(+x.r > 0));
       if (si >= 0 && !exDone(p, ei)) return { ei, si };
     }
@@ -1574,17 +1682,15 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     const el = $("focusCard"); if (!el) return;
     if (S.tab !== "workout"){ paintRest(); return; }
     const p = plan().find(x => x.id === curDayId());
+    renderBelow(p);
     if (!p){ el.innerHTML = `<div class="mid"><h2>No plan yet</h2><div class="meta">Your plan shows here once your coach sets it up.</div></div>`; return; }
-    const dayBtn = `<button type="button" class="daybtn" id="fmDay" aria-label="${esc(p.name)}. Open this week to swap days">${ic("calendar")}${esc(shortName(p.id))}</button>`;   // the calendar says it opens the week; "Chest A" (not "Day 1 Chest A") leaves room on small phones
     if (isRest(p)){
       const done = restDone(S.date), n = p.exercises.length, cu = catchUp();
-      el.innerHTML = `<div class="hdr">${dayBtn}<span>${S.date === today ? "Today" : esc(fmtShort(S.date))}</span></div>
-        <div class="mid"><div class="eyebrow">Rest day</div><h2>Walk, eat, sleep.</h2><div class="meta">${done ? "Checked off. " : ""}An easy 20 to 30 minute walk${n ? `, ${restWord()} if you feel like it` : ""}.</div>
+      el.innerHTML = `<div class="mid"><div class="eyebrow">Rest day</div><h2>Walk, eat, sleep.</h2><div class="meta">${done ? "Checked off. " : ""}An easy 20 to 30 minute walk${n ? `, ${restWord()} if you feel like it` : ""}.</div>
         ${cu ? `<div class="cue hold">${ic("info")}<span>${esc(shortName(cu.miss.planned))} from ${WDAYL[cu.miss.i]} is still open</span></div>` : ""}
         ${done ? `<div class="pill good">${CHECK}Rest day done</div>` : `<button type="button" class="btn" id="fmRestDone">Rest day done</button>`}
         ${cu ? `<button type="button" class="btn quiet" id="fmCatch">Do ${esc(shortName(cu.miss.planned))} today</button>` : ""}
         ${n ? `<button type="button" class="btn quiet" id="fmAbs">Optional ${esc(restWord())} · ${n} moves</button>` : ""}</div>`;
-      $("fmDay").onclick = openWeekSheet;
       if ($("fmRestDone")) $("fmRestDone").onclick = () => markRest($("fmRestDone"));
       if ($("fmCatch")) $("fmCatch").onclick = () => { planPicked = false; swapDays(cu.sun, cu.miss.i, cu.today.i); pickDay(cu.miss.planned); };
       if ($("fmAbs")) $("fmAbs").onclick = () => { FM.ei = exOrder(p)[0]; FM.si = null; renderLifting(p, true); };
@@ -1592,54 +1698,140 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     }
     renderLifting(p);
   }
+  // Under the workout card, a short scroll down: every lift of this workout (tap one to go to it). The week sits above the card (renderWeek).
+  // ---------- hold a lift and drag it to reorder (like moving an app on a phone): the row lifts off, the others slide to make room ----------
+  let LH = null, lhSwallow = 0;
+  function lhClear(){
+    const h = LH; if (!h) return; LH = null; clearTimeout(h.t); if (h.ghost) h.ghost.remove();
+    h.list.classList.remove("sorting"); h.list.querySelectorAll(".wolift").forEach(r => { r.classList.remove("held", "press"); r.style.transform = ""; });
+  }
+  function lhStart(){
+    const h = LH; if (!h || !h.el.isConnected){ lhClear(); return; }
+    h.rows = [...h.list.querySelectorAll(".wolift")]; h.rects = h.rows.map(r => r.getBoundingClientRect()); h.on = true; h.to = h.k;
+    const r = h.rects[h.k], g = h.el.cloneNode(true); g.className = "wolift woliftfly"; g.removeAttribute("data-ei");
+    g.style.cssText = `left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px`; document.body.appendChild(g); h.ghost = g;
+    h.el.classList.remove("press"); h.el.classList.add("held"); h.list.classList.add("sorting"); try { navigator.vibrate && navigator.vibrate(12); } catch(e){}
+    requestAnimationFrame(() => { if (h.ghost && !h.ghost.style.transform) h.ghost.style.transform = "scale(1.03)"; });
+  }
+  function lhMove(y){
+    const h = LH, r = h.rects[h.k], first = h.rects[0], end = h.rects[h.rects.length - 1];
+    const top = Math.max(first.top - 6, Math.min(end.bottom - r.height + 6, r.top + y - h.y)), mid = top + r.height / 2;
+    h.ghost.style.transform = `translateY(${top - r.top}px) scale(1.03)`;
+    let to = h.rects.findIndex(x => mid >= x.top && mid <= x.bottom); if (to < 0) to = mid < first.top ? 0 : h.rects.length - 1; h.to = to;
+    h.rows.forEach((row, j) => { if (j === h.k) return; const sh = h.k < to && j > h.k && j <= to ? -r.height : h.k > to && j >= to && j < h.k ? r.height : 0; row.style.transform = sh ? `translateY(${sh}px)` : ""; });
+  }
+  function liftMove(k, to){
+    const p = plan().find(x => x.id === curDayId()); if (!p) return;
+    const o = exOrder(p).slice(), [m] = o.splice(k, 1); o.splice(to, 0, m); S.order = S.order || {};
+    if (JSON.stringify(o) === JSON.stringify(usualOrder(p))) delete S.order[p.id]; else S.order[p.id] = o.map(i => p.exercises[i].name);
+    renderWorkout();
+  }
+  document.addEventListener("pointerdown", e => {
+    const el = e.target.closest && e.target.closest("#woBelow .wolift"); if (!el || (e.pointerType === "mouse" && e.button !== 0)) return;
+    lhClear(); const list = el.parentNode, rows = [...list.querySelectorAll(".wolift")]; if (rows.length < 2) return;
+    LH = { el, list, k: rows.indexOf(el), id: e.pointerId, x: e.clientX, y: e.clientY, on: false };
+    if (e.target.closest("[data-grip]")){ e.preventDefault(); lhStart(); return; }   // the handle picks the lift up at once
+    el.classList.add("press"); LH.t = setTimeout(lhStart, 350);   // anywhere else on the row: hold, and the row darkens while you wait
+  });
+  document.addEventListener("pointermove", e => {
+    const h = LH; if (!h || e.pointerId !== h.id) return;
+    if (!h.on){ if (Math.hypot(e.clientX - h.x, e.clientY - h.y) > 8) lhClear(); return; }   // moved before the hold took: that is a scroll
+    lhMove(e.clientY);
+  });
+  document.addEventListener("touchmove", e => { if (LH && LH.on && e.cancelable) e.preventDefault(); }, { passive: false });   // while a lift is held, the page does not scroll
+  const lhEnd = e => {
+    const h = LH; if (!h || e.pointerId !== h.id) return;
+    const on = h.on, k = h.k, to = e.type === "pointercancel" ? k : h.to; lhClear(); if (!on) return;
+    lhSwallow = Date.now() + 400; if (to !== k) liftMove(k, to);
+  };
+  document.addEventListener("pointerup", lhEnd); document.addEventListener("pointercancel", lhEnd);
+  document.addEventListener("contextmenu", e => { if (e.target.closest && e.target.closest("#woBelow .wolift")) e.preventDefault(); });
+  function renderBelow(p, abs){
+    const el = $("woBelow"); if (!el) return;
+    if (!p){ el.innerHTML = ""; renderWeek(); return; }
+    const meIdx = parseD(S.date).getDay();
+    let lifts = "";
+    if (!isRest(p) || abs){
+      const d = ensureDraft(p), order = exOrder(p), keep = keepFor(p, lenPick(), order), at = fmAt(p), early = earlyLifts(p.id, S.date), saved = S.workouts.find(w => w.id === woId(S.date, p.id)), fin = !!(saved && saved.done);
+      const rows = order.map((ei, k) => { const ex = p.exercises[ei], sets = setsIn(d[ei]), n = Math.max(+ex.sets || 0, d[ei].sets.length), cue = nextCue(ex, S.date, p.id), here = !fin && at && at.ei === ei, all = sets.length >= n;
+        const er = !sets.length && early[ex.name];   // done on an earlier day this week
+        const right = er ? `<span class="v done">${CHECK}done ${WDAY[parseD(er.date).getDay()]}</span>` : sets.length ? `<span class="v ${all ? "done" : "part"}">${all ? CHECK : ""}${sets.length} of ${n}</span>` : `<span class="v">${esc(ex.sets)} × ${esc(ex.reps)}</span>`;
+        const sub = er ? er.sets.map(s => `${isBW(ex.name) && !(+s.w) ? "BW" : fmtW(s.w)}×${s.r}`).join(", ") : sets.length ? sets.map(s => `${isBW(ex.name) && !(+s.w) ? "BW" : fmtW(s.w === "" ? 0 : s.w)}×${s.r}`).join(", ") : k >= keep ? "skipped for time" : cue ? cue.title : `last ${lastText(lastSets(ex.name, S.date, p.id), ex.name)}`;
+        return `<button type="button" class="wolift${here ? " now" : ""}${k >= keep && !sets.length ? " cut" : ""}" data-ei="${ei}"${here ? ' aria-current="step"' : ""}><span class="n">${k + 1}</span><span class="t"><b>${esc(ex.name)}</b><small>${esc(sub)}</small></span>${right}${order.length > 1 ? `<span class="grip" data-grip aria-label="Drag to change the order">${ic("bars")}</span>` : "<span></span>"}</button>`; }).join("");
+      // the order: hold a lift and drag it. A move is for this workout only; "Set as default" saves it for this plan day (settings.liftOrder)
+      const same = (x, y) => JSON.stringify(x) === JSON.stringify(y), usual = usualOrder(p), oneOff = !same(order, usual), own = !same(usual, p.exercises.map((_, i) => i));
+      const line = oneOff ? `<div class="wkchanged"><span>For this workout only.</span><button type="button" class="linkbtn" id="liftUndo">Undo</button><button type="button" class="linkbtn" id="liftDefault">Set as default</button></div>`
+        : own ? `<div class="wkchanged"><span>Your own order.</span><button type="button" class="linkbtn" id="liftPlan">Use plan order</button></div>`
+        : "";
+      lifts = `<div class="card"><div class="cardhead"><span class="eyebrow">${S.date === today ? "Today's lifts" : `${WDAY[meIdx]}'s lifts`}</span></div><div class="wolifts">${rows}</div>${line}</div>`;
+    }
+    el.innerHTML = lifts; renderWeek();
+    if ($("liftUndo")) $("liftUndo").onclick = () => { if (S.order) delete S.order[p.id]; renderWorkout(); };
+    if ($("liftDefault")) $("liftDefault").onclick = async () => { const names = exOrder(p).map(i => p.exercises[i].name);
+      try { await saveSettings({ liftOrder: Object.assign({}, sett().liftOrder, { [p.id]: names }) }); if (S.order) delete S.order[p.id]; toast(`Set as default. ${shortName(p.id)} starts in this order now.`); } catch(e){ toast("Open this page in Claude to save."); } renderWorkout(); };
+    if ($("liftPlan")) $("liftPlan").onclick = async () => { const lo = Object.assign({}, sett().liftOrder); delete lo[p.id]; try { await saveSettings({ liftOrder: lo }); } catch(e){ toast("Open this page in Claude to save."); } renderWorkout(); };
+    el.querySelectorAll(".wolift").forEach(b => b.onclick = () => { if (Date.now() < lhSwallow) return; const ei = +b.dataset.ei; FM.ei = ei; FM.si = null; FM.edit = false; FM.typed = null; FM.skip.delete(ei);
+      const d = ensureDraft(p)[ei]; if (d && !d.sets.some(x => !(+x.r > 0))){ FM.si = 0; FM.edit = true; }   // every set is in: open set 1 to look or change
+      if (isRest(p)) renderLifting(p, true); else renderWorkout();
+      try { $("focusCard").scrollIntoView({ block: "start", behavior: reduceMotion() ? "auto" : "smooth" }); } catch(e){ window.scrollTo(0, 0); } });
+  }
   function renderLifting(p, force){
+    if (force) renderBelow(p, true);
     const el = $("focusCard"), d = ensureDraft(p), saved = S.workouts.find(w => w.id === woId(S.date, p.id)), order = keptOrder(p);
-    const at = fmAt(p), prog = saved ? woProgress(saved) : null, allLogged = !at, finished = !!(saved && saved.done) || (allLogged && order.every(ei => setsIn(d[ei]).length));
-    const dayBtn = `<button type="button" class="daybtn" id="fmDay" aria-label="${esc(p.name)}. Open this week to swap days">${ic("calendar")}${esc(shortName(p.id))}</button>`;   // the calendar says it opens the week; "Chest A" (not "Day 1 Chest A") leaves room on small phones
-    const liftsLbl = S.date === today ? "Today's lifts" : `${WDAY[parseD(S.date).getDay()]}'s lifts`;   // opens the whole workout: every lift, time options, order
+    const at = fmAt(p), prog = saved ? woProgress(saved) : null, allLogged = !at, early = earlyLifts(p.id, S.date), finished = !!(saved && saved.done) || (allLogged && order.every(ei => setsIn(d[ei]).length || early[p.exercises[ei].name]));
     const noteOn = !!((S.noteText || {})[p.id] || (saved && saved.note));
     const foot = (ex, ei) => `<div class="foot"><a href="${ytUrl(ex.name)}" target="_blank" rel="noopener">${ic("play")}Form video</a><button type="button" id="fmSwap">${ic("swap")}Swap</button><button type="button" id="fmSkip">${ic("skip")}Skip lift</button><button type="button" id="fmNote">${ic("note")}${noteOn ? "Note ✓" : "Note"}</button></div>`;
     if ((finished || allLogged) && !force && !(FM.ei != null && FM.si != null)){
       const w = saved || { exercises: [], date: S.date }, st = woStats(w), bi = blockInfo(S.date, p, []);
       const left = order.filter(ei => !setsIn(d[ei]).length).length;
-      el.innerHTML = `<div class="hdr">${dayBtn}<button type="button" id="fmAll">${liftsLbl}</button></div>
-        <div class="mid"><div class="finish"><div class="bigcheck">${CHECK}</div><h2>${finished ? "Workout done" : "All lifts logged"}</h2>
+      el.innerHTML = `<div class="mid"><div class="finish"><div class="bigcheck">${CHECK}</div><h2>${finished ? "Workout done" : "All lifts logged"}</h2>
           <div class="finstats"><div><b>${st.pr ? `${st.pr.n}/${st.pr.total}` : st.sets}</b><span>${st.pr ? "lifts" : "sets"}</span></div><div><b>${st.vol ? Math.round(st.vol).toLocaleString() : "–"}</b><span>${U()} moved</span></div><div><b>${st.mins || "–"}</b><span>minutes</span></div></div>
           ${st.vol ? `<div class="finnext">${esc([heavyLine(st.vol), vsLastLine(st)].filter(Boolean).join(" "))}</div>` : ""}
           ${st.bests.length ? `<div class="finbest">${st.bests.map(b => `<div>${TROPHY}<span>New best · ${esc(b)}</span></div>`).join("")}</div>` : `<div class="finnext">No new bests today. Showing up is what moves the numbers.</div>`}
           ${st.next ? `<div class="finnext">Next: ${esc(st.next.q.name)}, ${WDAYL[parseD(st.next.d).getDay()]}.</div>` : ""}
           ${finished ? `<button type="button" class="btn" id="fmHome">Nice</button>` : `<button type="button" class="btn" id="fmFinish">Finish workout${left ? ` · ${left} skipped` : ""}</button>`}
+          ${setsDone(p).length ? `<button type="button" class="btn quiet" id="fmEff">${unrated(p).length ? "Rate how hard it was" : "Change how hard it was"}</button>` : ""}
         </div></div>
         <div class="foot"><span>${esc(bi.head)}</span><button type="button" id="fmNote">${ic("note")}${noteOn ? "Note ✓" : "Note"}</button></div>`;
-      $("fmDay").onclick = openWeekSheet; $("fmAll").onclick = () => openLiftsSheet(p); $("fmNote").onclick = () => openNoteSheet(p);
+      $("fmNote").onclick = () => openNoteSheet(p);
+      if ($("fmEff")) $("fmEff").onclick = () => openEffortSheet(p);
       if ($("fmHome")) $("fmHome").onclick = () => showTab("dash");
-      if ($("fmFinish")) $("fmFinish").onclick = async () => { await markDone(p); showTab("dash"); };
+      if ($("fmFinish")) $("fmFinish").onclick = async () => { await markDone(p); if (unrated(p).length) openEffortSheet(p, () => showTab("dash")); else showTab("dash"); };
       return;
     }
     const { ei, si, edit } = at, ex = p.exercises[ei], dr = d[ei], last = lastSets(ex.name, S.date, p.id), cue = nextCue(ex, S.date, p.id), sg = sugFor(cue, last, si), pv = last && last.sets[si];
     const cur = dr.sets[si], pre = pfOn(), key = `${S.date}|${p.id}|${ei}|${si}`, ty = FM.typed && FM.typed.key === key ? FM.typed : null;
-    const done = dr.sets.slice(0, si).filter(x => +x.r > 0).pop(), hint = done ? { w: done.w, r: done.r } : sg || pv || null;   // after set 1, the hint is the set you just did
+    // The faded numbers: the weight is what the coach line says to use this time (so the two never disagree, even when last time ramped up
+    // 95, 105, 115), the reps are what you did last time on that set. Once you've logged a set today, the faded weight follows today's
+    // weight (you clearly chose it). A lift with no coach weight uses last time's; one with no history falls back to the suggestion.
+    const lastAt = i => (last && last.sets && last.sets[i]) || null, lastAny = last && last.sets && last.sets.length ? last.sets[last.sets.length - 1] : null;
+    const cueW = cue && cue.kind !== "new" && cue.nw != null ? cue.nw : null;
+    const fadeAt = i => { const b = lastAt(i); if (!b) return null; const dn = dr.sets.slice(0, i).filter(x => +x.r > 0).pop(); return { w: dn ? dn.w : cueW != null ? cueW : b.w, r: b.r }; };
+    const done = dr.sets.slice(0, si).filter(x => +x.r > 0).pop(), base = pv || lastAny, hint = base ? { w: done ? done.w : cueW != null ? cueW : base.w, r: base.r } : done ? { w: done.w, r: done.r } : sg || null;
     FM.pf = pre && hint ? { w: hint.w, r: hint.r } : { w: "", r: "" };
     const w0 = ty ? ty.w : +cur.r > 0 ? cur.w : "", r0 = ty ? ty.r : +cur.r > 0 ? cur.r : "";
     const wPh = hint ? fmtW(hint.w) : U(), rPh = hint ? hint.r : "reps";
     const pos = order.indexOf(ei), total = order.length, pr = prSet(p, ei);
-    const dots = dr.sets.map((s, i) => `<button type="button" data-dot="${i}" class="${i === si ? "now" : +s.r > 0 ? (i === pr ? "best" : "done") : ""}" aria-label="Set ${i + 1}${+s.r > 0 ? `, ${fmtSet(s, ex.name)}` : ""}">${i === pr ? ic("trophy") : ""}</button>`).join("") + `<button type="button" class="dadd" id="fmAdd">+ set</button>`;
-    const wu = si === 0 && !edit && !dr.sets.some(s => +s.r > 0) && hint ? warmupSets(ex.name, hint.w) : [];   // before set 1 only, never logged
-    const wuLine = wu.length ? `<div class="warmup">Warm-up first: ${wu.map(s => `${esc(s.label)} × ${s.r}`).join(" · ")}</div>` : "";
+    // every set of this lift is a row, all on screen at once: number, weight, reps. The row you're on holds the two boxes; a logged row shows
+    // what you did (tap it to change it); a row still to come shows a dash, never a number, so nothing looks filled in before it is.
+    const wTxt = s => isBW(ex.name) && !(+s.w) ? "BW" : fmtW(s.w === "" || s.w == null ? 0 : s.w);
+    const rows = dr.sets.map((s, i) => { const got = +s.r > 0, here = i === si;
+      if (here) return `<div class="setrow now" data-dot="${i}" aria-current="step"><small>Set ${i + 1}</small><input id="fmW" type="number" inputmode="decimal" step="0.5" value="${esc(w0)}" placeholder="${esc(wPh)}" aria-label="Set ${i + 1} weight in ${U()}"><input id="fmR" type="number" inputmode="numeric" value="${esc(r0)}" placeholder="${esc(rPh)}" aria-label="Set ${i + 1} reps"><span class="st">${got ? "edit" : "now"}</span></div>`;
+      return `<button type="button" class="setrow${got ? " done" : ""}${got && i === pr ? " best" : ""}" data-dot="${i}" aria-label="Set ${i + 1}${got ? `, ${fmtSet(s, ex.name)}, logged. Tap to change it` : `, not done yet${lastAt(i) ? `. Last time ${fmtSet(lastAt(i), ex.name)}` : ""}. Tap to go to it`}"><small>Set ${i + 1}</small><span class="w">${got ? esc(wTxt(s)) : fadeAt(i) ? esc(wTxt(fadeAt(i))) : "–"}</span><span class="r">${got ? esc(s.r) : lastAt(i) ? esc(lastAt(i).r) : "–"}</span><span class="st">${got ? (i === pr ? ic("trophy") : CHECK) : ""}</span></button>`; }).join("");
+    const dots = `<div class="sethead"><span>Set</span><span>${U()}</span><span>Reps</span><span></span></div>${rows}<button type="button" class="setadd" id="fmAdd">+ Add a set</button>`;
     const lastSet = si >= dr.sets.length - 1, lastLift = pos >= total - 1;
     const logLabel = lastSet ? (lastLift ? "Log set and finish" : "Log set and go to next lift") : "Log set";
-    const eff = FM.effAsk != null && d[FM.effAsk] ? `<div class="effort"><span class="q">How hard was ${esc(p.exercises[FM.effAsk].name)}?</span><div class="effbtns">${[1, 2, 3, 4].map(v => `<button type="button" data-eff="${v}" aria-pressed="${+d[FM.effAsk].effort === v}">${EFFORT_L[v]}<small>${EFFORT_S[v]}</small></button>`).join("")}</div></div>` : "";
     const rest = RT.running ? `<div class="restrow"><button type="button" class="radj" id="rtMinus" aria-label="10 seconds less">${ic("minus")}</button><div class="rmid"><span class="rlbl">Rest</span><span class="t" id="rtClock">${fmtT(restLeft())}</span></div><button type="button" class="radj" id="rtPlus" aria-label="10 seconds more">${ic("plus")}</button><button type="button" id="rtSkip">Skip rest</button></div>` : "";
-    el.innerHTML = `<div class="hdr">${dayBtn}<span class="num">lift ${pos + 1} of ${total}</span><button type="button" id="fmAll">${liftsLbl}</button></div>
-      <div class="mid midtop">
-        <div><h2>${esc(ex.name)}</h2><div class="meta">Set ${si + 1} of ${dr.sets.length} · ${edit ? "editing" : `last time ${esc(lastText(last, ex.name))}`}${last && last.from && !last.date ? ` (${esc(last.from)})` : ""}</div></div>
-        ${cue ? cueHtml(cue) : `<div class="cue hold">${ic("target")}<span>${esc(ex.sets)} × ${esc(ex.reps)}</span></div>`}${wuLine}
-        <div class="nums"><label>${U()}<input id="fmW" type="number" inputmode="decimal" step="0.5" value="${esc(w0)}" placeholder="${esc(wPh)}"></label><label>reps<input id="fmR" type="number" inputmode="numeric" value="${esc(r0)}" placeholder="${esc(rPh)}"></label></div>
-        <div class="dots">${dots}</div>
-        <button type="button" class="btn" id="fmLog">${logLabel}</button>
-        ${eff}${rest}
-      </div>${foot(ex, ei)}`;
-    $("fmDay").onclick = openWeekSheet; $("fmAll").onclick = () => openLiftsSheet(p); $("fmNote").onclick = () => openNoteSheet(p);
+    // a thin line across the top of the card fills as sets are logged: where you are in the workout, with no words
+    const pgEarly = earlyLifts(p.id, S.date), pgNeed = order.reduce((n, k) => n + Math.max(+p.exercises[k].sets || 0, d[k].sets.length), 0);
+    const pgGot = order.reduce((n, k) => n + (pgEarly[p.exercises[k].name] && !setsIn(d[k]).length ? Math.max(+p.exercises[k].sets || 0, d[k].sets.length) : setsIn(d[k]).length), 0), pct = pgNeed ? Math.min(100, Math.round(pgGot / pgNeed * 100)) : 0;
+    el.innerHTML = `<div class="woprog" role="progressbar" aria-label="Workout progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><i style="width:${pct}%"></i></div><div class="mid midtop">
+        <div><h2>${esc(ex.name)}</h2>${FM.guest && FM.guest.ei === ei ? `<div class="meta">Doing this one early. It will be checked off on ${esc(FM.guest.day)}.</div>` : edit || !lastAny ? `<div class="meta">${edit ? `Editing set ${si + 1}` : "First time on this lift"}</div>` : ""}</div>
+        ${cue ? cueHtml(cue) : `<div class="cue hold">${ic("target")}<span>${esc(ex.sets)} × ${esc(ex.reps)}</span></div>`}
+        <div class="sets" role="group" aria-label="Sets">${dots}</div>
+        <div class="logdock">${rest}<button type="button" class="btn" id="fmLog">${logLabel}</button></div>
+      </div>${foot(ex, ei)}`;   // the rest clock and Log set stay together, pinned just above the tab bar, so neither is ever under it
+    $("fmNote").onclick = () => openNoteSheet(p);
     $("fmLog").onclick = () => logSet(p, ei, si);
     const keepTyped = () => {   // what you type saves on its own after a pause; Log set still moves you on and starts the rest clock
       const wv = $("fmW").value, rv = $("fmR").value;
@@ -1653,13 +1845,13 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     };
     $("fmW").addEventListener("input", keepTyped); $("fmR").addEventListener("input", keepTyped);
     $("fmR").addEventListener("keydown", e => { if (e.key === "Enter"){ e.preventDefault(); logSet(p, ei, si); } });
-    el.querySelectorAll("[data-dot]").forEach(b => b.onclick = () => { FM.ei = ei; FM.si = +b.dataset.dot; FM.edit = true; FM.typed = null; renderWorkout(); });
+    el.querySelectorAll("button[data-dot]").forEach(b => b.onclick = () => { FM.ei = ei; FM.si = +b.dataset.dot; FM.edit = true; FM.typed = null; renderWorkout(); });
     $("fmAdd").onclick = () => { woDirty = true; touch(p.id, ei); const sets = ensureDraft(p)[ei].sets; sets.push({ w: "", r: "" }); FM.ei = ei; FM.si = sets.length - 1; FM.edit = false; FM.typed = null; renderWorkout(); };   // touched, so the new set survives a redraw
     $("fmSkip").onclick = () => { FM.skip.add(ei); FM.after = ei; FM.ei = null; FM.si = null; FM.edit = false; FM.typed = null; toast(`Skipped ${ex.name}.`); renderWorkout(); };
     $("fmSwap").onclick = () => { openCoach(); $("qlText").value = `Can you give me a swap for ${ex.name} today?`; };
-    el.querySelectorAll("[data-eff]").forEach(b => b.onclick = () => { setEffort(p, FM.effAsk, +b.dataset.eff); FM.effAsk = null; renderWorkout(); });
     if ($("rtSkip")){ $("rtSkip").onclick = stopRest; $("rtMinus").onclick = () => nudgeRest(-10); $("rtPlus").onclick = () => nudgeRest(10); }
     const tipLine = $("tipLine"); if (tipLine) tipLine.remove();
+    if (!edit) howToSoon();   // once per device, the first time someone is on this screen
   }
   function logSet(p, ei, si){
     const d = ensureDraft(p), ex = p.exercises[ei], pf = FM.pf || {}, w = $("fmW").value || String(pf.w ?? ""), r = $("fmR").value || String(pf.r ?? "");
@@ -1668,17 +1860,48 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     d[ei].sets[si] = { w: w === "" ? 0 : +w, r: +r }; woDirty = true; touch(p.id, ei); queueWoSave(0);
     const pr = prSet(p, ei), key = `${S.date}|${p.id}`;
     if (pr === si && !celebrated.has(key)){ celebrated.add(key); toast(`New best: ${ex.name} ${fmtSet(d[ei].sets[si], ex.name)}`, true); }   // one celebration per workout
-    const liftDone = exDone(p, ei) && !d[ei].effort;
+    if (FM.guest && FM.guest.ei === ei && exDone(p, ei)){   // one lift from another day, done early: save it and go back to today's workout
+      const g = FM.guest; FM.guest = null; stopRest(); toast(`${ex.name} is logged. It's checked off for ${g.day}.`);
+      pickDay(g.back); renderDash(); return;
+    }
     FM.si = null; FM.after = ei; FM.ei = exDone(p, ei) ? null : ei;   // stay on this lift until its sets are in
-    if (liftDone) FM.effAsk = ei;
     const nx = FM.ei != null ? { ei, si } : fmNext(p, ei);
-    if (nx || liftDone) startTimer(restFor(ex), ex.name); else stopRest();
+    if (nx) startTimer(restFor(ex), ex.name); else stopRest();
+    if (!nx && unrated(p).length) setTimeout(() => { if (S.tab === "workout" && !SH.open) openEffortSheet(p); }, 500);   // the last set of the workout: ask how hard each lift was, once
     renderWorkout();
+  }
+  // How hard was it: asked once, in a sheet, when the workout's last set is in (or from the finish card). One row per lift you logged.
+  // It describes the last set of each lift and is saved as exercises[].effort, exactly as before.
+  const setsDone = p => { const d = ensureDraft(p); return exOrder(p).filter(ei => setsIn(d[ei]).length); };
+  const unrated = p => { const d = ensureDraft(p); return setsDone(p).filter(ei => !d[ei].effort); };
+  function openEffortSheet(p, then){
+    const draw = () => { const d = ensureDraft(p);
+      return `<div class="note">For each lift, how hard was the last set? This decides when the weight goes up.</div>` + setsDone(p).map(ei => `<div class="effrow"><b>${esc(p.exercises[ei].name)}</b><div class="effbtns lite">${[1, 2, 3, 4].map(v => `<button type="button" data-ei="${ei}" data-eff="${v}" aria-pressed="${+d[ei].effort === v}">${EFFORT_L[v]}<small>${EFFORT_S[v]}</small></button>`).join("")}</div></div>`).join("")
+        + `<div class="sheetacts"><button type="button" class="primary" id="effDone">${unrated(p).length ? "Skip the rest" : "Done"}</button></div>`; };
+    const wire = body => {
+      body.querySelectorAll("[data-eff]").forEach(b => b.onclick = () => { const d = ensureDraft(p)[+b.dataset.ei]; if (+d.effort !== +b.dataset.eff) setEffort(p, +b.dataset.ei, +b.dataset.eff); body.innerHTML = draw(); wire(body); });
+      $("effDone").onclick = () => { closeSheet(); renderWorkout(); if (then) then(); };
+    };
+    openSheet({ title: "How hard was it?", html: draw(), wire });
+  }
+  let memHints = 0;   // used when this device can't store settings
+  // tl-hints holds which first-time pop-up this device has seen: 2 is the "How this screen works" one (1 was the older faded-numbers note)
+  const hintsSeen = () => { try { return Math.max(memHints, +localStorage.getItem("tl-hints") || 0) >= 2; } catch(e){ return memHints >= 2; } };
+  const hintsBump = () => { memHints = 2; try { localStorage.setItem("tl-hints", "2"); } catch(e){} };
+  // show the first-time pop-up shortly after the Workout screen with a lift on it is in front (from a redraw, or from tapping the tab)
+  function howToSoon(){ if (hintsSeen()) return; setTimeout(() => { if (S.tab === "workout" && $("fmLog") && !SH.open && !hintsSeen() && !typingSet()) openFadedTip(pfOn()); }, 600); }
+  function openFadedTip(pre){   // the one-time note for a new user: how this screen works, so the screen itself carries no instructions
+    hintsBump();
+    openSheet({ title: "How this screen works", html: `<div class="tipdemo"><span class="old">115</span><span class="old">10</span><b>not logged yet</b></div>
+      <p class="tiptext"><b>Faded numbers</b> are a starting point. They are <b>not logged</b>. The weight is what your coach suggests today. The reps are what you did last time. ${pre ? "Type your own, or just tap <b>Log set</b> to use them." : "Type what you do, then tap <b>Log set</b>."}</p>
+      <div class="tiprow"><span class="tipic">${ic("bars")}</span><p class="tiptext"><b>Change the order.</b> Drag the handle on a lift up or down. Tap a lift to open it.</p></div>
+      <div class="tiprow"><span class="tipic day">WED</span><p class="tiptext"><b>Move a day.</b> Hold a day in the week row and drag it onto another day. They swap. Tap a day to see its lifts.</p></div>
+      <div class="sheetacts"><button type="button" class="primary" id="tipOk">Got it</button></div>`, wire(){ $("tipOk").onclick = closeSheet; } });
   }
   function setPrefill(on){ memPf = on; try { localStorage.setItem("tl-prefill", on ? "on" : "off"); } catch(e){} }
   // ---------- workout model: which day, the draft of today's sets, saving as you go, the sheets (all lifts, the week, the note) ----------
   function nextDayId(){   // the workout planned for the date at the top (a rest day maps to the rest plan)
-    const id = plannedOn(S.date);
+    const id = standIn(S.date);
     if (id && !isRestId(id)) return id;
     if (restPlan()) return restPlan().id;
     return nextDayIdRotation();
@@ -1697,11 +1920,11 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
   const loggedOn = d => S.workouts.filter(w => w.date === d && plan().some(p => p.id === w.dayId)).sort((a,b) => (a.savedAt||"") < (b.savedAt||"") ? 1 : -1)[0];
   function curDayId(){   // the day the Workout screen shows: the one you picked, else what's logged on this date, else what's planned
     if (planPicked && S.selDay && plan().some(p => p.id === S.selDay)) return S.selDay;
-    const l = loggedOn(S.date); if (l) return l.dayId;
+    const l = shownOn(S.date); if (l) return l.dayId;   // the same rule the week and Home use, so all three always agree
     return nextDayId();
   }
   const selId = curDayId;   // the coach's context and the kit's hooks still ask for selId()
-  function pickDay(id){ if (!plan().some(p => p.id === id)) return; flushWoSave(); S.selDay = id; planPicked = true; woDirty = false; FM.ei = null; FM.si = null; FM.after = null; FM.typed = null; FM.edit = false; FM.skip = new Set(); renderWorkout(); }
+  function pickDay(id){ if (!plan().some(p => p.id === id)) return; flushWoSave(); S.selDay = id; planPicked = true; woDirty = false; FM.guest = null; FM.ei = null; FM.si = null; FM.after = null; FM.typed = null; FM.edit = false; FM.skip = new Set(); renderWorkout(); }
   const setsIn = d => (d ? d.sets : []).filter(x => x.r !== "" && x.r != null && +x.r > 0);
   function exDone(p, ei){ const d = S.draft[p.id] && S.draft[p.id][ei]; return !!d && setsIn(d).length >= Math.max(1, +p.exercises[ei].sets || d.sets.length); }
   const touch = (pid, ei) => { (S.touched[pid] = S.touched[pid] || new Set()).add(ei); };
@@ -1719,14 +1942,15 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     }
     return S.draft[p.id];
   }
-  // the order the lifts run in: a one-off order picked in the Today's lifts sheet (S.order), else settings.liftOrder[dayId], else the plan's order
-  function exOrder(p){
-    const names = (S.order && S.order[p.id]) || ((sett().liftOrder || {})[p.id]);
+  // the order the lifts run in: a one-off order made by dragging a lift in the list under the card (S.order), else settings.liftOrder[dayId], else the plan's order
+  function orderFrom(p, names){
     const idx = p.exercises.map((_, i) => i);
     if (!Array.isArray(names)) return idx;
     const by = names.map(n => p.exercises.findIndex(e => e.name === n)).filter(i => i >= 0);
     return by.concat(idx.filter(i => !by.includes(i)));
   }
+  const usualOrder = p => orderFrom(p, (sett().liftOrder || {})[p.id]);   // the saved default for this day, else the plan's order
+  const exOrder = p => orderFrom(p, (S.order && S.order[p.id]) || (sett().liftOrder || {})[p.id]);
   const keptOrder = p => { const o = exOrder(p); return o.slice(0, keepFor(p, lenPick(), o)); };   // the lifts that fit the Full / 45 / 30 pick
   // sets you log save on their own: only the lifts you touched, merged into what's already saved (so sets the coach logged stay)
   let woSaveT = null, woSaveArgs = null;
@@ -1854,70 +2078,121 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     setTimeout(() => { liftDrag = null; }, 0);
   };
   document.addEventListener("pointerup", endLiftDrag); document.addEventListener("pointercancel", endLiftDrag);
-  // ---------- the week sheet: tap a day, then tap where it goes (or hold and drag). Swaps are for this week only. ----------
-  // A swap happens on the first try. If it puts two hard sessions for one muscle back to back, a heads-up shows with Undo (never a block).
+  // ---------- the week, at the top of the Workout screen above the card: tap a day to see its lifts and do it today; drag a day sideways onto another to move it ----------
+  // A move happens on the drop and is for this week only; "Set as default" makes it stick. If a move puts two hard sessions for one muscle
+  // back to back, a heads-up shows with Undo (never a block).
   let wkSel = null, wkUndo = null, wkUndoT = null, wkDrag = null;
-  function openWeekSheet(){
-    const sun = sundayOf(S.date), meIdx = parseD(S.date).getDay();
-    wkSel = null;
-    const draw = () => {
-      const st = weekState(sun), cur = weekFor(sun), ICO = { done: CHECK, restdone: CHECK, part: "◐", miss: "!", skip: "–", moved: "↪" };
-      const grid = `<div class="wkgrid" id="wkGrid">${st.map(x => `<button type="button" class="wkday ${x.st}${x.d === today ? " now" : ""}${wkSel === x.i ? " sel" : wkSel != null ? " tgt" : ""}" data-i="${x.i}" aria-pressed="${wkSel === x.i}" aria-label="${WDAYL[x.i]}: ${esc(shortName(x.id))}"><b>${WDAY[x.i]}</b><span>${esc(shortName(x.id))}</span><i>${ICO[x.st] || ""}</i></button>`).join("")}</div>`;
-      let act;
-      if (wkUndo){
-        act = (wkUndo.warn ? `<div class="warnline">${ic("info")}<span>Heads up: ${esc(wkUndo.warn.join("; "))}. Two hard days in a row are hard to recover from. Fine now and then.</span></div>` : "")
-          + `<div class="undoline"><span>${esc(wkUndo.text)}</span><button type="button" id="wkUndoBtn">Undo</button></div>`;
-      } else if (wkSel != null){
-        const x = st[wkSel], nm = isRestId(x.id) ? "Rest" : shortName(x.id);
-        act = `<div class="note">${esc(WDAYL[wkSel])} · ${esc(nm)}. Now tap the day it should go to.</div>`
-          + (!isRestId(x.id) && wkSel !== meIdx ? `<div class="sheetacts"><button type="button" id="wkJust">Just ${S.date === today ? "today" : WDAY[meIdx]}: ${esc(nm)}</button></div>` : "");
-      } else act = `<div class="note">Tap a day, then tap where it goes. Or hold and drag. Changes are for this week only.</div>`;
-      const base = weekBase(), changed = cur.some((v, i) => v !== base[i]);
-      return grid + act + (changed ? `<div class="sheetacts"><button type="button" id="wkUsual">Make this my usual week</button><button type="button" id="wkReset">Back to usual</button></div>` : "");
-    };
-    const settle = (a, b) => {   // the second tap or the drop: swap now; a heads-up rides along when two hard days for one muscle touch
-      if (a === b){ wkSel = null; refreshSheet(); return; }
-      doSwap(a, b, swapWarning(weekFor(sun), a, b));
-    };
-    const doSwap = (a, b, warn) => {
-      const prev = weekFor(sun).slice(), moved = shortName(prev[a]);
-      wkSel = null; planPicked = false;
-      clearTimeout(wkUndoT); wkUndo = { days: prev, text: `Moved ${moved} to ${WDAYL[b]}.`, warn: warn && warn.length ? warn : null };
-      wkUndoT = setTimeout(() => { wkUndo = null; refreshSheet(); }, wkUndo.warn ? 20000 : 10000);
-      swapDays(sun, a, b);
-      const nowToday = weekFor(sun)[meIdx]; if (a === meIdx || b === meIdx){ if (nowToday && !isRestId(nowToday)) pickDay(nowToday); else { FM.ei = null; renderWorkout(); } }
-      setTimeout(refreshSheet, 50);
-    };
-    const wire = body => {
-      body.querySelectorAll(".wkday").forEach(b => {
-        b.onclick = () => { if (wkDrag && wkDrag.moved) return; const i = +b.dataset.i; if (wkSel == null) wkSel = i; else if (wkSel === i) wkSel = null; else { settle(wkSel, i); return; } refreshSheet(); };
-        b.onpointerdown = e => { wkDrag = { from: +b.dataset.i, x: e.clientX, y: e.clientY, id: e.pointerId, moved: false, el: b, t: setTimeout(() => startWkDrag(e), 350) }; };
-      });
-      if ($("wkJust")) $("wkJust").onclick = () => { const id = weekFor(sun)[wkSel]; closeSheet(); pickDay(id); };
-      if ($("wkUndoBtn")) $("wkUndoBtn").onclick = () => { const u = wkUndo; wkUndo = null; clearTimeout(wkUndoT); saveWeek(sun, u.days); toast("Put back."); setTimeout(refreshSheet, 50); };
-      if ($("wkUsual")) $("wkUsual").onclick = async () => { await setUsualWeek(weekFor(sun)); toast("Saved as your usual week."); refreshSheet(); };
-      if ($("wkReset")) $("wkReset").onclick = () => { saveWeek(sun, weekBase()); setTimeout(refreshSheet, 300); };
-    };
-    const startWkDrag = e => {   // hold a day for a moment, then drag it onto another day
-      if (!wkDrag || !wkDrag.el || !$("wkGrid")) return;
-      wkDrag.moved = true; wkSel = null; wkDrag.el.classList.add("drag");
-      const g = wkDrag.el.cloneNode(true); g.className = "wkday wkfly"; g.removeAttribute("data-i"); g.style.width = wkDrag.el.offsetWidth + "px"; document.body.appendChild(g); wkDrag.ghost = g;
-      $("wkGrid").querySelectorAll(".wkday").forEach(x => { if (x !== wkDrag.el) x.classList.add("tgt"); });
-      moveGhost(e.clientX, e.clientY); try { navigator.vibrate && navigator.vibrate(15); } catch(err){}
-    };
-    const moveGhost = (x, y) => { if (!wkDrag || !wkDrag.ghost) return; wkDrag.ghost.style.left = (x - wkDrag.ghost.offsetWidth / 2) + "px"; wkDrag.ghost.style.top = (y - 30) + "px"; };
-    const onMove = e => { if (!wkDrag || e.pointerId !== wkDrag.id) return; if (!wkDrag.moved){ if (Math.abs(e.clientX - wkDrag.x) + Math.abs(e.clientY - wkDrag.y) > 12){ clearTimeout(wkDrag.t); wkDrag = null; } return; }
-      e.preventDefault(); moveGhost(e.clientX, e.clientY);
-      const over = document.elementFromPoint(e.clientX, e.clientY)?.closest(".wkday:not(.wkfly)");
-      $("wkGrid")?.querySelectorAll(".wkday.over").forEach(x => x !== over && x.classList.remove("over")); if (over && over !== wkDrag.el) over.classList.add("over"); };
-    const onUp = e => { if (!wkDrag) return; clearTimeout(wkDrag.t); const d = wkDrag;
-      if (d.moved){ if (d.ghost) d.ghost.remove(); const over = document.elementFromPoint(e.clientX, e.clientY)?.closest(".wkday:not(.wkfly)"); $("wkGrid")?.querySelectorAll(".wkday").forEach(x => x.classList.remove("drag", "over", "tgt"));
-        if (over && +over.dataset.i !== d.from) settle(d.from, +over.dataset.i); else refreshSheet(); setTimeout(() => { wkDrag = null; }, 0); }
-      else wkDrag = null; };
-    document.addEventListener("pointermove", onMove); document.addEventListener("pointerup", onUp); document.addEventListener("pointercancel", onUp);
-    openSheet({ title: "This week", html: draw(), wire, refresh(){ if (!SH.open || !SH.cur || SH.cur.title !== "This week") return; $("uiSheetBody").innerHTML = draw(); wire($("uiSheetBody")); },
-      onClose(){ document.removeEventListener("pointermove", onMove); document.removeEventListener("pointerup", onUp); document.removeEventListener("pointercancel", onUp); clearTimeout(wkUndoT); wkUndo = null; } });
+  const wkSun = () => sundayOf(S.date), wkMe = () => parseD(S.date).getDay();
+  const wkDoneHere = () => { const w = shownOn(S.date); return !!(w && woIsDone(w)); };   // a finished workout on this day stays put: another one is an extra
+  function renderWeek(){
+    const el = $("woWeek"); if (!el || (wkDrag && wkDrag.moved)) return;
+    if (!plan().length){ el.innerHTML = ""; return; }
+    const sun = wkSun(), meIdx = wkMe(), meWord = S.date === today ? "today" : `on ${WDAYL[meIdx]}`;
+    const st = weekState(sun), cur = weekFor(sun), SAY = { done: "done", restdone: "done", moved: "done", miss: "missed", part: "started", skip: "skipped" },
+      OK = `<svg class="wkst ok" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="M4.6 8.3l2.3 2.3 4.6-5"/></svg>`,
+      ICO = { done: OK, restdone: OK, moved: OK, miss: `<svg class="wkst no" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>`,
+        part: `<svg class="wkst half" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.6"/><path d="M8 1.4a6.6 6.6 0 0 1 0 13.2z"/></svg>`,
+        skip: `<svg class="wkst skip" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8h8"/></svg>` };   // a green check for done, a red X for missed, half a ring for started, a dash for skipped
+    const grid = `<div class="wkgrid" id="wkGrid">${st.map(x => `<button type="button" class="wkday ${x.st}${x.d === today ? " now" : ""}${x.i === meIdx ? " me" : ""}${wkSel === x.i ? " sel" : ""}" data-i="${x.i}" aria-pressed="${wkSel === x.i}" data-say="${SAY[x.st] || ""}" aria-label="${WDAYL[x.i]}: ${esc(shortName(x.id))}${SAY[x.st] ? ", " + SAY[x.st] : ""}. Tap to see it, drag sideways to move it"><b>${WDAY[x.i]}</b><span>${esc(tileName(x.id))}</span><i>${ICO[x.st] || ""}</i></button>`).join("")}</div>`;
+    const base = weekBase(), changed = cur.some((v, i) => v !== base[i]);
+    let act = "";
+    if (wkUndo && wkUndo.warn) act = `<div class="warnline">${ic("info")}<span>Heads up: ${esc(wkUndo.warn.join("; "))}. Two hard days in a row are hard to recover from. Fine now and then.</span></div>`;
+    if (wkSel != null){   // the day you tapped: its lifts, and one button to do it on the day you're on
+      const x = st[wkSel], q = plan().find(z => z.id === x.id), rest = isRestId(x.id) || isRest(q), nm = rest ? "Rest day" : shortName(x.id);
+      const said = { done: "done", part: "started", miss: "missed", moved: "already done this week", skip: "skipped", restdone: "done" }[x.st] || "";
+      const ahead = !!q && !rest && x.d > S.date && x.st === "plan" && cur[x.i] === x.id, erl = q ? earlyLifts(q.id, x.d) : {};   // a day still to come: any one of its lifts can be done early
+      const lifts = q && !rest ? `<ul class="wklifts">${q.exercises.map((ex, k) => { const got = erl[ex.name], right = got ? `${CHECK}done ${WDAY[parseD(got.date).getDay()]}` : `${esc(ex.sets)} × ${esc(ex.reps)}`;
+        return ahead && !got ? `<li><button type="button" data-one="${k}"><span>${esc(ex.name)}</span><span>${right}</span></button></li>` : `<li><span>${esc(ex.name)}</span><span class="${got ? "got" : ""}">${right}</span></li>`; }).join("")}</ul>${ahead ? `<div class="note">Tap one lift to do just that lift ${meWord}. It will be checked off on ${esc(WDAYL[wkSel])}.</div>` : ""}` : `<div class="note">An easy walk. Nothing to log.</div>`;
+      const here = wkSel === meIdx, open = !rest && q;
+      act += `<div class="wkpick"><div class="wkpickhd"><b>${esc(WDAYL[wkSel])} · ${esc(nm)}</b>${said ? `<span>${esc(said)}</span>` : ""}</div>${lifts}
+        ${open && !(here && x.id === curDayId()) ? `<div class="sheetacts"><button type="button" class="primary" id="wkDo">${here ? "Open this workout" : `Do this ${meWord}`}</button></div>` : ""}
+        ${open && !here && !wkDoneHere() && cur[x.i] === x.id && !isRestId(cur[meIdx]) && cur[meIdx] !== x.id ? `<div class="note">${esc(shortName(cur[meIdx]))} moves to ${esc(WDAYL[wkSel])}, so nothing gets lost.</div>` : ""}</div>`;
+    }
+    // no how-to text: a pressed day shrinks, a held one makes the row wiggle (like apps on a phone), and until this device has moved a day
+    // once (tl-wkmoved) the row gives one short wiggle when the screen opens. The words live in the first-time pop-up.
+    el.innerHTML = `${grid}${act}
+      ${changed || wkUndo ? `<div class="wkchanged"><span>${changed ? "For this week only." : "Back to your usual week."}</span>${wkUndo ? `<button type="button" class="linkbtn" id="wkUndoBtn">Undo</button>` : ""}${changed ? `<button type="button" class="linkbtn" id="wkUsual">Set as default</button>` : ""}</div>` : ""}`;   // one quiet line: a move is for this week unless you make it the default
+    el.querySelectorAll(".wkday").forEach(b => {
+      b.onclick = () => { if (wkDrag && (wkDrag.moved || wkDrag.swallow)) return; const i = +b.dataset.i; wkSel = wkSel === i ? null : i; renderWeek(); };
+      b.onpointerdown = e => { if (e.button) return; wkUnpress(wkDrag); wkDrag = { from: +b.dataset.i, x: e.clientX, y: e.clientY, id: e.pointerId, moved: false, el: b };
+        b.classList.add("press"); const d = wkDrag; d.holdT = setTimeout(() => { if (wkDrag === d && !d.moved && $("wkGrid")) $("wkGrid").classList.add("jiggle"); }, 300); };
+    });
+    if (!wkTipSeen() && !wkNudged && S.tab === "workout"){ wkNudged = true; setTimeout(() => { const g = $("wkGrid"); if (g && !wkDrag && S.tab === "workout"){ g.classList.add("nudge"); setTimeout(() => g.classList.remove("nudge"), 1300); } }, 700); }
+    if ($("wkDo")) $("wkDo").onclick = () => wkDoHere(wkSel);
+    el.querySelectorAll("[data-one]").forEach(b => b.onclick = () => wkDoLift(wkSel, +b.dataset.one));
+    if ($("wkUndoBtn")) $("wkUndoBtn").onclick = () => { const u = wkUndo; wkUndo = null; clearTimeout(wkUndoT); planPicked = false; saveWeek(sun, u.days); renderWorkout(); renderDash(); toast("Put back."); };
+    if ($("wkUsual")) $("wkUsual").onclick = async () => { await setUsualWeek(weekFor(sun)); wkUndo = null; clearTimeout(wkUndoT); toast("Set as default. Every week starts like this now."); renderWeek(); };
   }
+  let memWkTip = false;
+  let wkNudged = false;
+  const wkUnpress = d => { if (!d) return; clearTimeout(d.holdT); if (d.el) d.el.classList.remove("press"); const g = $("wkGrid"); if (g) g.classList.remove("jiggle", "nudge"); };
+  const wkTipSeen = () => { try { return memWkTip || localStorage.getItem("tl-wkmoved") === "1"; } catch(e){ return memWkTip; } };
+  function wkNote(prev, warn){   // after a move: Undo shows for a while, then steps aside ("Set as default" stays while the week differs)
+    clearTimeout(wkUndoT); wkUndo = { days: prev, warn: warn && warn.length ? warn : null };
+    wkUndoT = setTimeout(() => { wkUndo = null; renderWeek(); }, 30000);
+  }
+  function wkSwap(a, b){   // the drop: move now; a heads-up rides along when two hard days for one muscle touch
+    if (a === b){ renderWeek(); return; }
+    const sun = wkSun(), prev = weekFor(sun).slice();
+    wkSel = null; planPicked = false; wkNote(prev, swapWarning(prev, a, b));
+    memWkTip = true; try { localStorage.setItem("tl-wkmoved", "1"); } catch(e){}
+    flushWoSave(); woDirty = false; FM.ei = null; FM.si = null; FM.after = null; FM.typed = null; FM.edit = false; FM.skip = new Set();
+    swapDays(sun, a, b);
+    renderWorkout(); renderDash();
+  }
+  function wkDoHere(i){   // "Do this today": the picked workout comes to the day you're on, and that day's workout takes its place
+    const sun = wkSun(), meIdx = wkMe(), cur = weekFor(sun), id = weekState(sun)[i].id;
+    wkSel = null;
+    if (i !== meIdx && cur[i] === id && cur[meIdx] !== id && !wkDoneHere()){ planPicked = false; wkNote(cur.slice(), null); swapDays(sun, i, meIdx); }
+    pickDay(id); renderDash();
+    try { $("focusCard").scrollIntoView({ block: "start", behavior: reduceMotion() ? "auto" : "smooth" }); } catch(e){ window.scrollTo(0, 0); }
+  }
+  function wkDoLift(i, k){   // one lift from a later day, done on the day you're on. The week does not change; that lift is checked off when its day comes.
+    const id = weekFor(wkSun())[i], back = curDayId(); if (!plan().some(p => p.id === id)) return;
+    wkSel = null; pickDay(id);
+    FM.guest = { back, ei: k, day: WDAYL[i] }; FM.ei = k; FM.si = null; renderWorkout();
+    try { window.scrollTo({ top: 0, behavior: reduceMotion() ? "auto" : "smooth" }); } catch(e){ window.scrollTo(0, 0); }
+  }
+  function openWeekSheet(pre){   // older name, still used by Home's catch-up line: go to the week on the Workout screen
+    if (S.tab !== "workout") showTab("workout");
+    wkSel = typeof pre === "number" ? pre : null; renderWeek();
+    try { window.scrollTo({ top: 0, behavior: reduceMotion() ? "auto" : "smooth" }); } catch(e){ window.scrollTo(0, 0); }
+  }
+  (() => {   // dragging a day: the finger moves sideways with a day under it, the day lifts and follows; up or down still scrolls the page
+    // the day slot under the finger. Slots are measured once, when the drag starts, because the days themselves slide about during it.
+    // A little above or below the row still counts, so a thumb doesn't have to be exact.
+    const dayAt = (x, y) => {
+      const g = $("wkGrid"); if (!g || !wkDrag || !wkDrag.slots) return null; const r = g.getBoundingClientRect();
+      if (y < r.top - 50 || y > r.bottom + 50 || x < r.left - 8 || x > r.right + 8) return null;
+      const k = wkDrag.slots.findIndex(b => x >= b.left - 2 && x <= b.right + 2);
+      return k < 0 ? null : g.querySelector(`.wkday[data-i="${k}"]`);
+    };
+    const slide = over => {   // the day you're over slides into the slot you lifted from, so you see the swap before you let go
+      const g = $("wkGrid"); if (!g) return;
+      g.querySelectorAll(".wkday").forEach(x => { x.style.transform = x === over && x !== wkDrag.el ? `translateX(${wkDrag.slots[wkDrag.from].left - wkDrag.slots[+x.dataset.i].left}px)` : ""; });
+    };
+    const moveGhost = (x, y) => { if (!wkDrag || !wkDrag.ghost) return; wkDrag.ghost.style.left = (x - wkDrag.ghost.offsetWidth / 2) + "px"; wkDrag.ghost.style.top = (y - wkDrag.ghost.offsetHeight - 14) + "px"; };   // above the finger, so you can see it
+    const start = e => {
+      if (!wkDrag.el.isConnected || !$("wkGrid")){ wkDrag = null; return false; }
+      wkUnpress(wkDrag); wkDrag.moved = true; wkDrag.el.classList.add("drag");
+      wkDrag.slots = [...$("wkGrid").querySelectorAll(".wkday")].map(c => c.getBoundingClientRect());
+      const g = wkDrag.el.cloneNode(true); g.className = "wkday wkfly"; g.removeAttribute("data-i"); g.style.width = wkDrag.el.offsetWidth + "px"; document.body.appendChild(g); wkDrag.ghost = g;
+      $("wkGrid").querySelectorAll(".wkday").forEach(x => { x.classList.remove("sel"); if (x !== wkDrag.el) x.classList.add("tgt"); });
+      try { navigator.vibrate && navigator.vibrate(15); } catch(err){}
+      return true;
+    };
+    document.addEventListener("pointermove", e => { if (!wkDrag || e.pointerId !== wkDrag.id) return;
+      if (!wkDrag.moved){ const dx = Math.abs(e.clientX - wkDrag.x), dy = Math.abs(e.clientY - wkDrag.y); if (dx + dy < 8) return; if (dy > dx * 1.5){ wkUnpress(wkDrag); wkDrag = null; return; } if (!start(e)) return; }
+      e.preventDefault(); moveGhost(e.clientX, e.clientY);
+      const over = dayAt(e.clientX, e.clientY); slide(over);
+      $("wkGrid")?.querySelectorAll(".wkday.over").forEach(x => x !== over && x.classList.remove("over")); if (over && over !== wkDrag.el) over.classList.add("over"); });
+    const up = e => { if (!wkDrag) return; const d = wkDrag;
+      if (!d.moved){ wkUnpress(d); wkDrag = null; return; }
+      if (d.ghost) d.ghost.remove(); const over = e.type === "pointercancel" ? null : dayAt(e.clientX, e.clientY); $("wkGrid")?.querySelectorAll(".wkday").forEach(x => { x.classList.remove("drag", "over", "tgt"); x.style.transform = ""; });
+      wkDrag = { swallow: true }; setTimeout(() => { if (wkDrag && wkDrag.swallow) wkDrag = null; }, 0);   // the tap that can follow a drop is not a pick
+      if (over && +over.dataset.i !== d.from) wkSwap(d.from, +over.dataset.i); else renderWeek(); };
+    document.addEventListener("pointerup", up); document.addEventListener("pointercancel", up);
+  })();
   function openNoteSheet(p){
     const saved = S.workouts.find(w => w.id === woId(S.date, p.id)), cur = (S.noteText || {})[p.id] ?? ((saved && saved.note) || "");
     openSheet({ title: "Note for this workout", html: `<textarea id="woNote" rows="4" placeholder="How do you feel? Sleep, soreness, anything that hurt.">${esc(cur)}</textarea><div class="sheetacts"><button type="button" class="primary" id="woNoteSave">Save note</button></div>`,
@@ -2496,7 +2771,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     return `${c && c.kind === "up" ? "↑ " : c && c.kind === "down" ? "↓ " : ""}${w}${w ? " · " : ""}${ex.sets}×${ex.reps}`;
   };
   function renderHomeHero(){
-    const el = $("homeHero"), d = S.date, woToday = loggedOn(d), p = plan().find(x => x.id === (woToday && !woToday.rest ? woToday.dayId : nextDayId()));
+    const el = $("homeHero"), d = S.date, p = plan().find(x => x.id === curDayId()), woToday = p && !isRest(p) ? S.workouts.find(w => w.id === woId(d, p.id)) || null : null;   // the same workout the Workout screen shows
     if (!p){ el.innerHTML = `<div class="eyebrow">Today</div><h2>No plan yet</h2><div class="meta">Ask your coach to set up your plan.</div>`; return; }
     if (isRest(p)){
       const done = restDone(d), cu = catchUp();
@@ -2509,7 +2784,8 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     const list = p.exercises.map(ex => ({ ex, c: nextCue(ex, d, p.id) })), wp = woToday ? woProgress(woToday) : null, bi = blockInfo(d, p, list), mins = sessionMins(p);
     const order = exOrder(p), kept = keptOrder(p);
     const doneNames = new Set(woToday ? (woToday.exercises || []).filter(x => (x.sets || []).length).map(x => x.name) : []);
-    const lifts = order.map(ei => { const ex = p.exercises[ei], c = list[ei].c, done = doneNames.has(ex.name), sets = done ? (woToday.exercises.find(x => x.name === ex.name) || {}).sets : null;
+    const early = earlyLifts(p.id, d);   // lifts of this workout done on an earlier day this week
+    const lifts = order.map(ei => { const ex = p.exercises[ei], c = list[ei].c, done = doneNames.has(ex.name) || !!early[ex.name], sets = doneNames.has(ex.name) ? (woToday.exercises.find(x => x.name === ex.name) || {}).sets : early[ex.name] ? early[ex.name].sets : null;
       return `<li class="${done ? "done" : ""}${kept.includes(ei) ? "" : " cut"}"><span class="n">${done ? "✓ " : ""}${esc(ex.name)}</span><span class="t ${c ? c.kind : ""}">${done ? esc(sets.map(s => `${isBW(ex.name) && !(+s.w) ? "BW" : fmtW(s.w)}×${s.r}`).join(", ")) : esc(liftTarget(ex, c))}</span></li>`; }).join("");
     const st = woToday ? woStats(woToday) : null;
     const top = wp && wp.done ? `<span class="pill good">${CHECK}Done${st && st.bests.length ? ` · ${st.bests.length} new best${st.bests.length > 1 ? "s" : ""}` : ""}</span>` : wp ? `<span class="pill">${wp.n} of ${wp.total} lifts</span>` : `<span class="pill">${esc(bi.head)}</span>`;
@@ -2571,7 +2847,7 @@ dialog img,dialog video{max-width:100%;max-height:80vh;display:block;margin:8px 
     $("hStreak").innerHTML = bits.length ? `<span>Streaks</span><span>${esc(bits.join(" · "))}</span>` : `<span>Streaks</span><span>Log a workout and your food to start one</span>`;
   }
   // one-time "What's new" card after an update, closed with a tap and remembered in settings.seenVersion
-  const WHATS_NEW = ["Safer saving: the page checks for anything you logged in a chat or on another device before every save, so nothing gets written over.", "A page left open overnight now moves on to the new day by itself.", "\"No progress\" only shows when you really added no reps for 3 sessions at the same weight.", "Workout screen: the suggested weight and reps are easier to read, and Form video, Swap, Skip lift and Note are bigger buttons.", "Progress: each main lift shows where it started and where it is now. The estimated max is left off for sets over 12 reps, where it isn't reliable.", "In kilograms, the coach now saves weigh-ins under 60 kg.", "New in Settings: Privacy and feedback. Your data stays in your account, and you choose what to share.", "Colors: every accent color is easier to read, a picked accent gets a lighter night shade, cards have a thin outline at night, and protein has its own color."];
+  const WHATS_NEW = ["Workout is simpler: your week on top, then the lift, what to do this time, and one row per set.", "The faded numbers in each set are a starting point: the weight your coach suggests and the reps you did last time. Type your own, or tap Log set to use them. Logged sets turn bright with a green check.", "Drag the handle on a lift (under the card) to change the order of the lifts.", "Move your week by dragging a day onto another. The other day slides over so you see the swap. It is for this week only, unless you tap \"Set as default\".", "Days say Done, Missed or Started in plain words.", "Tap a later day to see its lifts. \"Do this today\" brings the whole workout to today. Or tap one lift to do just that lift early, and it is checked off when its day comes.", "\"How hard was it?\" is asked once, when your workout is done.", "Session length (full, 45 or 30 minutes) is now only in Settings on Progress.", "Safer saving: the page checks for anything you logged in a chat or on another device before every save, so nothing gets written over.", "A page left open overnight now moves on to the new day by itself.", "\"No progress\" only shows when you really added no reps for 3 sessions at the same weight.", "Workout screen: the suggested weight and reps are easier to read, and Form video, Swap, Skip lift and Note are bigger buttons.", "Progress: each main lift shows where it started and where it is now. The estimated max is left off for sets over 12 reps, where it isn't reliable.", "In kilograms, the coach now saves weigh-ins under 60 kg.", "New in Settings: Privacy and feedback. Your data stays in your account, and you choose what to share.", "Colors: every accent color is easier to read, a picked accent gets a lighter night shade, cards have a thin outline at night, and protein has its own color."];
   function renderWhatsNew(){
     const el = $("whatsNew"), show = !!(S.db && S.config && plan().length && sett().seenVersion !== PAGE_VERSION && !S.first && !S.wnClosed);
     el.hidden = !show; if (!show) return;
